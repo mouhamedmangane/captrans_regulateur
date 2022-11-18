@@ -31,4 +31,10 @@ class CotisationLocalRepo extends NplLocalReposiroty implements CotisationRepo{
     return set<int?>(_somme_total_item,value);
   }
 
+  @override
+  Future<Cotisation> getComplete(Cotisation cotisation) {
+    // TODO: implement getComplete
+    throw UnimplementedError();
+  }
+
 }

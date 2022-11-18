@@ -20,14 +20,14 @@ class ButtonHCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.all(10.0),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               if(icon!=null)...[
                 Ink(
                     child: Icon(icon,color: iconColor,),
-                    padding: EdgeInsets.all(15),
+                    padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
                         color: iconBackcolor,
                         borderRadius: BorderRadius.circular(15)

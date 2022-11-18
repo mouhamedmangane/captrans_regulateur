@@ -16,21 +16,26 @@ class ReceveurRecentesBloc extends Cubit<SimpleLoadableState<List<Receveur>>>{
   ReceveurRecentesBloc({required this.receveurDisRepo}):super(SimpleLoadableState.loading());
 
   Future<void> load(Bus bus) async {
-    emit(SimpleLoadableState.loading());
-    await receveurDisRepo.get4Recents(bus).then((value){
-      emit(SimpleLoadableState.done(value));
-    }).catchError((error){
-      cptTest++;
-      if(cptTest>1){
-        emit(SimpleLoadableState.done(ReceveurData(3).getData()));
-      }
-      else if(error is NplTreatRequestException)
-        emit(SimpleLoadableState.error(error.message));
-      else
-        emit(SimpleLoadableState.error("La requête n'a pas abouti, verifier votre connexion internet "));
 
-
-    });
+    if(bus.receveurs!=null){
+      emit(SimpleLoadableState.done(bus.receveurs!));
+    }
+    else
+       emit(SimpleLoadableState.done([]));
+    // await receveurDisRepo.get4Recents(bus).then((value){
+    //   emit(SimpleLoadableState.done(value));
+    // }).catchError((error){
+    //   cptTest++;
+    //   if(cptTest>1){
+    //     emit(SimpleLoadableState.done(ReceveurData(3).getData()));
+    //   }
+    //   else if(error is NplTreatRequestException)
+    //     emit(SimpleLoadableState.error(error.message));
+    //   else
+    //     emit(SimpleLoadableState.error("La requête n'a pas abouti, verifier votre connexion internet "));
+    //
+    //
+    // });
   }
 
 }

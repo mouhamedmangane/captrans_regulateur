@@ -36,6 +36,13 @@ class CotisationDisRepo extends DisRepo implements CotisationRepo{
             (json) => treatRequest.make<int>(json)
     );
   }
+
+  @override
+  Future<Cotisation> getComplete(Cotisation cotisation) {
+    return getRequest('cotisation/${cotisation.id}',
+        (json) => treatRequest.make<Cotisation>(json)
+    );
+  }
   
 
 }

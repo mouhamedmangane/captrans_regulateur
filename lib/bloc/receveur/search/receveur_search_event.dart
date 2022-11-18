@@ -15,3 +15,7 @@ class ReceveurSearchLoad extends ReceveurSearchEvent{
   List<Object?> get props => [search];
 }
 
+class ReceveurSearchOnAdded extends ReceveurSearchEvent{
+}
+
+

@@ -10,8 +10,9 @@ class Titre1 extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
+        //decoration: TextDecoration.underline,
         fontWeight: FontWeight.w500,
-        fontSize: 22,
+        fontSize: 18,
         color: color,
       ),);
   }

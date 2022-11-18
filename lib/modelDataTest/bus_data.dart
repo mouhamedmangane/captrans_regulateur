@@ -1,6 +1,7 @@
 // ignore: file_names
 import 'package:captrans_regulateur/model/bus.dart';
 import 'package:captrans_regulateur/model/proprietaire.dart';
+import 'package:captrans_regulateur/modelDataTest/nom_gie_data.dart';
 import 'package:captrans_regulateur/modelDataTest/proprietaire_data.dart';
 import 'package:noppal_util/model/gen_data_array_impl.dart';
 import 'package:noppal_util/model/gen_date_time.dart';
@@ -17,6 +18,7 @@ class BusData extends GenDataArrayImpl<Bus>{
   List<Bus> getData() {
     GenMatAuto matricule=GenMatAuto();
     GenNombre jourEtat=GenNombre(-100,100);
+    NomGieData nomGie=NomGieData();
     GenNombre montantEtat=GenNombre(1500,500000,pas: 500);
     GenEtat<int> compte=GenEtat([1200,1300,1500,1750,1900,2000]);
     GenDateTime lasteDate=GenDateTime(start: DateTime.now());
@@ -30,6 +32,7 @@ class BusData extends GenDataArrayImpl<Bus>{
         compte: m_etat*compte.next(),
         numeroLigne: numroLigne.random(),
         proprietaireId: numroLigne.random(),
+        nomGie:nomGie.random() ,
         jourEtat: m_etat,
         montantEtat: montantEtat.random(),
         lastDateCotisation: lasteDate.next(),

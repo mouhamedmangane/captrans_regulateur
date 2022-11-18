@@ -6,12 +6,13 @@ import 'package:flutter/material.dart';
 
 class ReceveurHabituelList extends StatelessWidget {
   final List<Receveur> receveurs;
-  const ReceveurHabituelList({required this.receveurs,Key? key}) : super(key: key);
+  final Function(BuildContext,Receveur) ? onPressed;
+  const ReceveurHabituelList({required this.receveurs,this.onPressed,Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: receveurs.map((receveur) => ReceveurListTile(receveur: receveur)).toList(),
+      children: receveurs.map((receveur) => ReceveurListTile(receveur: receveur,onPressed: onPressed,)).toList(),
     );
   }
 }

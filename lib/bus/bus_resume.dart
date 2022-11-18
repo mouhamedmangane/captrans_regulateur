@@ -14,7 +14,10 @@ class BusResume extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Icon(Icons.bus_alert,color: Colors.blue,size: 35,),
+        CircleAvatar(
+          backgroundColor: Colors.blue,
+          child:Icon(Icons.bus_alert,color: Colors.white,),
+        ),
         SizedBox(width: 13,),
         Column(
           mainAxisSize: MainAxisSize.min,
@@ -23,8 +26,8 @@ class BusResume extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text('${bus.matricule}'!,style:TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.blue)),
-                Text(' (${bus.proprietaire!.nom!})',style:TextStyle(fontSize: 16,color: Colors.blue)),
+                Text('${bus.matricule} '!,style:TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.blue)),
+                Text(' ( ${bus.proprietaire!.nom!} )',style:TextStyle(fontSize: 16,color: Colors.blue)),
               ],
             ),
             SizedBox(height: 2,),

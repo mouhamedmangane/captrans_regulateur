@@ -16,24 +16,23 @@ class MySliverApp extends StatelessWidget {
         elevation: 1,
         backgroundColor: Colors.grey.shade200,
         foregroundColor: Colors.black,
-        toolbarHeight: 60,
-        expandedHeight: 90+additionalHeigth.toDouble(),
-        //title: MyAppBar(titre),
+        title: Text(titre),
         floating: false,
         automaticallyImplyLeading: true,
         pinned: true,
-        flexibleSpace: FlexibleSpaceBar(
 
-          title:Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children:<Widget> [
-              Text(titre,style: TextStyle(color: Colors.black),),
-              Spacer()
-            ]+((actions!=null)?actions!:[]),
-          ) ,
-          centerTitle: false,
-          titlePadding: EdgeInsets.only(bottom: 15,top: 10),
-        ),
+        // flexibleSpace: FlexibleSpaceBar(
+        //
+        //   title:Row(
+        //     crossAxisAlignment: CrossAxisAlignment.end,
+        //     children:<Widget> [
+        //       Text(titre,style: TextStyle(color: Colors.black),),
+        //       Spacer()
+        //     ]+((actions!=null)?actions!:[]),
+        //   ) ,
+        //   centerTitle: false,
+        //   titlePadding: EdgeInsets.only(bottom: 15,top: 10),
+        // ),
 
             //UserAvatarButton(),
 

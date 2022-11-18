@@ -2,7 +2,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-enum HomeTab{ cotisation,collect,bus}
+enum HomeTab{ cotisation,collect,bus,setting}
 
 class HomeState extends Equatable{
   final HomeTab tab;

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class ReceveurListTile extends StatelessWidget {
   final Receveur receveur;
-  final Function() ? onPressed;
+  final Function(BuildContext,Receveur) ? onPressed;
   const ReceveurListTile({required this.receveur,this.onPressed=null,Key? key}) : super(key: key);
 
   @override
@@ -15,9 +15,12 @@ class ReceveurListTile extends StatelessWidget {
       subtitle: Text(receveur.tel),
       leading: CircleAvatar(
         backgroundImage: Image.asset('asset/user/${receveur.id+1}.jpeg').image,
-        radius: 28,
+        radius: 25,
       ),
-      onTap: onPressed,
+      onTap: (){
+        if(onPressed != null)
+          onPressed!(context,receveur);
+      },
     );
   }
 }

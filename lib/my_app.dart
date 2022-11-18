@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'cotisation/cotisation_home/cotisation_body.dart';
 
 class MyHomePage extends StatelessWidget {
+  static const String  routeName="/home";
   const MyHomePage({Key? key}) : super(key: key);
 
   @override
@@ -31,6 +32,7 @@ class MyHomeView extends StatelessWidget {
         children: const [CotisationBody(),CollectBody(),BusBody()],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.white,
         elevation: 1,
         currentIndex: selectedTab.index,
@@ -50,6 +52,11 @@ class MyHomeView extends StatelessWidget {
             icon: Icon(Icons.directions_bus),
             label: "Bus",
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: "Bus",
+          ),
+
       ],
     ),
 

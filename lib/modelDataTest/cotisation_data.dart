@@ -42,6 +42,7 @@ class CotisationData extends GenDataArrayImpl<Cotisation>{
         regulateur: regulateur,
         ligneCotisations: ligneCotisations,
         busId: bus.id,
+        created_at: DateTime.now(),
       );
    });
   }

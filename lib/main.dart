@@ -1,8 +1,11 @@
 import 'package:captrans_regulateur/bloc/cotisation/addcotisation/add_cotisation_bloc.dart';
 import 'package:captrans_regulateur/bloc/main/app_start_bloc.dart';
-import 'package:captrans_regulateur/cotisation/add_cotisation/screen_add_cotisation.dart';
+import 'package:captrans_regulateur/bus/search_bus_page.dart';
+import 'package:captrans_regulateur/cotisation/add_cotisation/add_montant_cotisation_page.dart';
 import 'package:captrans_regulateur/cotisation/add_cotisation/search_bus_by_mat_page.dart';
+import 'package:captrans_regulateur/cotisation/cotisation_page.dart';
 import 'package:captrans_regulateur/my_app.dart';
+import 'package:captrans_regulateur/receveur/save_receveur_page.dart';
 import 'package:captrans_regulateur/receveur/search_receveur_page.dart';
 import 'package:captrans_regulateur/receveur/select_receveur_page.dart';
 import 'package:captrans_regulateur/repository/bus/bus_dis_repo.dart';
@@ -65,11 +68,17 @@ class App extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: MyHomePage(),
+          //home: MyHomePage(),
+          initialRoute:MyHomePage.routeName ,
           routes: {
+            MyHomePage.routeName:(context)=>MyHomePage(),
             SearchBusByMatPage.routeName:(context)=>SearchBusByMatPage(),
+            SearchBusPageArg.routeName:(context)=>SearchBusPageArg(),
             SelectReceveurPage.routeName:(context)=>SelectReceveurPage(),
             SearchReceveurPageArg.routeName:(context)=>SearchReceveurPageArg(),
+            SaveReceveurPageArg.routeName:(context)=>SaveReceveurPageArg(),
+            AddMontantCotisationPage.routeName:(context)=>AddMontantCotisationPage(),
+            CotisationPageArgs.routeName:(context) => CotisationPageArgs(),
           },
         ),
       ),

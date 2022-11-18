@@ -1,12 +1,10 @@
 import 'package:captrans_regulateur/bloc/cotisation/addcotisation/add_cotisation_bloc.dart';
 import 'package:captrans_regulateur/bloc/receveur/receveur_recentes_bloc.dart';
 import 'package:captrans_regulateur/bus/bus_resume.dart';
-import 'package:captrans_regulateur/bus/search_bus_button.dart';
-import 'package:captrans_regulateur/model/bus.dart';
+import 'package:captrans_regulateur/cotisation/add_cotisation/resume_cotisation_view.dart';
 import 'package:captrans_regulateur/model/receveur.dart';
 import 'package:captrans_regulateur/receveur/receveur_habituel_list.dart';
 import 'package:captrans_regulateur/receveur/search_receveur_page.dart';
-import 'package:captrans_regulateur/receveur/search_receveur_param.dart';
 import 'package:captrans_regulateur/receveur/select_receveur_param.dart';
 import 'package:captrans_regulateur/repository/receveur/receveur_dis_repo.dart';
 import 'package:captrans_regulateur/ui/button/error_body_view.dart';
@@ -16,6 +14,8 @@ import 'package:noppal_util/bloc/enum_loadable_state.dart';
 import 'package:noppal_util/bloc/simple_loadable_state.dart';
 import 'package:noppal_util/ui/croquis/list_croquis.dart';
 import 'package:noppal_util/ui/link/searchLInk.dart';
+
+import '../cotisation/add_cotisation/add_montant_cotisation_page.dart';
 
 
 class SelectReceveurPage extends StatelessWidget {
@@ -39,18 +39,8 @@ class SelectReceveurPage extends StatelessWidget {
         body: BlocBuilder<ReceveurRecentesBloc,SimpleLoadableState<List<Receveur>>>(
            builder: (context,state){
              print(state.state);
-               if(state.state ==EnumLoadableState.ERROR) return Padding(
-                 padding: const EdgeInsets.only(bottom:90,left: 40,right: 40),
-                 child: ErrorBodyView(
-                     onTap: (){
-                       context.read<ReceveurRecentesBloc>().load(param.bus!);
-                     },
-                     title: "Data Faillure",
-                     message: state.message??'',
-
-                 ),
-               );
-               else if(state.state == EnumLoadableState.DONE) return SelectReceveurView(receveurs: state.value!,);
+;
+               if(state.state == EnumLoadableState.DONE) return SelectReceveurView(receveurs: state.value!,);
                else return ListCroquisSliver(
                      2,
                    backgroundColor: Colors.grey.shade300,
@@ -60,24 +50,7 @@ class SelectReceveurPage extends StatelessWidget {
 
            },
         ),
-        bottomSheet:Container(
-          width: double.infinity,
-          padding: EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color:Colors.grey.shade50,
-            boxShadow: [
-              BoxShadow()
-            ],
-           borderRadius: BorderRadius.vertical(top: Radius.circular(15) ),
-          ),
-          height:85,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                BusResume(param.bus),
-              ],
-            )
-        ),
+        bottomSheet:ResumeCotisationView(bus: param.bus,)
 
       ),
     );
@@ -116,14 +89,22 @@ class SelectReceveurView extends StatelessWidget {
          padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 10),
          child: Text('Receveurs habituels (${receveurs.length})',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
        ),
-        ReceveurHabituelList(receveurs: receveurs),
-        // Padding(
-        //   padding: const EdgeInsets.symmetric(horizontal: 30.0,vertical: 30),
-        //   child: Container(
-        //     alignment: Alignment.center,
-        //     child: Text('Si le Receveur ne figure pas dans cette liste veillez cliquer sur la barre de recherche pour sélectionner ou pour ajouter un receveur',style:TextStyle(color:Colors.grey.shade400),textAlign: TextAlign.center,)
-        //   ),
-        // ),
+        if(receveurs.isNotEmpty)...[
+          ReceveurHabituelList(receveurs: receveurs,onPressed: (context,receveur){
+            BlocProvider.of<AddCotisationBloc>(context).add(AddCotisationSelectedReceveur(receveur));
+            Navigator.pushNamed(context, AddMontantCotisationPage.routeName);
+          },)
+        ]
+       ,if(receveurs.isEmpty)...[
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30.0,vertical: 30),
+            child: Container(
+                alignment: Alignment.center,
+                child: Text('Aucun reveveur habutel enregistré pour ce bus, Veillez cliquer sur la barre de recherche pour rechercher ou pour ajouter un reveveur',style:TextStyle(color:Colors.grey.shade500),textAlign: TextAlign.center,)
+            ),
+          ),
+        ]
+
       ],
     );
   }
@@ -133,15 +114,17 @@ class SelectReceveurView extends StatelessWidget {
   Route _goSearchReceveur(){
     return PageRouteBuilder(
         pageBuilder: (context,animation,secondaryAnimation) =>  SearchReceveurPage(
-          onSelect:(receveur){},
+          onSelect:(context,receveur){
+            BlocProvider.of<AddCotisationBloc>(context).add(AddCotisationSelectedReceveur(receveur));
+            Navigator.pushNamed(context, AddMontantCotisationPage.routeName);
+          },
         ),
-        transitionDuration: Duration(milliseconds: 100),
+        transitionDuration: Duration(milliseconds: 300),
         transitionsBuilder: (context,animation,secondaryAnimation,child){
-          const begin = Offset(0.0, 0.085);
+          const begin = Offset(0.0, 0.078);
           const end = Offset.zero;
           final tween = Tween(begin: begin, end: end);
           final offsetAnimation = animation.drive(tween);
-
           return SlideTransition(
             position: offsetAnimation,
             child: child,

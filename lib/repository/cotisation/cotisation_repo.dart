@@ -8,4 +8,5 @@ abstract class CotisationRepo{
   Future<int?> sommeTotal();
   Future<Cotisation> add(CotisationSave cotisationSave);
   Future<List<Cotisation>> en_cours();
+  Future<Cotisation> getComplete(Cotisation cotisation);
 }

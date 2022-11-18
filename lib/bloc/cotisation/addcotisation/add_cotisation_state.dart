@@ -3,6 +3,7 @@ part of "add_cotisation_bloc.dart";
 enum AddCotisationStatus {initial,loading,success,failure}
 
 class AddCotisationState extends Equatable{
+
   AddCotisationStatus status;
   Bus ? bus;
   Receveur ? receveur;
@@ -10,13 +11,14 @@ class AddCotisationState extends Equatable{
   String ? message;
   Cotisation  ? cotisation;
 
+
   AddCotisationState({
     this.status=AddCotisationStatus.initial,
-    this.bus=null,
-    this.receveur=null,
+    this.bus ,
+    this.receveur ,
     this.montant=0,
     this.message='',
-    this.cotisation=null,
+    this.cotisation,
   });
 
   AddCotisationState copyWith({
@@ -33,11 +35,11 @@ class AddCotisationState extends Equatable{
         receveur: receveur ?? this.receveur,
         montant: montant ?? this.montant,
         message: message?? this.message,
-        cotisation:cotisation,
+        cotisation:cotisation ?? this.cotisation,
     );
   }
 
   @override
   // TODO: implement props
-  List<Object?> get props => [];
+  List<Object?> get props => [status,bus,receveur,montant,message,cotisation];
 }

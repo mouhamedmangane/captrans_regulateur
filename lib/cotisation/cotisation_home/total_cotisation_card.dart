@@ -14,12 +14,11 @@ class TotalCotisationCard extends StatelessWidget {
       elevation: 3,
       margin: EdgeInsets.symmetric(horizontal: 0,vertical: 4),
       shape: RoundedRectangleBorder(
-
         borderRadius: BorderRadius.circular(15),
       ),
       child: Container(
         padding: EdgeInsets.all(20),
-        height: 127,
+        height: 100,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           color: Theme.of(context).primaryColor,
@@ -28,7 +27,7 @@ class TotalCotisationCard extends StatelessWidget {
           fit: StackFit.expand,
           children: [
             Align(
-              child: Image.asset("asset/images/money1.png",width: 100,),
+              child: Image.asset("asset/images/money1.png",width: 85,),
               alignment: Alignment.centerRight,
             ),
             Align(
@@ -43,8 +42,8 @@ class TotalCotisationCard extends StatelessWidget {
                       return Text("${NumberHelper.format(state.value??0)} FCFA",style: TextStyle(fontSize: 28,color: Colors.white,fontWeight: FontWeight.bold),);
                     }
                   ),
-                  SizedBox(height: 15,),
-                  Text("Montant Encaissé",style: TextStyle(fontSize: 18,color: Colors.white70,fontWeight: FontWeight.bold),),
+                  SizedBox(height: 3,),
+                  Text("Montant Encaissé",style: TextStyle(color: Colors.white70,fontWeight: FontWeight.bold),),
                   //Text("FCFA",style: TextStyle(fontSize: 28,color: Colors.white,fontWeight: FontWeight.bold),),
                 ],
               ),

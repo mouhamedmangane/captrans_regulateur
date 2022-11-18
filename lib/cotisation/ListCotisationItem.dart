@@ -1,5 +1,6 @@
 import 'package:captrans_regulateur/model/cotisation.dart';
 import 'package:flutter/material.dart';
+import 'package:noppal_util/format/number_helper.dart';
 
 class ListeCotisationItem extends StatelessWidget {
   final Cotisation cotisation;
@@ -21,7 +22,7 @@ class ListeCotisationItem extends StatelessWidget {
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(cotisation.montant!.toString(),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
+          Text('${NumberHelper.format(cotisation.montant??0)}',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
           Text(" F ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18))
         ],
       ),

@@ -10,25 +10,28 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class SearchBusByMatParam{
   final String matricule;
   final Function(BuildContext,Bus) onValidate;
-  const SearchBusByMatParam({ required this.matricule, required this.onValidate});
+  final bool canRescan;
+  const SearchBusByMatParam({ required this.matricule, required this.onValidate,this.canRescan=false});
 }
 
 class SearchBusByMatPage extends StatelessWidget {
   static const routeName="/cotisation/search_bus/by_mat";
+
   const SearchBusByMatPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     SearchBusByMatParam param = ModalRoute.of(context)!.settings.arguments as SearchBusByMatParam;
     return BlocProvider<SearchBusByMatBloc>(
       create: (ct)=>SearchBusByMatBloc(busRepo: ct.read<BusRepo>())..add(SearchBusByMatCharger(param.matricule)),
-      child: SearchBusByMatView(onValidate: param.onValidate,),
+      child: SearchBusByMatView(onValidate: param.onValidate,canRescan: param.canRescan,),
     );
   }
 }
 
 class SearchBusByMatView extends StatelessWidget {
   final Function(BuildContext,Bus) onValidate;
-  const SearchBusByMatView({required this.onValidate,Key? key}) : super(key: key);
+  final bool canRescan;
+  const SearchBusByMatView({required this.onValidate,this.canRescan=false,Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,25 +47,24 @@ class SearchBusByMatView extends StatelessWidget {
           child: Stack(
               children:[
                 Align(
-                  alignment: Alignment.topLeft,
-                  child: Column(
-                    crossAxisAlignment:  CrossAxisAlignment.center,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.bus_alert,size: 28,),
-                          SizedBox(width: 10,),
-                          BlocBuilder<SearchBusByMatBloc,SearchBusByMatState>(
-                            buildWhen: (previous,current) => previous.matricule != current.matricule,
-                            builder: (context,state) =>
-                                Text("${state.matricule}",style: TextStyle(fontSize: 32,),textAlign: TextAlign.center,),
-                          ),
-                        ],
-                      ),
-
-                    ],
-                  ),
+                  alignment: Alignment.topCenter,
+                  child: Row(
+                      crossAxisAlignment:  CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircleAvatar(
+                          child: Icon(Icons.bus_alert,size: 40,color: Colors.blue,),
+                          radius: 40,
+                          backgroundColor: Colors.grey.shade300,
+                        ),
+                        SizedBox(width: 2,),
+                        BlocBuilder<SearchBusByMatBloc,SearchBusByMatState>(
+                          buildWhen: (previous,current) => previous.matricule != current.matricule,
+                          builder: (context,state) =>
+                              Text("${state.matricule}",style: TextStyle(fontSize: 32,color: Colors.blue),textAlign: TextAlign.center,),
+                        ),
+                      ],
+                    ),
                 ),
                 Align(
                   alignment: Alignment.center,
@@ -92,36 +94,40 @@ class SearchBusByMatView extends StatelessWidget {
       return Padding(
         padding: const EdgeInsets.only(left: 30.0,right: 30,bottom: 30),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Icon(state.status==SearchBusByMatStatus.failureRequest?Icons.wifi_tethering_error:Icons.phonelink_erase_rounded,size: 150,color: Colors.grey,),
-              SizedBox(height: 30,),
-              Text("Echec Recherche",style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),
+              Icon(state.status==SearchBusByMatStatus.failureRequest?Icons.wifi_tethering_error:Icons.phonelink_erase_rounded,size: 75,color: Colors.grey.shade400,),
               SizedBox(height: 10,),
-              Text(state.message,style: TextStyle(fontSize: 16),textAlign: TextAlign.center,),
-              SizedBox(height: 30,),
+              Text("Echec Recherche",style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold,color: Colors.grey.shade600)),
+              SizedBox(height: 5,),
+              Text(state.message,style: TextStyle(fontSize: 16,color: Colors.grey.shade600),textAlign: TextAlign.center),
+              SizedBox(height: 10,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
+                  if(canRescan)...[
+                    ElevatedButton(
+                      style: ButtonStyle(
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                //side: BorderSide()
+                              )
+                          )
+                      ),
+                      onPressed:(){
+                      },
+                      child: Row(
+                        children: [
+                          Icon(Icons.qr_code_outlined),
+                          Text(" Réscanner"),
+                        ],
+                      ),
+                    ),
+                  ],
                   ElevatedButton(
-                    style: ButtonStyle(
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                              //side: BorderSide()
-                            )
-                        )
-                    ),
-                    onPressed:(){
-                    },
-                    child: Row(
-                      children: [
-                        Icon(Icons.qr_code_outlined),
-                        Text(" Réscanner"),
-                      ],
-                    ),
-                  ), ElevatedButton(
                     style: ButtonStyle(
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
