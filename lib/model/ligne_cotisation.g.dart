@@ -10,6 +10,12 @@ _$_LigneCotisation _$$_LigneCotisationFromJson(Map<String, dynamic> json) =>
     _$_LigneCotisation(
       id: json['id'] as int,
       nombreDeDepot: json['nombreDeDepot'] as int,
+      dateDebut: json['dateDebut'] == null
+          ? null
+          : DateTime.parse(json['dateDebut'] as String),
+      dateFin: json['dateFin'] == null
+          ? null
+          : DateTime.parse(json['dateFin'] as String),
       created_at: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
@@ -21,13 +27,15 @@ _$_LigneCotisation _$$_LigneCotisationFromJson(Map<String, dynamic> json) =>
       prixGie: json['prixGie'] as int,
       prixCaptrans: json['prixCaptrans'] as int,
       prixSupplementaire: json['prixSupplementaire'] as int?,
-      nomGie: json['nomGie'] as String,
+      total: json['total'] as int?,
     );
 
 Map<String, dynamic> _$$_LigneCotisationToJson(_$_LigneCotisation instance) =>
     <String, dynamic>{
       'id': instance.id,
       'nombreDeDepot': instance.nombreDeDepot,
+      'dateDebut': instance.dateDebut?.toIso8601String(),
+      'dateFin': instance.dateFin?.toIso8601String(),
       'created_at': instance.created_at?.toIso8601String(),
       'updated_at': instance.updated_at?.toIso8601String(),
       'etatBusId': instance.etatBusId,
@@ -35,5 +43,5 @@ Map<String, dynamic> _$$_LigneCotisationToJson(_$_LigneCotisation instance) =>
       'prixGie': instance.prixGie,
       'prixCaptrans': instance.prixCaptrans,
       'prixSupplementaire': instance.prixSupplementaire,
-      'nomGie': instance.nomGie,
+      'total': instance.total,
     };

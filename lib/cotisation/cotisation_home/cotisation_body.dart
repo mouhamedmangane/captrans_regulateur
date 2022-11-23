@@ -6,11 +6,13 @@ import 'package:captrans_regulateur/bloc/cotisation/cotisation_en_cours_bloc.dar
 import 'package:captrans_regulateur/bloc/cotisation/total_cotisation_bloc.dart';
 import 'package:captrans_regulateur/bus/search_bus_page.dart';
 import 'package:captrans_regulateur/bus/search_bus_param.dart';
-import 'package:captrans_regulateur/cotisation/add_cotisation/search_bus_by_mat_page.dart';
+import 'package:captrans_regulateur/bus/search_bus_by_mat_page.dart';
 import 'package:captrans_regulateur/cotisation/cotisation_home/total_cotisation_card.dart';
+import 'package:captrans_regulateur/cotisation/cotisation_page.dart';
 import 'package:captrans_regulateur/cotisation/liste_cotisation.dart';
 import 'package:captrans_regulateur/model/bus.dart';
 import 'package:captrans_regulateur/modelDataTest/receveur_data.dart';
+import 'package:captrans_regulateur/my_app.dart';
 import 'package:captrans_regulateur/receveur/select_receveur_page.dart';
 import 'package:captrans_regulateur/receveur/select_receveur_param.dart';
 import 'package:captrans_regulateur/util_app/titre/titre_1.dart';
@@ -39,7 +41,6 @@ class CotisationBody extends StatelessWidget {
         BlocProvider<CotisationEnCoursBloc>(
           create: (context) => CotisationEnCoursBloc(SimpleLoadableState.init())..load(),
         ),
-
       ],
       child: Scaffold(
         appBar: AppBar(
@@ -91,7 +92,18 @@ class CotisationBody extends StatelessWidget {
               //   backgroundColor: Colors.grey.shade300,
               //   shimmerDuration: 1000,
               // ),
-              ListeCotisation(),
+              ListeCotisation(
+                onTap: (context,cotisation){
+                  Navigator.pushNamed(
+                      context,
+                      CotisationPageArgs.routeName,
+                      arguments: CotisationParam(
+                        cotisation:cotisation!,
+                        mustCompleted: false,
+                      )
+                  );
+                },
+              ),
 
 
             ],
@@ -166,6 +178,7 @@ class AddCotisationBar extends StatelessWidget {
   SearchBusByMatParam _paramSearch(matricule,{canResacn=false}){
     return  SearchBusByMatParam(
         matricule: matricule,
+        canRescan: canResacn,
         onValidate: (context,bus){
           print('ok');
           Bus  gBus;

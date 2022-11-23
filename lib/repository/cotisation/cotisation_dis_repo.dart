@@ -43,6 +43,20 @@ class CotisationDisRepo extends DisRepo implements CotisationRepo{
         (json) => treatRequest.make<Cotisation>(json)
     );
   }
+
+  @override
+  Future<List<Cotisation>> findByCollectId(int collectId) {
+    return getRequest('cotisation/collect/${collectId}',
+            (json) => treatRequest.makeList(json)
+    );
+  }
+
+  @override
+  Future<List<Cotisation>> findByBusId(int busId) {
+    return getRequest('cotisation/bus/${busId}',
+            (json) => treatRequest.makeList(json)
+    );
+  }
   
 
 }

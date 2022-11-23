@@ -1,4 +1,4 @@
-part of "search_bus_by_mat_bloc.dart";
+part of 'search_bus_by_mat_bloc.dart';
 
 
 enum SearchBusByMatStatus {loading,failureRequest,failureTreatement,success}

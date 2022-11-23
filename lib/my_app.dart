@@ -35,6 +35,7 @@ class MyHomeView extends StatelessWidget {
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.white,
         elevation: 1,
+        //enableFeedback: false,
         currentIndex: selectedTab.index,
         onTap: (selected){
          context.read<HomeCubit>().setTab(HomeTab.values[selected]);
@@ -42,11 +43,11 @@ class MyHomeView extends StatelessWidget {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.payments),
-            label: "Hom",
+            label: "Cotisations",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.inventory_2,),
-            label: "Collect",
+            label: "Collectes",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.directions_bus),
@@ -54,7 +55,8 @@ class MyHomeView extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
-            label: "Bus",
+            label: "Paramètre",
+            backgroundColor:Colors.blue,
           ),
 
       ],

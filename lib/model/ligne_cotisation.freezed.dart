@@ -22,6 +22,8 @@ LigneCotisation _$LigneCotisationFromJson(Map<String, dynamic> json) {
 mixin _$LigneCotisation {
   int get id => throw _privateConstructorUsedError;
   int get nombreDeDepot => throw _privateConstructorUsedError;
+  DateTime? get dateDebut => throw _privateConstructorUsedError;
+  DateTime? get dateFin => throw _privateConstructorUsedError;
   DateTime? get created_at => throw _privateConstructorUsedError;
   DateTime? get updated_at => throw _privateConstructorUsedError;
   int get etatBusId => throw _privateConstructorUsedError;
@@ -29,7 +31,7 @@ mixin _$LigneCotisation {
   int get prixGie => throw _privateConstructorUsedError;
   int get prixCaptrans => throw _privateConstructorUsedError;
   int? get prixSupplementaire => throw _privateConstructorUsedError;
-  String get nomGie => throw _privateConstructorUsedError;
+  int? get total => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -46,6 +48,8 @@ abstract class $LigneCotisationCopyWith<$Res> {
   $Res call(
       {int id,
       int nombreDeDepot,
+      DateTime? dateDebut,
+      DateTime? dateFin,
       DateTime? created_at,
       DateTime? updated_at,
       int etatBusId,
@@ -53,7 +57,7 @@ abstract class $LigneCotisationCopyWith<$Res> {
       int prixGie,
       int prixCaptrans,
       int? prixSupplementaire,
-      String nomGie});
+      int? total});
 }
 
 /// @nodoc
@@ -71,6 +75,8 @@ class _$LigneCotisationCopyWithImpl<$Res, $Val extends LigneCotisation>
   $Res call({
     Object? id = null,
     Object? nombreDeDepot = null,
+    Object? dateDebut = freezed,
+    Object? dateFin = freezed,
     Object? created_at = freezed,
     Object? updated_at = freezed,
     Object? etatBusId = null,
@@ -78,7 +84,7 @@ class _$LigneCotisationCopyWithImpl<$Res, $Val extends LigneCotisation>
     Object? prixGie = null,
     Object? prixCaptrans = null,
     Object? prixSupplementaire = freezed,
-    Object? nomGie = null,
+    Object? total = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -89,6 +95,14 @@ class _$LigneCotisationCopyWithImpl<$Res, $Val extends LigneCotisation>
           ? _value.nombreDeDepot
           : nombreDeDepot // ignore: cast_nullable_to_non_nullable
               as int,
+      dateDebut: freezed == dateDebut
+          ? _value.dateDebut
+          : dateDebut // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      dateFin: freezed == dateFin
+          ? _value.dateFin
+          : dateFin // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       created_at: freezed == created_at
           ? _value.created_at
           : created_at // ignore: cast_nullable_to_non_nullable
@@ -117,10 +131,10 @@ class _$LigneCotisationCopyWithImpl<$Res, $Val extends LigneCotisation>
           ? _value.prixSupplementaire
           : prixSupplementaire // ignore: cast_nullable_to_non_nullable
               as int?,
-      nomGie: null == nomGie
-          ? _value.nomGie
-          : nomGie // ignore: cast_nullable_to_non_nullable
-              as String,
+      total: freezed == total
+          ? _value.total
+          : total // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -136,6 +150,8 @@ abstract class _$$_LigneCotisationCopyWith<$Res>
   $Res call(
       {int id,
       int nombreDeDepot,
+      DateTime? dateDebut,
+      DateTime? dateFin,
       DateTime? created_at,
       DateTime? updated_at,
       int etatBusId,
@@ -143,7 +159,7 @@ abstract class _$$_LigneCotisationCopyWith<$Res>
       int prixGie,
       int prixCaptrans,
       int? prixSupplementaire,
-      String nomGie});
+      int? total});
 }
 
 /// @nodoc
@@ -159,6 +175,8 @@ class __$$_LigneCotisationCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? nombreDeDepot = null,
+    Object? dateDebut = freezed,
+    Object? dateFin = freezed,
     Object? created_at = freezed,
     Object? updated_at = freezed,
     Object? etatBusId = null,
@@ -166,7 +184,7 @@ class __$$_LigneCotisationCopyWithImpl<$Res>
     Object? prixGie = null,
     Object? prixCaptrans = null,
     Object? prixSupplementaire = freezed,
-    Object? nomGie = null,
+    Object? total = freezed,
   }) {
     return _then(_$_LigneCotisation(
       id: null == id
@@ -177,6 +195,14 @@ class __$$_LigneCotisationCopyWithImpl<$Res>
           ? _value.nombreDeDepot
           : nombreDeDepot // ignore: cast_nullable_to_non_nullable
               as int,
+      dateDebut: freezed == dateDebut
+          ? _value.dateDebut
+          : dateDebut // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      dateFin: freezed == dateFin
+          ? _value.dateFin
+          : dateFin // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       created_at: freezed == created_at
           ? _value.created_at
           : created_at // ignore: cast_nullable_to_non_nullable
@@ -205,10 +231,10 @@ class __$$_LigneCotisationCopyWithImpl<$Res>
           ? _value.prixSupplementaire
           : prixSupplementaire // ignore: cast_nullable_to_non_nullable
               as int?,
-      nomGie: null == nomGie
-          ? _value.nomGie
-          : nomGie // ignore: cast_nullable_to_non_nullable
-              as String,
+      total: freezed == total
+          ? _value.total
+          : total // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -219,6 +245,8 @@ class _$_LigneCotisation implements _LigneCotisation {
   const _$_LigneCotisation(
       {required this.id,
       required this.nombreDeDepot,
+      this.dateDebut,
+      this.dateFin,
       this.created_at,
       this.updated_at,
       required this.etatBusId,
@@ -226,7 +254,7 @@ class _$_LigneCotisation implements _LigneCotisation {
       required this.prixGie,
       required this.prixCaptrans,
       this.prixSupplementaire,
-      required this.nomGie});
+      this.total});
 
   factory _$_LigneCotisation.fromJson(Map<String, dynamic> json) =>
       _$$_LigneCotisationFromJson(json);
@@ -235,6 +263,10 @@ class _$_LigneCotisation implements _LigneCotisation {
   final int id;
   @override
   final int nombreDeDepot;
+  @override
+  final DateTime? dateDebut;
+  @override
+  final DateTime? dateFin;
   @override
   final DateTime? created_at;
   @override
@@ -250,11 +282,11 @@ class _$_LigneCotisation implements _LigneCotisation {
   @override
   final int? prixSupplementaire;
   @override
-  final String nomGie;
+  final int? total;
 
   @override
   String toString() {
-    return 'LigneCotisation(id: $id, nombreDeDepot: $nombreDeDepot, created_at: $created_at, updated_at: $updated_at, etatBusId: $etatBusId, cotisationId: $cotisationId, prixGie: $prixGie, prixCaptrans: $prixCaptrans, prixSupplementaire: $prixSupplementaire, nomGie: $nomGie)';
+    return 'LigneCotisation(id: $id, nombreDeDepot: $nombreDeDepot, dateDebut: $dateDebut, dateFin: $dateFin, created_at: $created_at, updated_at: $updated_at, etatBusId: $etatBusId, cotisationId: $cotisationId, prixGie: $prixGie, prixCaptrans: $prixCaptrans, prixSupplementaire: $prixSupplementaire, total: $total)';
   }
 
   @override
@@ -265,6 +297,9 @@ class _$_LigneCotisation implements _LigneCotisation {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.nombreDeDepot, nombreDeDepot) ||
                 other.nombreDeDepot == nombreDeDepot) &&
+            (identical(other.dateDebut, dateDebut) ||
+                other.dateDebut == dateDebut) &&
+            (identical(other.dateFin, dateFin) || other.dateFin == dateFin) &&
             (identical(other.created_at, created_at) ||
                 other.created_at == created_at) &&
             (identical(other.updated_at, updated_at) ||
@@ -278,7 +313,7 @@ class _$_LigneCotisation implements _LigneCotisation {
                 other.prixCaptrans == prixCaptrans) &&
             (identical(other.prixSupplementaire, prixSupplementaire) ||
                 other.prixSupplementaire == prixSupplementaire) &&
-            (identical(other.nomGie, nomGie) || other.nomGie == nomGie));
+            (identical(other.total, total) || other.total == total));
   }
 
   @JsonKey(ignore: true)
@@ -287,6 +322,8 @@ class _$_LigneCotisation implements _LigneCotisation {
       runtimeType,
       id,
       nombreDeDepot,
+      dateDebut,
+      dateFin,
       created_at,
       updated_at,
       etatBusId,
@@ -294,7 +331,7 @@ class _$_LigneCotisation implements _LigneCotisation {
       prixGie,
       prixCaptrans,
       prixSupplementaire,
-      nomGie);
+      total);
 
   @JsonKey(ignore: true)
   @override
@@ -314,6 +351,8 @@ abstract class _LigneCotisation implements LigneCotisation {
   const factory _LigneCotisation(
       {required final int id,
       required final int nombreDeDepot,
+      final DateTime? dateDebut,
+      final DateTime? dateFin,
       final DateTime? created_at,
       final DateTime? updated_at,
       required final int etatBusId,
@@ -321,7 +360,7 @@ abstract class _LigneCotisation implements LigneCotisation {
       required final int prixGie,
       required final int prixCaptrans,
       final int? prixSupplementaire,
-      required final String nomGie}) = _$_LigneCotisation;
+      final int? total}) = _$_LigneCotisation;
 
   factory _LigneCotisation.fromJson(Map<String, dynamic> json) =
       _$_LigneCotisation.fromJson;
@@ -330,6 +369,10 @@ abstract class _LigneCotisation implements LigneCotisation {
   int get id;
   @override
   int get nombreDeDepot;
+  @override
+  DateTime? get dateDebut;
+  @override
+  DateTime? get dateFin;
   @override
   DateTime? get created_at;
   @override
@@ -345,7 +388,7 @@ abstract class _LigneCotisation implements LigneCotisation {
   @override
   int? get prixSupplementaire;
   @override
-  String get nomGie;
+  int? get total;
   @override
   @JsonKey(ignore: true)
   _$$_LigneCotisationCopyWith<_$_LigneCotisation> get copyWith =>

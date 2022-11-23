@@ -29,7 +29,7 @@ class ReceveurSearchBloc extends Bloc<ReceveurSearchEvent,ReceveurSearchState>{
     }).catchError((error){
       cptTest++;
       if(cptTest>2){
-        emit(state.copyWith(status:ReceveurSearchStatus.done,receveurs: ReceveurData(15).getData(),page: state.page+1,maxPage: 3));
+        emit(state.copyWith(status:ReceveurSearchStatus.done,receveurs: ReceveurData(30).getData(),page: state.page+1,maxPage: 3));
         cptTest=0;
         return;
       }

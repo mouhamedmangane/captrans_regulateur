@@ -1,8 +1,9 @@
 import 'package:captrans_regulateur/bloc/cotisation/addcotisation/add_cotisation_bloc.dart';
 import 'package:captrans_regulateur/bloc/main/app_start_bloc.dart';
 import 'package:captrans_regulateur/bus/search_bus_page.dart';
+import 'package:captrans_regulateur/collect/d%C3%A9tail_collect_page.dart';
 import 'package:captrans_regulateur/cotisation/add_cotisation/add_montant_cotisation_page.dart';
-import 'package:captrans_regulateur/cotisation/add_cotisation/search_bus_by_mat_page.dart';
+import 'package:captrans_regulateur/bus/search_bus_by_mat_page.dart';
 import 'package:captrans_regulateur/cotisation/cotisation_page.dart';
 import 'package:captrans_regulateur/my_app.dart';
 import 'package:captrans_regulateur/receveur/save_receveur_page.dart';
@@ -10,6 +11,8 @@ import 'package:captrans_regulateur/receveur/search_receveur_page.dart';
 import 'package:captrans_regulateur/receveur/select_receveur_page.dart';
 import 'package:captrans_regulateur/repository/bus/bus_dis_repo.dart';
 import 'package:captrans_regulateur/repository/bus/bus_repo.dart';
+import 'package:captrans_regulateur/repository/collect/collect_dis_repo.dart';
+import 'package:captrans_regulateur/repository/collect/collect_repo.dart';
 import 'package:captrans_regulateur/repository/cotisation/cotisation_dis_repo.dart';
 import 'package:captrans_regulateur/repository/cotisation/cotisation_repo.dart';
 import 'package:captrans_regulateur/repository/receveur/receveur_dis_repo.dart';
@@ -53,6 +56,9 @@ class App extends StatelessWidget {
         RepositoryProvider<BusRepo>(
           create:(context)=>BusDisRepo(),
         ),
+        RepositoryProvider<CollectRepo>(
+          create:(context)=>CollectDisRepo(),
+        ),
         RepositoryProvider<ReceveurDisRepo>(
           create:(context)=>ReceveurDisRepo(),
         ),
@@ -79,6 +85,7 @@ class App extends StatelessWidget {
             SaveReceveurPageArg.routeName:(context)=>SaveReceveurPageArg(),
             AddMontantCotisationPage.routeName:(context)=>AddMontantCotisationPage(),
             CotisationPageArgs.routeName:(context) => CotisationPageArgs(),
+            DetailCollectPageArg.routeName:(context) => DetailCollectPageArg()
           },
         ),
       ),

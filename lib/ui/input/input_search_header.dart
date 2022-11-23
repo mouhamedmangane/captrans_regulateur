@@ -6,10 +6,15 @@ class InputSearchHeader extends StatefulWidget {
   final TextEditingController ? controller;
   final Function(String) ?  onChange;
   final String ? hintText;
+  final Color ? backgroundColor;
+  final TextCapitalization textCapitalization;
+
   const InputSearchHeader({
     this.controller,
     this.onChange,
     this.hintText,
+    this.backgroundColor,
+    this.textCapitalization=TextCapitalization.none,
     Key? key
   }) : super(key: key);
 
@@ -20,12 +25,24 @@ class InputSearchHeader extends StatefulWidget {
 class _InputSearchHeaderState extends State<InputSearchHeader> {
 
   bool editing=false;
+  late Color backgroundColor;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    if(widget.backgroundColor!=null)
+      backgroundColor=widget.backgroundColor!;
+    else
+      backgroundColor=Colors.grey.shade300;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return  TextField(
         controller: widget.controller,
         autofocus: true,
+        textCapitalization: widget.textCapitalization,
         onChanged: (text){
           setState(() {
             editing=text.isNotEmpty;
@@ -37,7 +54,7 @@ class _InputSearchHeaderState extends State<InputSearchHeader> {
         decoration: InputDecoration(
           filled: true,
           contentPadding: EdgeInsets.all(30),
-          fillColor: Colors.grey.shade300,
+          fillColor: backgroundColor,
           focusColor: Colors.white,
           border: OutlineInputBorder(
             borderSide: BorderSide.none,

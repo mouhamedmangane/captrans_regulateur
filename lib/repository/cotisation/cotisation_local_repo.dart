@@ -37,4 +37,16 @@ class CotisationLocalRepo extends NplLocalReposiroty implements CotisationRepo{
     throw UnimplementedError();
   }
 
+  @override
+  Future<List<Cotisation>> findByCollectId(int collectId) {
+    // TODO: implement findByCollectId
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Cotisation>> findByBusId(int busId) {
+    // TODO: implement findByBusId
+    throw UnimplementedError();
+  }
+
 }

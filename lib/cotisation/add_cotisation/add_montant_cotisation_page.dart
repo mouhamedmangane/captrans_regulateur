@@ -71,11 +71,10 @@ class _AddMontantCotisationViewState extends State<AddMontantCotisationView> {
             listener: (context,state) {
               if(state.status==AddCotisationStatus.success){
                 print('mus listener');
-
                 Navigator.pushNamedAndRemoveUntil(
                     context,
                     CotisationPageArgs.routeName,
-                    (route) => route.settings!.name == MyHomePage.routeName,
+                        (route) => route.settings!.name == MyHomePage.routeName,
                     arguments: CotisationParam(
                       cotisation:state.cotisation!,
                       mustCompleted: false,

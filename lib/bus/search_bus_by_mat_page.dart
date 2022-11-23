@@ -1,7 +1,7 @@
 
 
 import 'package:captrans_regulateur/bloc/cotisation/addcotisation/add_cotisation_bloc.dart';
-import 'package:captrans_regulateur/bloc/cotisation/addcotisation/search_bus_by_mat_bloc.dart';
+import 'package:captrans_regulateur/bloc/bus/search_by_mat/search_bus_by_mat_bloc.dart';
 import 'package:captrans_regulateur/model/bus.dart';
 import 'package:captrans_regulateur/repository/bus/bus_repo.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +38,7 @@ class SearchBusByMatView extends StatelessWidget {
     return  Scaffold(
       backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
-       title:  Text('Recherche Bus'),
+       title:  Text('Recherche bus par matricule'),
        titleSpacing: 0,
         elevation: 1,
       ),
@@ -48,23 +48,22 @@ class SearchBusByMatView extends StatelessWidget {
               children:[
                 Align(
                   alignment: Alignment.topCenter,
-                  child: Row(
-                      crossAxisAlignment:  CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CircleAvatar(
-                          child: Icon(Icons.bus_alert,size: 40,color: Colors.blue,),
-                          radius: 40,
-                          backgroundColor: Colors.grey.shade300,
-                        ),
-                        SizedBox(width: 2,),
-                        BlocBuilder<SearchBusByMatBloc,SearchBusByMatState>(
-                          buildWhen: (previous,current) => previous.matricule != current.matricule,
-                          builder: (context,state) =>
-                              Text("${state.matricule}",style: TextStyle(fontSize: 32,color: Colors.blue),textAlign: TextAlign.center,),
-                        ),
-                      ],
-                    ),
+                  child: Chip(
+                    padding: EdgeInsets.symmetric(horizontal: 10,vertical: 4),
+                    label: Row(
+                        crossAxisAlignment:  CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.bus_alert,size: 35,color: Colors.blue,),
+                          SizedBox(width: 4,),
+                          BlocBuilder<SearchBusByMatBloc,SearchBusByMatState>(
+                            buildWhen: (previous,current) => previous.matricule != current.matricule,
+                            builder: (context,state) =>
+                                Text("${state.matricule}",style: TextStyle(fontSize: 32,color: Colors.blue),textAlign: TextAlign.center,),
+                          ),
+                        ],
+                      ),
+                  ),
                 ),
                 Align(
                   alignment: Alignment.center,

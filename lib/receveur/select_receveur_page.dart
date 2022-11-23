@@ -1,13 +1,11 @@
 import 'package:captrans_regulateur/bloc/cotisation/addcotisation/add_cotisation_bloc.dart';
 import 'package:captrans_regulateur/bloc/receveur/receveur_recentes_bloc.dart';
-import 'package:captrans_regulateur/bus/bus_resume.dart';
 import 'package:captrans_regulateur/cotisation/add_cotisation/resume_cotisation_view.dart';
 import 'package:captrans_regulateur/model/receveur.dart';
 import 'package:captrans_regulateur/receveur/receveur_habituel_list.dart';
 import 'package:captrans_regulateur/receveur/search_receveur_page.dart';
 import 'package:captrans_regulateur/receveur/select_receveur_param.dart';
 import 'package:captrans_regulateur/repository/receveur/receveur_dis_repo.dart';
-import 'package:captrans_regulateur/ui/button/error_body_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noppal_util/bloc/enum_loadable_state.dart';

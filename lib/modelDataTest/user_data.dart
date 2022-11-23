@@ -18,7 +18,7 @@ class UserData extends GenDataArrayImpl<User>{
     GenId id=GenId();
     GenNomComplet nom=GenNomComplet(taille);
     GenPreNom login=GenPreNom();
-    GenNombre genTel=GenNombre(771234567,779999999);
+    GenNombre genTel=GenNombre(771234567, 779999999);
     GenEtat<String> role=GenEtat(['regulateur','collecteur']);
     GenEtat<String> adresse=GenEtat(['876 Rue 10','87 Pikine maka colonae','273 guédiawaye','87 Fann Hann']);
     return List.generate(taille, (index) => User(

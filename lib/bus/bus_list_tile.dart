@@ -12,16 +12,19 @@ class BusListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(bus.matricule),
-      subtitle: Row(
-        children: [
-          Text('${bus.nomGie}'),
-          Text('${bus.proprietaire!.nom}'),
-        ],
-      ),
+      subtitle: Text('${bus.nomGie} \\ ${bus.proprietaire!.nom} ',softWrap: true),
       trailing: Text('Ligne ${bus.numeroLigne}'),
       leading: CircleAvatar(
         //backgroundImage: ,
-        child: Text('L ${bus.numeroLigne}',textAlign: TextAlign.center,),
+        backgroundColor: (bus.jourEtat! > 0 )?Colors.blue.shade700:Colors.red.shade700,
+        foregroundColor: Colors.white,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text((bus.jourEtat! > 0 )?'+':'-',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold),),
+            Text('1${bus.jourEtat!.abs()}',textAlign: TextAlign.center,),
+          ],
+        ),
         radius: 25,
       ),
       onTap: (){

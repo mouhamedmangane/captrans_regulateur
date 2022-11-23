@@ -9,4 +9,7 @@ abstract class CotisationRepo{
   Future<Cotisation> add(CotisationSave cotisationSave);
   Future<List<Cotisation>> en_cours();
   Future<Cotisation> getComplete(Cotisation cotisation);
+  Future<List<Cotisation>> findByCollectId(int collectId);
+  Future<List<Cotisation>> findByBusId(int busId);
+
 }

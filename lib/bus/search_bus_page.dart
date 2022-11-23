@@ -69,6 +69,8 @@ class _SearchBusViewState extends State<SearchBusView> {
         appBar: AppBar(
           titleSpacing: 0,
           elevation: 2,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          foregroundColor: Colors.black,
           title: BlocBuilder<BusSearchBloc,BusSearchState>(
             builder: (context,state){
               return _searchInput(context) ;
@@ -102,20 +104,18 @@ class _SearchBusViewState extends State<SearchBusView> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children:[
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                Stack(
                     children:<Widget>[
-                      Icon(Icons.person_search_outlined,color:color,size: 80,),
+                      Positioned(child: Icon(Icons.search,color:Colors.blue,size: 40,), right: 8,),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal:8.0,vertical:0),
-                        child:  Text('ou',style: TextStyle(color: color,fontSize: 24),),
+                        padding: const EdgeInsets.only(left: 30.0,right: 30,top: 10),
+                        child: Icon(Icons.directions_bus,color:Colors.blue,size: 80,),
                       ),
-                      Icon(Icons.person_add_outlined,color: color,size: 80,),
+
                     ]
                 ),
                 const SizedBox(height: 15,),
-                Text("Chercher un buss en saisissant son nom ou son numero de téléphone dans la barre de recherche en haut. Si le buss n'existe pas ajouter le an cliquant sur le bouton ajout en haut à droite",
+                Text("Chercher un bus en saisissant sa  matricule  dans la barre de recherche en haut.",
                   style: TextStyle(color: color,fontSize: 16),
                   textAlign: TextAlign.center,
                 ),
@@ -134,7 +134,9 @@ class _SearchBusViewState extends State<SearchBusView> {
       alignment: Alignment.center,
       child: InputSearchHeader(
         controller: _controller,
+        textCapitalization: TextCapitalization.characters,
         hintText: "Rechercher Bus",
+        backgroundColor: Theme.of(context).colorScheme.onBackground,
         onChange: (text){
             if(context.read<BusSearchBloc>().state.search!=text)
               context.read<BusSearchBloc>().add(BusSearchLoad(search: text));

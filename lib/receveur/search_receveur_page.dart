@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noppal_util/ui/bounce/npl_tap_bounce.dart';
 
+import '../ui/input/input_search_header.dart';
+
 class SearchReceveurPageArg extends StatelessWidget {
   static const routeName="/cotisation/search_receveur_arg";
 
@@ -69,6 +71,7 @@ class _SearchReceveurViewState extends State<SearchReceveurView> {
       appBar: AppBar(
         titleSpacing: 0,
         elevation: 2,
+
         title: BlocBuilder<ReceveurSearchBloc,ReceveurSearchState>(
           builder: (context,state){
             return _searchInput(context) ;
@@ -83,7 +86,7 @@ class _SearchReceveurViewState extends State<SearchReceveurView> {
                     arguments: _paramSaveReceveur(),
                 );
               },
-              icon: Icon(Icons.person_add))
+              icon: Icon(Icons.person_add),)
         ],
       ),
       body: BlocBuilder<ReceveurSearchBloc,ReceveurSearchState>(
@@ -146,26 +149,14 @@ class _SearchReceveurViewState extends State<SearchReceveurView> {
     return Container(
       height: 40,
       alignment: Alignment.center,
-      child: TextField(
+      child: InputSearchHeader(
+        hintText: 'Recherche receveur',
         controller: _controller,
-        autofocus: true,
-
-        onChanged: (text){
+        onChange: (text){
           if(context.read<ReceveurSearchBloc>().state.search!=text)
             context.read<ReceveurSearchBloc>().add(ReceveurSearchLoad(search: text));
         },
-        textAlignVertical: TextAlignVertical.bottom,
-        decoration: InputDecoration(
-          filled: true,
-          contentPadding: EdgeInsets.all(30),
-          fillColor: Colors.grey.shade300,
-          focusColor: Colors.white,
-          border: OutlineInputBorder(
-            borderSide: BorderSide.none,
-            borderRadius: BorderRadius.circular(20),
-          ),
-          hintText: 'Recherche receveur',
-          ),
+
         ),
       );
 

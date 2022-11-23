@@ -34,9 +34,11 @@ class BusData extends GenDataArrayImpl<Bus>{
         proprietaireId: numroLigne.random(),
         nomGie:nomGie.random() ,
         jourEtat: m_etat,
+        marque: 'Toyota',
         montantEtat: montantEtat.random(),
         lastDateCotisation: lasteDate.next(),
         proprietaire: proprietaire.next(),
+        created_at: DateTime.now()
       );
     });
   }

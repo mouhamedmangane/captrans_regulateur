@@ -9,21 +9,27 @@ class LigneCotisationData extends GenDataArrayImpl<LigneCotisation>{
 
   @override
   List<LigneCotisation> getData() {
+    GenNombre nombre=GenNombre(1,100,pas: 3);
+    GenEtat<int> prixCaptranse=GenEtat([1200,1300,1500,1750,1900,2000]);
+    GenEtat<int> prixGie=GenEtat([1000,700,500,750,900,800]);;
+    GenNombre prixSupplementaire=GenNombre(500,10000,pas: 500);
+    GenEtat<String> nomGie = GenEtat(['Sope Nabi','Noumbélane','Wa keur sering diw']);
+
     return List.generate(taille, (index) {
-      GenNombre nombre=GenNombre(1,100,pas: 3);
-      GenEtat<int> prixCaptranse=GenEtat([1200,1300,1500,1750,1900,2000]);
-      GenEtat<int> prixGie=GenEtat([1000,700,500,750,900,800]);;
-      GenNombre prixSupplementaire=GenNombre(500,10000,pas: 500);
-      GenEtat<String> nomGie = GenEtat(['Sope Nabi','Noumbélane','Wa keur sering diw']);
-      return LigneCotisation(
+      int pCap=prixCaptranse.random();
+      int pGie=prixGie.random();
+      int pSup=prixSupplementaire.random();
+         return LigneCotisation(
         id: index,
         nombreDeDepot: nombre.random(),
         etatBusId: nombre.random(),
         cotisationId:  nombre.random(),
-        prixGie: prixGie.random(),
-        prixCaptrans: prixCaptranse.random(),
-        nomGie: nomGie.random(),
-        prixSupplementaire: prixSupplementaire.random(),
+        prixGie: pGie,
+        prixCaptrans: pCap,
+        prixSupplementaire: pSup,
+        total: pCap+pSup+pGie,
+         dateDebut: DateTime.now(),
+         dateFin: DateTime.now()
       );
     });
   }

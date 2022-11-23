@@ -48,7 +48,7 @@ class AddCotisationBloc extends Bloc<AddCotisationEvent,AddCotisationState>{
     }).catchError((error){
       print('cotisation catch');
       aa++;
-      if(aa>3){
+      if(aa>1){
         emit(state.copyWith(status:AddCotisationStatus.success,cotisation:CotisationData(2).next()));
 
       }
