@@ -1,3 +1,4 @@
+import 'package:captrans_regulateur/app_const.dart';
 import 'package:captrans_regulateur/model/collect.dart';
 import 'package:captrans_regulateur/model/cotisation.dart';
 import 'package:captrans_regulateur/modelDataTest/cotisation_data.dart';
@@ -43,11 +44,8 @@ class CollectDetailBloc extends Bloc<CollectDetailEvent,CollectDetailState>{
       }
       else{
         String message;
-        if(error is NplTreatRequestException){
-          message = error.message;
-        }else{
-          message = error.toString();
-        }
+        if(error is NplTreatRequestException) message=error.message;
+        else message =  AppConst.no_connexion;
         add(CollectDetailUpdate(status: CollectDetailStatus.error,message: message));
 
       }

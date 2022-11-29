@@ -14,6 +14,8 @@ class User with _$User{
     required String nom,
     String ? adresse,
     required String login,
+    String ? token,
+    String ? code,
     String ? tel,
     String ? email,
     String ? profil,

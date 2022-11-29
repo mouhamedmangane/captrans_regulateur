@@ -7,6 +7,8 @@ import 'package:captrans_regulateur/repository/cotisation/cotisation_repo.dart';
 import 'package:noppal_util/bloc/simple_loadable_state.dart';
 import 'package:noppal_util/repository/npl_treat_request_exception.dart';
 
+import '../../../app_const.dart';
+
 class BusDetailCotisationBloc extends Cubit<SimpleLoadableState<List<Cotisation>>>{
   CotisationRepo _cotisationRepo;
   int cptTest=0;
@@ -25,11 +27,8 @@ class BusDetailCotisationBloc extends Cubit<SimpleLoadableState<List<Cotisation>
       }
       else{
         String message="";
-        if(error is NplTreatRequestException){
-          message=error.message;
-        }
-        else
-          message=error.toString();
+        if(error is NplTreatRequestException) message=error.message;
+        else message =  AppConst.no_connexion;
         emit(SimpleLoadableState.error(message));
       }
 

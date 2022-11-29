@@ -1,6 +1,7 @@
 
 import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
+import 'package:captrans_regulateur/app_const.dart';
 import 'package:captrans_regulateur/model/receveur.dart';
 import 'package:captrans_regulateur/modelDataTest/receveur_data.dart';
 import 'package:captrans_regulateur/repository/receveur/receveur_dis_repo.dart';
@@ -40,7 +41,7 @@ class ReceveurSearchBloc extends Bloc<ReceveurSearchEvent,ReceveurSearchState>{
 
       String message;
       if(error is NplTreatRequestException) message=error.message;
-      else message= error.toString();
+      else message =  AppConst.no_connexion;
       emit(state.copyWith(status:ReceveurSearchStatus.error,page:0,message: message,receveurs: []));
       print('non');
     });
@@ -54,20 +55,14 @@ class ReceveurSearchBloc extends Bloc<ReceveurSearchEvent,ReceveurSearchState>{
     }).catchError((error){
       cptTest1++;
 
-      if(cptTest1>4){
-        state.receveurs.addAll(ReceveurData(5).getData());
-        emit(state.copyWith(status:ReceveurSearchStatus.errorAdd,page: state.page+1,message: 'test ttttt'));
-        return;
-      }
-      else{
-        state.receveurs.addAll(ReceveurData(5).getData());
+      if(cptTest1>1){
+        state.receveurs.addAll(ReceveurData(10).getData());
         emit(state.copyWith(status:ReceveurSearchStatus.done,page: state.page+1,maxPage: 3));
         return;
       }
-      String message;
-      if(error is NplTreatRequestException) message=error.message;
-      else message= error.toString();
-      emit(state.copyWith(status:ReceveurSearchStatus.errorAdd,message: message,));
+      state.receveurs.addAll(ReceveurData(10).getData());
+      emit(state.copyWith(status:ReceveurSearchStatus.errorAdd,page: state.page+1,message:AppConst.no_connexion));
+      return;
     });
   }
 

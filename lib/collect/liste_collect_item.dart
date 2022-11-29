@@ -20,12 +20,12 @@ class ListeCollectItem extends StatelessWidget {
       },
       leading: CircleAvatar(
         backgroundImage: Image.asset("asset/user/${collect.collecteur!.id}.jpeg").image,
-        radius: 25,
+        radius: 23,
 
       ),
       subtitle: Text(NplDateFormat.simpleFormat(collect.created_at!)),
-      trailing: Text("${NumberHelper.format(collect.montant)!} F",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
-      title: Text(collect.collecteur!.nom!) ,
+      trailing: Text("${NumberHelper.format(collect.montant)} F",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
+      title: Text(collect.collecteur!.nom) ,
     );
   }
 }

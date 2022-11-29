@@ -11,17 +11,10 @@ class UserDisRepo extends DisRepo{
 
   Future<User> connexionRegulateur(ConnexionDto connexionDto){
     return postRequest('connexion/regulateur',
-        connexionDto.,
+        connexionDto.toJson(),
             (p0) => treatRequest.make(p0)
     );
   }
 
-  Future<User> deverouillage(STring password){
-
-  }
-
-  Future<User> savelocal(User user){
-
-  }
 
 }

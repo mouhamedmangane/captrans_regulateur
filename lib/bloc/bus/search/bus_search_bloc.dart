@@ -3,10 +3,11 @@ import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:captrans_regulateur/model/bus.dart';
 import 'package:captrans_regulateur/modelDataTest/bus_data.dart';
-import 'package:captrans_regulateur/repository/bus/bus_dis_repo.dart';
 import 'package:captrans_regulateur/repository/bus/bus_repo.dart';
 import 'package:equatable/equatable.dart';
 import 'package:noppal_util/repository/npl_treat_request_exception.dart';
+
+import '../../../app_const.dart';
 
 part 'bus_search_event.dart';
 part 'bus_search_state.dart';
@@ -42,7 +43,7 @@ class BusSearchBloc extends Bloc<BusSearchEvent,BusSearchState>{
 
       String message;
       if(error is NplTreatRequestException) message=error.message;
-      else message= error.toString();
+      else message =  AppConst.no_connexion;
       emit(state.copyWith(status:BusSearchStatus.error,page:0,message: message,buss: []));
       print('non');
     });
@@ -66,10 +67,6 @@ class BusSearchBloc extends Bloc<BusSearchEvent,BusSearchState>{
         emit(state.copyWith(status:BusSearchStatus.done,page: state.page+1,maxPage: 3));
         return;
       }
-      String message;
-      if(error is NplTreatRequestException) message=error.message;
-      else message= error.toString();
-      emit(state.copyWith(status:BusSearchStatus.errorAdd,message: message,));
     });
   }
 

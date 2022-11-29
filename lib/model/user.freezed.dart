@@ -24,6 +24,8 @@ mixin _$User {
   String get nom => throw _privateConstructorUsedError;
   String? get adresse => throw _privateConstructorUsedError;
   String get login => throw _privateConstructorUsedError;
+  String? get token => throw _privateConstructorUsedError;
+  String? get code => throw _privateConstructorUsedError;
   String? get tel => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   String? get profil => throw _privateConstructorUsedError;
@@ -45,6 +47,8 @@ abstract class $UserCopyWith<$Res> {
       String nom,
       String? adresse,
       String login,
+      String? token,
+      String? code,
       String? tel,
       String? email,
       String? profil,
@@ -69,6 +73,8 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? nom = null,
     Object? adresse = freezed,
     Object? login = null,
+    Object? token = freezed,
+    Object? code = freezed,
     Object? tel = freezed,
     Object? email = freezed,
     Object? profil = freezed,
@@ -92,6 +98,14 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.login
           : login // ignore: cast_nullable_to_non_nullable
               as String,
+      token: freezed == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String?,
+      code: freezed == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String?,
       tel: freezed == tel
           ? _value.tel
           : tel // ignore: cast_nullable_to_non_nullable
@@ -127,6 +141,8 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String nom,
       String? adresse,
       String login,
+      String? token,
+      String? code,
       String? tel,
       String? email,
       String? profil,
@@ -147,6 +163,8 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
     Object? nom = null,
     Object? adresse = freezed,
     Object? login = null,
+    Object? token = freezed,
+    Object? code = freezed,
     Object? tel = freezed,
     Object? email = freezed,
     Object? profil = freezed,
@@ -170,6 +188,14 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
           ? _value.login
           : login // ignore: cast_nullable_to_non_nullable
               as String,
+      token: freezed == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String?,
+      code: freezed == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String?,
       tel: freezed == tel
           ? _value.tel
           : tel // ignore: cast_nullable_to_non_nullable
@@ -202,6 +228,8 @@ class _$_User implements _User {
       required this.nom,
       this.adresse,
       required this.login,
+      this.token,
+      this.code,
       this.tel,
       this.email,
       this.profil,
@@ -219,6 +247,10 @@ class _$_User implements _User {
   @override
   final String login;
   @override
+  final String? token;
+  @override
+  final String? code;
+  @override
   final String? tel;
   @override
   final String? email;
@@ -231,7 +263,7 @@ class _$_User implements _User {
 
   @override
   String toString() {
-    return 'User(id: $id, nom: $nom, adresse: $adresse, login: $login, tel: $tel, email: $email, profil: $profil, cni: $cni, foncion: $foncion)';
+    return 'User(id: $id, nom: $nom, adresse: $adresse, login: $login, token: $token, code: $code, tel: $tel, email: $email, profil: $profil, cni: $cni, foncion: $foncion)';
   }
 
   @override
@@ -243,6 +275,8 @@ class _$_User implements _User {
             (identical(other.nom, nom) || other.nom == nom) &&
             (identical(other.adresse, adresse) || other.adresse == adresse) &&
             (identical(other.login, login) || other.login == login) &&
+            (identical(other.token, token) || other.token == token) &&
+            (identical(other.code, code) || other.code == code) &&
             (identical(other.tel, tel) || other.tel == tel) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.profil, profil) || other.profil == profil) &&
@@ -252,8 +286,8 @@ class _$_User implements _User {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, nom, adresse, login, tel, email, profil, cni, foncion);
+  int get hashCode => Object.hash(runtimeType, id, nom, adresse, login, token,
+      code, tel, email, profil, cni, foncion);
 
   @JsonKey(ignore: true)
   @override
@@ -275,6 +309,8 @@ abstract class _User implements User {
       required final String nom,
       final String? adresse,
       required final String login,
+      final String? token,
+      final String? code,
       final String? tel,
       final String? email,
       final String? profil,
@@ -291,6 +327,10 @@ abstract class _User implements User {
   String? get adresse;
   @override
   String get login;
+  @override
+  String? get token;
+  @override
+  String? get code;
   @override
   String? get tel;
   @override

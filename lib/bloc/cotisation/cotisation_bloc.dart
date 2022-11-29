@@ -1,6 +1,7 @@
 
 
 import 'package:bloc/bloc.dart';
+import 'package:captrans_regulateur/app_const.dart';
 import 'package:captrans_regulateur/model/cotisation.dart';
 import 'package:captrans_regulateur/repository/cotisation/cotisation_repo.dart';
 import 'package:noppal_util/bloc/simple_loadable_state.dart';
@@ -28,12 +29,8 @@ class CotisationBloc extends Cubit<SimpleLoadableState<Cotisation>>{
         emit(SimpleLoadableState.done(value));
       }).catchError((error){
         String message;
-        if(error is NplTreatRequestException){
-          message=error.message;
-        }
-        else{
-          message="La requete n'a pas abouti";
-        }
+        if(error is NplTreatRequestException) message=error.message;
+        else message =  AppConst.no_connexion;
         emit(SimpleLoadableState.error(message));
       });
     }

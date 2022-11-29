@@ -1,4 +1,5 @@
 import 'package:captrans_regulateur/bloc/collect/collect_list_bloc.dart';
+import 'package:captrans_regulateur/collect/collect_qr_code_page.dart';
 import 'package:captrans_regulateur/collect/d%C3%A9tail_collect_page.dart';
 import 'package:captrans_regulateur/collect/liste_collect.dart';
 import 'package:captrans_regulateur/model/collect.dart';
@@ -26,6 +27,7 @@ class CollectBody extends StatelessWidget {
             actions: [
               IconButton(
                   onPressed: (){
+                    Navigator.pushNamed(context, CollectQrCodePage.routeName);
                   },
                   icon: Icon(Icons.qr_code_outlined,color: Colors.blue)
               ),

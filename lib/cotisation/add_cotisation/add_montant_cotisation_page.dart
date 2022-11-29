@@ -1,4 +1,6 @@
 import 'package:captrans_regulateur/bloc/cotisation/addcotisation/add_cotisation_bloc.dart';
+import 'package:captrans_regulateur/bloc/cotisation/cotisation_en_cours_bloc.dart';
+import 'package:captrans_regulateur/bloc/cotisation/total_cotisation_bloc.dart';
 import 'package:captrans_regulateur/cotisation/add_cotisation/resume_cotisation_view.dart';
 import 'package:captrans_regulateur/cotisation/cotisation_page.dart';
 import 'package:captrans_regulateur/my_app.dart';
@@ -68,13 +70,18 @@ class _AddMontantCotisationViewState extends State<AddMontantCotisationView> {
             borderRadius: BorderRadius.circular(20),
           ),
           child: BlocListener<AddCotisationBloc,AddCotisationState>(
-            listener: (context,state) {
+            listener: (context,state) async{
               if(state.status==AddCotisationStatus.success){
+                CotisationEnCoursBloc cotisationEnCoursBloc=context.read<CotisationEnCoursBloc>();
+                await cotisationEnCoursBloc.addNewCotisastion(state.cotisation!);
+
+                await context.read<TotalCotisationBloc>().reloadload(cotisationEnCoursBloc.state.value!);
+
                 print('mus listener');
                 Navigator.pushNamedAndRemoveUntil(
                     context,
                     CotisationPageArgs.routeName,
-                        (route) => route.settings!.name == MyHomePage.routeName,
+                        (route) => route.settings.name == MyHomePage.routeName,
                     arguments: CotisationParam(
                       cotisation:state.cotisation!,
                       mustCompleted: false,
@@ -89,7 +96,7 @@ class _AddMontantCotisationViewState extends State<AddMontantCotisationView> {
                 ),
                 onPressed:(){
                   _formKey.currentState!.validate();
-                  if( (_controller.text ??'').replaceAll(" ", '').isNotEmpty){
+                  if( (_controller.text).replaceAll(" ", '').isNotEmpty){
                     print(_controller.text.trim());
                     int montant = int.parse(_controller.text.replaceAll(' ', '')).toInt();
                     print('test');
@@ -118,7 +125,7 @@ class _AddMontantCotisationViewState extends State<AddMontantCotisationView> {
             controller: _controller ,
             onChanged: (txt){
               print('test');
-              print((txt ??"").replaceAll(' ', ''));
+              print((txt).replaceAll(' ', ''));
             },
             inputFormatters: [
               FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),

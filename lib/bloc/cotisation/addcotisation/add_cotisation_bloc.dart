@@ -1,6 +1,7 @@
 
 
 import 'package:bloc/bloc.dart';
+import 'package:captrans_regulateur/app_const.dart';
 import 'package:captrans_regulateur/model/bus.dart';
 import 'package:captrans_regulateur/model/cotisation.dart';
 import 'package:captrans_regulateur/model/receveur.dart';
@@ -49,10 +50,16 @@ class AddCotisationBloc extends Bloc<AddCotisationEvent,AddCotisationState>{
       print('cotisation catch');
       aa++;
       if(aa>1){
-        emit(state.copyWith(status:AddCotisationStatus.success,cotisation:CotisationData(2).next()));
+        Cotisation cotisationL=CotisationData(2).next();
+        Cotisation cotisation=cotisationL.copyWith(
+          receveur: state.receveur,
+          montant: event.montant,
+          montantCotiser: event.montant,
+        );
 
+        emit(state.copyWith(status:AddCotisationStatus.success,cotisation:cotisation));
       }
-      emit(state.copyWith(status:AddCotisationStatus.failure,message: error.toString()));
+      emit(state.copyWith(status:AddCotisationStatus.failure,message:AppConst.no_connexion));
     });
   }
 

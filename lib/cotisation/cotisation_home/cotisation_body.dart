@@ -1,7 +1,5 @@
 import 'dart:math';
 
-import 'package:captrans_regulateur/appbar/my_sliver_app.dart';
-import 'package:captrans_regulateur/bloc/cotisation/addcotisation/add_cotisation_bloc.dart';
 import 'package:captrans_regulateur/bloc/cotisation/cotisation_en_cours_bloc.dart';
 import 'package:captrans_regulateur/bloc/cotisation/total_cotisation_bloc.dart';
 import 'package:captrans_regulateur/bus/search_bus_page.dart';
@@ -9,10 +7,9 @@ import 'package:captrans_regulateur/bus/search_bus_param.dart';
 import 'package:captrans_regulateur/bus/search_bus_by_mat_page.dart';
 import 'package:captrans_regulateur/cotisation/cotisation_home/total_cotisation_card.dart';
 import 'package:captrans_regulateur/cotisation/cotisation_page.dart';
-import 'package:captrans_regulateur/cotisation/liste_cotisation.dart';
+import 'package:captrans_regulateur/cotisation/liste_cotisation_en_cours.dart';
 import 'package:captrans_regulateur/model/bus.dart';
 import 'package:captrans_regulateur/modelDataTest/receveur_data.dart';
-import 'package:captrans_regulateur/my_app.dart';
 import 'package:captrans_regulateur/receveur/select_receveur_page.dart';
 import 'package:captrans_regulateur/receveur/select_receveur_param.dart';
 import 'package:captrans_regulateur/util_app/titre/titre_1.dart';
@@ -25,6 +22,7 @@ import 'package:noppal_util/ui/croquis/card_croquis.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 
+import '../../model/cotisation.dart';
 import '../../ui/button/button_h_card.dart';
 
 class CotisationBody extends StatelessWidget {
@@ -33,81 +31,75 @@ class CotisationBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<TotalCotisationBloc>(
-          create: (context) => TotalCotisationBloc(SimpleLoadableState(value: 0,state: EnumLoadableState.INIT))..load(),
-        ),
-        BlocProvider<CotisationEnCoursBloc>(
-          create: (context) => CotisationEnCoursBloc(SimpleLoadableState.init())..load(),
-        ),
-      ],
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Cotisations',),
-          elevation: 0,
-          scrolledUnderElevation: 1,
-          backgroundColor: Colors.grey.shade50,
-          foregroundColor: Colors.black,
-        ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-          child: CustomScrollView(
-            slivers: [
-              //MySliverApp("Cotisations"),
-              SliverToBoxAdapter(
-                    child:BlocBuilder<TotalCotisationBloc,SimpleLoadableState<int>>(
-                      builder: (context,state) {
-                        return SelectWidgetByState.select(
-                          state.state,
-                          {
-                            EnumLoadableState.DONE:TotalCotisationCard(),
-                          },
-                          parDefaut: CardCroquis(
-                            width: double.infinity,
-                            height: 127,
-                            borderRadius: BorderRadius.circular(20),
-                            backgroundColor: Colors.grey.shade300,
-                          )
-                        );
-                      }
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Cotisations',),
+        elevation: 0,
+        scrolledUnderElevation: 1,
+        backgroundColor: Colors.grey.shade50,
+        foregroundColor: Colors.black,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+        child: CustomScrollView(
+          slivers: [
+            //MySliverApp("Cotisations"),
+            SliverToBoxAdapter(
+                  child:BlocBuilder<TotalCotisationBloc,SimpleLoadableState<int>>(
+                    builder: (context,state) {
+                      return SelectWidgetByState.select(
+                        state.state,
+                        {
+                          EnumLoadableState.DONE:TotalCotisationCard(),
+                        },
+                        parDefaut: CardCroquis(
+                          width: double.infinity,
+                          height: 127,
+                          borderRadius: BorderRadius.circular(20),
+                          backgroundColor: Colors.grey.shade300,
+                        )
+                      );
+                    }
+                  )
+            ),
+
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: AddCotisationBar(),
+              ),
+            ),
+
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20,bottom: 5),
+                child:  BlocBuilder<CotisationEnCoursBloc,SimpleLoadableState<List<Cotisation>>>(
+                  builder: (context,state) {
+                    return Titre1(' En cours ( ${(state.value!=null? state.value!.length :'...')} )',color: Colors.grey.shade700,);
+                  }
+                ),
+              ),
+            ),
+
+            // ListCroquisSliver(4,
+            //   backgroundColor: Colors.grey.shade300,
+            //   shimmerDuration: 1000,
+            // ),
+            ListeCotisationEnCours(
+              onTap: (context,cotisation){
+                Navigator.pushNamed(
+                    context,
+                    CotisationPageArgs.routeName,
+                    arguments: CotisationParam(
+                      cotisation:cotisation!,
+                      mustCompleted: false,
                     )
-              ),
-
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: AddCotisationBar(),
-                ),
-              ),
-
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 20,bottom: 5),
-                  child: Titre1(' En cours ( 10 )',color: Colors.grey.shade700,),
-                ),
-              ),
-
-              // ListCroquisSliver(4,
-              //   backgroundColor: Colors.grey.shade300,
-              //   shimmerDuration: 1000,
-              // ),
-              ListeCotisation(
-                onTap: (context,cotisation){
-                  Navigator.pushNamed(
-                      context,
-                      CotisationPageArgs.routeName,
-                      arguments: CotisationParam(
-                        cotisation:cotisation!,
-                        mustCompleted: false,
-                      )
-                  );
-                },
-              ),
+                );
+              },
+            ),
 
 
-            ],
-          ),
+          ],
         ),
       ),
     );
@@ -163,10 +155,6 @@ class AddCotisationBar extends StatelessWidget {
                               arguments:_paramSearch(matricule,canResacn: true)
                           );
                         }
-                        else{
-                          Navigator.pop(context);
-                        }
-
                       },
                     )
           ),

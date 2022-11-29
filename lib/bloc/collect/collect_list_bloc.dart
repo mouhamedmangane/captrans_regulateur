@@ -20,7 +20,7 @@ class CollectListBloc extends Cubit<SimpleLoadableState<List<Collect>>>{
     }).catchError((error){
       tt++;
       if(tt>1){
-        emit(SimpleLoadableState.done(CollectData(20).getData()));
+        emit(SimpleLoadableState.done(CollectData(5).getData()));
         return;
       }
       String message;

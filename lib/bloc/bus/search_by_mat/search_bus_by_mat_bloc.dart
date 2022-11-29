@@ -8,6 +8,8 @@ import 'package:captrans_regulateur/repository/bus/bus_repo.dart';
 import 'package:equatable/equatable.dart';
 import 'package:noppal_util/repository/npl_treat_request_exception.dart';
 
+import '../../../app_const.dart';
+
 part 'search_bus_by_mat_event.dart';
 
 part 'search_bus_by_mat_state.dart';
@@ -34,7 +36,7 @@ class SearchBusByMatBloc extends Bloc<SearchBusByMatEvent,SearchBusByMatState>{
         add(SearchBusByMatFailled(error.message,hasConnexion: true));
       }
       else{
-        add(SearchBusByMatFailled("Le serveur est inaccessible, veillez verifier votre connexion"));
+        add(SearchBusByMatFailled(AppConst.no_connexion));
 
       };
     });

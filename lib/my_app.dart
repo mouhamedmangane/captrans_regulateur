@@ -1,6 +1,7 @@
 import 'package:captrans_regulateur/bloc/home_cubit.dart';
 import 'package:captrans_regulateur/bus/bus_body.dart';
 import 'package:captrans_regulateur/collect/collect_body.dart';
+import 'package:captrans_regulateur/connexion/profil_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -29,7 +30,7 @@ class MyHomeView extends StatelessWidget {
       backgroundColor: Colors.grey.shade200,
       body: IndexedStack(
         index: selectedTab.index ,
-        children: const [CotisationBody(),CollectBody(),BusBody()],
+        children: const [CotisationBody(),CollectBody(),BusBody(),ProfilBody()],
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

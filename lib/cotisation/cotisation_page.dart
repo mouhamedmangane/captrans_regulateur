@@ -1,13 +1,9 @@
 
 
 import 'package:captrans_regulateur/bloc/cotisation/cotisation_bloc.dart';
-import 'package:captrans_regulateur/model/bus.dart';
 import 'package:captrans_regulateur/model/ligne_cotisation.dart';
-import 'package:captrans_regulateur/model/receveur.dart';
 import 'package:captrans_regulateur/receveur/receveur_list_tile.dart';
 import 'package:captrans_regulateur/repository/cotisation/cotisation_repo.dart';
-import 'package:captrans_regulateur/ui/button/error_body_view.dart';
-import 'package:captrans_regulateur/ui/listitem/MyDivider.dart';
 import 'package:captrans_regulateur/ui/listitem/cle_valeur_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -126,7 +122,7 @@ class CotisationView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _cotisationEntete(cotisation),
-          SizedBox(height: 10,),
+          SizedBox(height: 5,),
           _ligneCotisation(context,cotisation.ligneCotisations!),
           SizedBox(height: 30,),
 
@@ -139,7 +135,7 @@ class CotisationView extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top:8.0),
+            padding: const EdgeInsets.only(top:20.0),
             child: ListTile(
               title:Text('${NumberHelper.format(cotisation.montant)} FCFA',style: TextStyle(fontSize: 29,fontWeight: FontWeight.bold),) ,
               subtitle: Text('Montant cotisation'),
@@ -217,15 +213,12 @@ class CotisationView extends StatelessWidget {
   }
   
   Widget _cotisationEntete(Cotisation cotisation){
-    TextStyle style=TextStyle(color: Colors.black);
-    TextStyle style2=TextStyle(color: Colors.grey);
     return Column(
       children: [
-        SizedBox(height: 10,),
         _montant(cotisation),
-        SizedBox(height: 10,),
+        SizedBox(height: 5,),
         _bus(cotisation),
-        SizedBox(height: 10,),
+        SizedBox(height: 5,),
         _receveur(cotisation),
 
 
@@ -287,11 +280,11 @@ class CotisationView extends StatelessWidget {
             //mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Chip(label:Text('P.Cap : ${NumberHelper.format(ligneCotisation.prixCaptrans!)}',style: style,)),
+              Chip(label:Text('P.Cap : ${NumberHelper.format(ligneCotisation.prixCaptrans)}',style: style,)),
               SizedBox(width: 5,),
-              Chip(label :Text('P.Gie : ${NumberHelper.format(ligneCotisation.prixGie!)}',style: style,)),
+              Chip(label :Text('P.Gie : ${NumberHelper.format(ligneCotisation.prixGie)}',style: style,)),
               SizedBox(width: 5,),
-              Chip(label: Text('P.Sup : ${NumberHelper.format(ligneCotisation.prixCaptrans!)}',style: style,)),
+              Chip(label: Text('P.Sup : ${NumberHelper.format(ligneCotisation.prixCaptrans)}',style: style,)),
             ],
           ),
         ],
