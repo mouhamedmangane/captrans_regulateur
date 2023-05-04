@@ -13,7 +13,6 @@ class LigneCotisationData extends GenDataArrayImpl<LigneCotisation>{
     GenEtat<int> prixCaptranse=GenEtat([1200,1300,1500,1750,1900,2000]);
     GenEtat<int> prixGie=GenEtat([1000,700,500,750,900,800]);;
     GenNombre prixSupplementaire=GenNombre(500,10000,pas: 500);
-    GenEtat<String> nomGie = GenEtat(['Sope Nabi','Noumbélane','Wa keur sering diw']);
 
     return List.generate(taille, (index) {
       int pCap=prixCaptranse.random();

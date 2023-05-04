@@ -6,7 +6,7 @@ import 'package:captrans_regulateur/modelDataTest/bus_data.dart';
 import 'package:flutter/material.dart';
 
 class ListeBus extends StatelessWidget {
-  List<Bus> buss=BusData(10).getData();
+  final List<Bus> buss=BusData(10).getData();
   ListeBus({Key? key}) : super(key: key);
 
   @override

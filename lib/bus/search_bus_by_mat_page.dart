@@ -116,7 +116,9 @@ class SearchBusByMatView extends StatelessWidget {
                               )
                           )
                       ),
-                      onPressed:(){
+                      onPressed:()async{
+
+
                       },
                       child: Row(
                         children: [
@@ -140,7 +142,7 @@ class SearchBusByMatView extends StatelessWidget {
                     },
                     child: Row(
                       children: [
-                        Icon(Icons.replay),
+                        const Icon(Icons.replay),
                         Text(" Réessayer"),
                       ],
                     ),

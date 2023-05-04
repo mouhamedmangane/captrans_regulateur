@@ -1,15 +1,11 @@
 // ignore: file_names
 import 'package:captrans_regulateur/model/bus.dart';
-import 'package:captrans_regulateur/model/proprietaire.dart';
 import 'package:captrans_regulateur/modelDataTest/nom_gie_data.dart';
 import 'package:captrans_regulateur/modelDataTest/proprietaire_data.dart';
 import 'package:noppal_util/model/gen_data_array_impl.dart';
 import 'package:noppal_util/model/gen_date_time.dart';
 import 'package:noppal_util/model/gen_etat.dart';
-import 'package:noppal_util/model/gen_id.dart';
 import 'package:noppal_util/model/gen_mat_auto.dart';
-import 'package:noppal_util/model/gen_nom.dart';
-import 'package:noppal_util/model/gen_nom_complet.dart';
 import 'package:noppal_util/model/gen_nombre.dart';
 class BusData extends GenDataArrayImpl<Bus>{
   int taille;
@@ -30,7 +26,7 @@ class BusData extends GenDataArrayImpl<Bus>{
         id: index,
         matricule: matricule.next(),
         compte: m_etat*compte.next(),
-        numeroLigne: numroLigne.random(),
+        numeroLigne: numroLigne.random().toString(),
         proprietaireId: numroLigne.random(),
         nomGie:nomGie.random() ,
         jourEtat: m_etat,
@@ -38,7 +34,7 @@ class BusData extends GenDataArrayImpl<Bus>{
         montantEtat: montantEtat.random(),
         lastDateCotisation: lasteDate.next(),
         proprietaire: proprietaire.next(),
-        created_at: DateTime.now()
+        createdAt: DateTime.now()
       );
     });
   }

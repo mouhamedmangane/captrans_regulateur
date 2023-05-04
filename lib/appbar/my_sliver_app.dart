@@ -1,5 +1,3 @@
-import 'package:captrans_regulateur/appbar/myappbar.dart';
-import 'package:captrans_regulateur/user/user_avatar_button.dart';
 import 'package:flutter/material.dart';
 
 class MySliverApp extends StatelessWidget {

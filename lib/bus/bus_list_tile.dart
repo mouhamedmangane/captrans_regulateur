@@ -12,20 +12,25 @@ class BusListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(bus.matricule),
+      minVerticalPadding: 10,
       subtitle: Text('${bus.nomGie} \\ ${bus.proprietaire!.nom} ',softWrap: true),
       trailing: Text('Ligne ${bus.numeroLigne}'),
-      leading: CircleAvatar(
+      leading:Container(
+        width: 50,
+        height: 50,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: (bus.jourEtat! >= 0 )?Colors.blue.shade700:Colors.red.shade700,
+          borderRadius: BorderRadius.circular(10)
+        ),
         //backgroundImage: ,
-        backgroundColor: (bus.jourEtat! > 0 )?Colors.blue.shade700:Colors.red.shade700,
-        foregroundColor: Colors.white,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text((bus.jourEtat! > 0 )?'+':'-',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold),),
-            Text('1${bus.jourEtat!.abs()}',textAlign: TextAlign.center,),
+            Text((bus.jourEtat! >= 0 )?'+':'-',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold,color: Colors.white),),
+            Text('${bus.jourEtat!.abs()}',style:TextStyle(color: Colors.white),textAlign: TextAlign.center,),
           ],
         ),
-        radius: 25,
       ),
       onTap: (){
         if(onPressed != null)

@@ -218,7 +218,7 @@ class _SearchReceveurViewState extends State<SearchReceveurView> {
           return ReceveurListTile(
             receveur: state.receveurs[index],
             onPressed: (context,receveur){
-              widget.onSelect!(context,receveur);
+              widget.onSelect(context,receveur);
             },
           );
         }

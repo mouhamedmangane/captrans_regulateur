@@ -1,9 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.noppal.captrans_regulateur">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
    <application
         android:label="captrans_regulateur"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
+            android:showWhenLocked="true"
+            android:turnScreenOn="true"
+            android:exported="true"
             android:name=".MainActivity"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"

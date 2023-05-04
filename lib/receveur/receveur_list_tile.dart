@@ -1,6 +1,7 @@
 
 
 import 'package:captrans_regulateur/model/receveur.dart';
+import 'package:captrans_regulateur/ui/avatar/circle_cached_avatar.dart';
 import 'package:flutter/material.dart';
 
 class ReceveurListTile extends StatelessWidget {
@@ -13,9 +14,9 @@ class ReceveurListTile extends StatelessWidget {
     return ListTile(
       title: Text(receveur.nom),
       subtitle: Text(receveur.tel),
-      leading: CircleAvatar(
-        backgroundImage: Image.asset('asset/user/${receveur.id+1}.jpeg').image,
-        radius: 25,
+      leading: CircleCachedAvatar(
+        urlDistant: ''
+
       ),
       onTap: (){
         if(onPressed != null)

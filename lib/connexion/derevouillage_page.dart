@@ -6,8 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noppal_util/bloc/enum_loadable_state.dart';
 import 'package:noppal_util/bloc/simple_loadable_state.dart';
 
+import '../bloc/main/app_material_bloc.dart';
 import '../bloc/user/deverouillage_bloc.dart';
-import '../my_app.dart';
 
 class DeverouillagePage extends StatelessWidget {
 
@@ -26,7 +26,7 @@ class DeverouillagePage extends StatelessWidget {
 }
 
 class DeverouillageView extends StatelessWidget {
-  TextEditingController _controllerPwd=TextEditingController();
+  final TextEditingController _controllerPwd=TextEditingController();
 
   DeverouillageView({Key? key}) : super(key: key);
 
@@ -73,8 +73,10 @@ class DeverouillageView extends StatelessWidget {
                   ),
                   BlocListener<DeverouillageBloc,SimpleLoadableState<String>>(
                     listener: (context,state){
-                      if(state.state == EnumLoadableState.DONE){
-                        Navigator.pushReplacementNamed(context, MyHomePage.routeName);
+                      if(state.state == EnumLoadableState.DONE && state.value== DeverouillageBloc.PASSR_STATE){
+                        context.read<AppMaterialBloc>().change(AppMaterialStatus.home);
+
+                        //Navigator.pushReplacementNamed(context, MyHomePage.routeName);
                       }
                     },
                     child: ElevatedButton(
@@ -107,7 +109,8 @@ class DeverouillageView extends StatelessWidget {
                 padding: const EdgeInsets.only(top:40,right: 8.0),
                 child: BlocListener<DeverouillageBloc,SimpleLoadableState<String>>(
                     listener: (context,state){
-                      if(state.state == EnumLoadableState.DONE && state.message=='exit'){
+                      if(state.state == EnumLoadableState.DONE && state.value== DeverouillageBloc.EXIT_STATE){
+                        print('decccccccccccccccccccccccccccccccccnion');
                         Navigator.pushReplacementNamed(context, ConnexionPage.routeName);
                       }
                     },

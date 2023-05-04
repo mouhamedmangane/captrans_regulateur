@@ -1,4 +1,6 @@
 
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:captrans_regulateur/app_const.dart';
@@ -24,34 +26,31 @@ class ReceveurSearchBloc extends Bloc<ReceveurSearchEvent,ReceveurSearchState>{
 
   Future<void> _onLoad(ReceveurSearchLoad event,Emitter<ReceveurSearchState> emit) async{
     emit(state.copyWith(status: ReceveurSearchStatus.loading,search: event.search,maxPage: 0,page: 0));
-    await _receveurDisRepo.findAll(event.search,1).then((value){
-      emit(state.copyWith(status:ReceveurSearchStatus.done,receveurs: value.value,page: state.page+1,maxPage: value.maxPage));
-      print('ok');
-    }).catchError((error){
-      cptTest++;
-      if(cptTest>2){
-        emit(state.copyWith(status:ReceveurSearchStatus.done,receveurs: ReceveurData(30).getData(),page: state.page+1,maxPage: 3));
-        cptTest=0;
-        return;
-      }
-      else if(cptTest>1){
-        emit(state.copyWith(status:ReceveurSearchStatus.done,receveurs: [],page: state.page+1,maxPage: 3));
-        return;
-      }
+    if(event.search.isNotEmpty){
+      await _receveurDisRepo.findAll(event.search,state.page).then((value){
+        emit(state.copyWith(status:ReceveurSearchStatus.done,receveurs: value.data,page: state.page+1,maxPage: value.lastPage));
+        print('ok');
+      }).catchError((error){
+        String message;
+        if(error is NplTreatRequestException) message=error.message;
+        else if(error is TimeoutException) message=AppConst.timeout;
+        else message =  AppConst.noConnexion;
+        emit(state.copyWith(status:ReceveurSearchStatus.error,page:0,message: message,receveurs: []));
+        print('non');
+        throw error;
+      });
+    }
+    else{
+      emit(state.copyWith(status: ReceveurSearchStatus.init));
+    }
 
-      String message;
-      if(error is NplTreatRequestException) message=error.message;
-      else message =  AppConst.no_connexion;
-      emit(state.copyWith(status:ReceveurSearchStatus.error,page:0,message: message,receveurs: []));
-      print('non');
-    });
   }
 
   Future<void> _onAdded(ReceveurSearchOnAdded event,Emitter<ReceveurSearchState> emit)async {
     emit(state.copyWith(status: ReceveurSearchStatus.loadingAdd));
     await _receveurDisRepo.findAll(state.search??'',state.page+1).then((value){
-      state.receveurs.addAll(value.value);
-      emit(state.copyWith(status:ReceveurSearchStatus.done,page: state.page+1,maxPage: value.maxPage));
+      state.receveurs.addAll(value.data);
+      emit(state.copyWith(status:ReceveurSearchStatus.done,page: state.page+1,maxPage: value.lastPage));
     }).catchError((error){
       cptTest1++;
 
@@ -61,7 +60,7 @@ class ReceveurSearchBloc extends Bloc<ReceveurSearchEvent,ReceveurSearchState>{
         return;
       }
       state.receveurs.addAll(ReceveurData(10).getData());
-      emit(state.copyWith(status:ReceveurSearchStatus.errorAdd,page: state.page+1,message:AppConst.no_connexion));
+      emit(state.copyWith(status:ReceveurSearchStatus.errorAdd,page: state.page+1,message:AppConst.noConnexion));
       return;
     });
   }

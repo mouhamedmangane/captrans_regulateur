@@ -3,10 +3,10 @@ import 'package:captrans_regulateur/model/cotisation.dart';
 import 'package:flutter/material.dart';
 
 class ListeCotisationSView extends StatelessWidget {
-  List<Cotisation> cotisations;
+  final List<Cotisation> cotisations;
   final Function(BuildContext,Cotisation ? cotisation)? onTap;
 
-  ListeCotisationSView({this.onTap, required this.cotisations,Key? key}) : super(key: key);
+  const ListeCotisationSView({this.onTap, required this.cotisations,Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

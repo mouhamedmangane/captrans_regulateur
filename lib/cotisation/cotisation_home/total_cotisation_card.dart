@@ -1,7 +1,6 @@
 import 'package:captrans_regulateur/bloc/cotisation/total_cotisation_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:noppal_util/bloc/simple_loadable_state.dart';
 import 'package:noppal_util/format/number_helper.dart';
 

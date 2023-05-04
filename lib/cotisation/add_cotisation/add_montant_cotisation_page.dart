@@ -4,11 +4,12 @@ import 'package:captrans_regulateur/bloc/cotisation/total_cotisation_bloc.dart';
 import 'package:captrans_regulateur/cotisation/add_cotisation/resume_cotisation_view.dart';
 import 'package:captrans_regulateur/cotisation/cotisation_page.dart';
 import 'package:captrans_regulateur/my_app.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:noppal_util/ui/bounce/npl_tap_bounce.dart';
 import 'package:noppal_util/ui/inputs/npl_input_formatters/npl_separator_format.dart';
+
 
 class AddMontantCotisationPage extends StatelessWidget {
   static const  String routeName="/add_cotisation/add_montant";
@@ -70,40 +71,40 @@ class _AddMontantCotisationViewState extends State<AddMontantCotisationView> {
             borderRadius: BorderRadius.circular(20),
           ),
           child: BlocListener<AddCotisationBloc,AddCotisationState>(
-            listener: (context,state) async{
+            listener: (context,state){
               if(state.status==AddCotisationStatus.success){
-                CotisationEnCoursBloc cotisationEnCoursBloc=context.read<CotisationEnCoursBloc>();
-                await cotisationEnCoursBloc.addNewCotisastion(state.cotisation!);
-
-                await context.read<TotalCotisationBloc>().reloadload(cotisationEnCoursBloc.state.value!);
-
-                print('mus listener');
+                context.read<CotisationEnCoursBloc>().addNewCotisastion(state.cotisation!.ticket.cotisation.copyWith(bus: state.cotisation!.ticket.bus));
+                context.read<TotalCotisationBloc>().changeMontant(state.cotisation!.montantEncaisser);
                 Navigator.pushNamedAndRemoveUntil(
                     context,
                     CotisationPageArgs.routeName,
                         (route) => route.settings.name == MyHomePage.routeName,
-                    arguments: CotisationParam(
-                      cotisation:state.cotisation!,
-                      mustCompleted: false,
+                    arguments: CotisationParamComplete(
+                      cotisationSuccess: state.cotisation!.ticket,
                     )
                 );
               }
             },
-            child: ElevatedButton(
-                style: ButtonStyle(
-                    elevation: MaterialStateProperty.all(0),
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius:BorderRadius.circular(20)))
-                ),
-                onPressed:(){
-                  _formKey.currentState!.validate();
-                  if( (_controller.text).replaceAll(" ", '').isNotEmpty){
-                    print(_controller.text.trim());
-                    int montant = int.parse(_controller.text.replaceAll(' ', '')).toInt();
-                    print('test');
-                    BlocProvider.of<AddCotisationBloc>(context).add(AddCotisationValidation(montant));
-                  }
-                },
-                child: Text("Valider",style: TextStyle(fontSize: 17),)
+            child: NplTapBounce(
+              onTap: (){
+
+              },
+              child: ElevatedButton(
+                  style: ButtonStyle(
+                      elevation: MaterialStateProperty.all(0),
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius:BorderRadius.circular(20)))
+                  ),
+                  onPressed:(){
+                    _formKey.currentState!.validate();
+                    if( (_controller.text).replaceAll(" ", '').isNotEmpty){
+                      print(_controller.text.trim());
+                      int montant = int.parse(_controller.text.replaceAll(' ', '')).toInt();
+                      print('test');
+                      BlocProvider.of<AddCotisationBloc>(context).add(AddCotisationValidation(montant));
+                    }
+                  },
+                  child: Text("Valider",style: TextStyle(fontSize: 17),)
+              ),
             ),
           ),
         );
@@ -114,7 +115,7 @@ class _AddMontantCotisationViewState extends State<AddMontantCotisationView> {
       child: BlocBuilder<AddCotisationBloc,AddCotisationState>(
         builder: (context,state) {
           String ?message=(state.status == AddCotisationStatus.failure)
-              ?state.message : '';
+              ?state.message : null;
           return TextFormField(
             autofocus: true,
             validator: (value){

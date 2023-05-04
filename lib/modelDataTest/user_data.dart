@@ -1,6 +1,5 @@
 
 import 'package:captrans_regulateur/model/user.dart';
-import 'package:noppal_util/model/gen_data.dart';
 import 'package:noppal_util/model/gen_data_array_impl.dart';
 import 'package:noppal_util/model/gen_etat.dart';
 import 'package:noppal_util/model/gen_id.dart';
@@ -23,13 +22,13 @@ class UserData extends GenDataArrayImpl<User>{
     GenEtat<String> adresse=GenEtat(['876 Rue 10','87 Pikine maka colonae','273 guédiawaye','87 Fann Hann']);
     return List.generate(taille, (index) => User(
       id: id.next(),
-      nom: nom.next(),
+      name: nom.next(),
       adresse: adresse.random(),
       login: '${login.random()}@captrans.com',
       tel:genTel.random().toString(),
       email: login.random(),
 
-      foncion: role.next(),
+      fonction: role.next(),
 
     ));
   }

@@ -1,7 +1,8 @@
 
 
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
-import 'package:captrans_regulateur/modelDataTest/user_data.dart';
 import 'package:captrans_regulateur/model_dto/connexion_dto.dart';
 import 'package:captrans_regulateur/repository/app_local_repo.dart';
 import 'package:captrans_regulateur/repository/user/user_dis_repo.dart';
@@ -9,10 +10,10 @@ import 'package:captrans_regulateur/repository/user/user_local_repo.dart';
 import 'package:noppal_util/bloc/enum_loadable_state.dart';
 import 'package:noppal_util/bloc/simple_loadable_state.dart';
 import 'package:noppal_util/conf/env.dart';
+import 'package:noppal_util/repository/dis_repo.dart';
 import 'package:noppal_util/repository/npl_treat_request_exception.dart';
 
 import '../../app_const.dart';
-import '../../model/user.dart';
 
 class ConnexionBloc extends Cubit<SimpleLoadableState<ConnexionDto>>{
   UserDisRepo _userDisRepo;
@@ -29,30 +30,26 @@ class ConnexionBloc extends Cubit<SimpleLoadableState<ConnexionDto>>{
   Future<void> connexion(ConnexionDto connexionDto) async {
     emit(SimpleLoadableState(value: connexionDto, state: EnumLoadableState.LOADING));
     await _userDisRepo.connexionRegulateur(connexionDto).then((user){
-      _userLocalRepo.save(user);
+      print(user);
+      assert(user.token != null,'Probleme d\'authentification. Consulter le service d\'administration');
+      assert(user.token!.isNotEmpty,'Probleme d\'authentification. Consulter le service d\'administration');
       user=user.copyWith(code: connexionDto.password);
+      _userLocalRepo.save(user);
+
       MyConf.addVariable(MyConfConstUser.USER_KEY,user);
       MyConf.addVariable(MyConfConstUser.ID_KEY,user.id);
+      _appLocalRepo.save_token(user.token!);
       _appLocalRepo.save_connected();
+      DisRepo.setGlobalToken(user.token);
       emit(SimpleLoadableState.done(connexionDto));
     }).catchError((error){
-      cptTest ++;
-      if(cptTest>1){
-        User user =UserData(2).next();
-        user=user.copyWith(code: connexionDto.password);
 
-        MyConf.addVariable(MyConfConstUser.USER_KEY,user);
-        MyConf.addVariable(MyConfConstUser.ID_KEY,user.id);
-        _appLocalRepo.save_connected();
-        _userLocalRepo.save(user);
-        emit(SimpleLoadableState.done(connexionDto));
-      }
-      else{
         String message='';
         if(error is NplTreatRequestException) message=error.message;
-        else message =  AppConst.no_connexion;
+        else if(error is TimeoutException) message=AppConst.timeout;
+        else message =  AppConst.noConnexion;
         emit(SimpleLoadableState.error(message));
-      }
+
     });
   }
   

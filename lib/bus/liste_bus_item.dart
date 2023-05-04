@@ -17,9 +17,9 @@ class ListeBusItem extends StatelessWidget {
         radius: 30,
 
       ),
-      title: Text(bus.matricule!,style: TextStyle(fontWeight: FontWeight.w400),),
+      title: Text(bus.matricule,style: TextStyle(fontWeight: FontWeight.w400),),
       subtitle: Text(bus.proprietaire!.nom),
       trailing:Text(NplDateFormat.simpleFormat(bus.lastDateCotisation!),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
-    );;
+    );
   }
 }

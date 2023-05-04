@@ -5,12 +5,12 @@ part of 'receveur_search_bloc.dart';
 enum ReceveurSearchStatus {init,loading,error,done,loadingAdd,errorAdd}
 
 class ReceveurSearchState extends Equatable{
-  ReceveurSearchStatus status;
-  List<Receveur>  receveurs=[];
-  int  page;
-  int maxPage;
-  String ? search;
-  String ? message;
+  final ReceveurSearchStatus status;
+  final List<Receveur>  receveurs;
+  final int  page;
+  final int maxPage;
+  final String ? search;
+  final String ? message;
   ReceveurSearchState({
     ReceveurSearchStatus ? status,
     List<Receveur> ? receveurs,
@@ -21,8 +21,8 @@ class ReceveurSearchState extends Equatable{
   }):
   status=status ?? ReceveurSearchStatus.init,
   receveurs=receveurs??[],
-  page=page ?? 0,
-  maxPage =maxPage ?? 0,
+  page=page ?? 1,
+  maxPage =maxPage ?? 1,
   search=search ?? '',
   message = message ?? ''
   ;

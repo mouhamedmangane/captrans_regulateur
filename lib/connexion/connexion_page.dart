@@ -1,6 +1,6 @@
+import 'package:captrans_regulateur/bloc/main/app_material_bloc.dart';
 import 'package:captrans_regulateur/bloc/user/connexion_bloc.dart';
 import 'package:captrans_regulateur/model_dto/connexion_dto.dart';
-import 'package:captrans_regulateur/my_app.dart';
 import 'package:captrans_regulateur/repository/app_local_repo.dart';
 import 'package:captrans_regulateur/repository/user/user_dis_repo.dart';
 import 'package:captrans_regulateur/repository/user/user_local_repo.dart';
@@ -27,8 +27,8 @@ class ConnexionPage extends StatelessWidget {
 }
 
 class ConnexionView extends StatelessWidget {
-  TextEditingController _controllerLogin=TextEditingController();
-  TextEditingController _controllerPwd=TextEditingController();
+  final TextEditingController _controllerLogin=TextEditingController();
+  final TextEditingController _controllerPwd=TextEditingController();
   ConnexionView({Key? key}) : super(key: key);
 
   @override
@@ -81,7 +81,8 @@ class ConnexionView extends StatelessWidget {
                   BlocListener<ConnexionBloc,SimpleLoadableState<ConnexionDto>>(
                     listener: (context,state){
                       if(state.state == EnumLoadableState.DONE){
-                        Navigator.pushReplacementNamed(context, MyHomePage.routeName);
+                        context.read<AppMaterialBloc>().change(AppMaterialStatus.home);
+                        //Navigator.pushReplacementNamed(context, MyHomePage.routeName);
                       }
                     },
                     child: ElevatedButton(

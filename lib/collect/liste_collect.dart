@@ -1,16 +1,15 @@
 import 'package:captrans_regulateur/collect/liste_collect_item.dart';
 import 'package:captrans_regulateur/model/collect.dart';
-import 'package:captrans_regulateur/modelDataTest/collect_data.dart';
 import 'package:flutter/material.dart';
 
 class ListeCollect extends StatelessWidget {
 
 
-  List<Collect> collects=CollectData(10).getData();
-  Function(BuildContext,Collect) ? onSelect;
+  final List<Collect> collects;
+  final Function(BuildContext,Collect) ? onSelect;
   final bool zeroContentPadding;
 
-  ListeCollect({this.onSelect,this.zeroContentPadding=false, Key? key}) : super(key: key);
+  const ListeCollect({required this.collects,this.onSelect,this.zeroContentPadding=false, Key? key}) : super(key: key);
 
 
   @override

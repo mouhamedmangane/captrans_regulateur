@@ -12,11 +12,12 @@ class Collect with _$Collect {
 
     required int id,
     required int montant,
-    required int collecteurId,
-    required int regulateurId,
+    int ? collecteurId,
+    int ? regulateurId,
+    DateTime ? date,
     DateTime ? created_at,
     DateTime ? updated_at,
-
+    String ? profil,
 
 
     User ? collecteur,

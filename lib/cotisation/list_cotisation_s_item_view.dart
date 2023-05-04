@@ -15,12 +15,12 @@ class ListeCotisationSItemView extends StatelessWidget {
         if(onTap != null)
           onTap!(context,cotisation);
       },
-      title: Text(cotisation.bus!.matricule!),
+      title: Text(cotisation.bus!.matricule),
       subtitle: Text(cotisation.bus!.proprietaire!.nom),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text('${NumberHelper.format(cotisation.montant??0)}',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
+          Text('${NumberHelper.format(cotisation.montant)}',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
           Text(" F ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16))
         ],
       ),

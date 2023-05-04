@@ -2,7 +2,6 @@ import 'package:captrans_regulateur/bus/search_bus_by_mat_page.dart';
 import 'package:captrans_regulateur/bus/search_bus_page.dart';
 import 'package:captrans_regulateur/bus/search_bus_param.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:noppal_util/ui/bounce/npl_tap_bounce.dart';
 import 'package:noppal_util/ui/link/searchLInk.dart';
@@ -19,8 +18,6 @@ class BusBody extends StatefulWidget {
 }
 
 class _BusBodyState extends State<BusBody> {
-  final  GlobalKey _key= GlobalKey();
-  TextEditingController _controller=TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +60,15 @@ class _BusBodyState extends State<BusBody> {
       onTap: (){
         Navigator.pushNamed(context, SearchBusPageArg.routeName,
             arguments: SearchBusParam(onSelect: (context,bus){
-              Navigator.push(context, MaterialPageRoute(builder:(context)=>BusDetailCotisationPage(bus: bus)));
+
+                    Navigator.pushNamed(context, SearchBusByMatPage.routeName,arguments: SearchBusByMatParam(
+                        matricule: bus.matricule,
+                        canRescan: true,
+                        onValidate: (context,mybus){
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder:(context)=>BusDetailCotisationPage(bus: mybus)));
+
+                        }));
+              //Navigator.push(context, MaterialPageRoute(builder:(context)=>BusDetailCotisationPage(bus: bus)));
 
             }));
       },
@@ -72,9 +77,7 @@ class _BusBodyState extends State<BusBody> {
           child: Icon(Icons.qr_code,size: 25,color: Colors.white,),
           onTap: () async {
             String matricule = await FlutterBarcodeScanner.scanBarcode('#ff6666', 'Cancel', true, ScanMode.QR);
-            matricule="DK976529";
-            print(matricule);
-            if(true){
+            if(matricule!='-1'){
               Navigator.pushNamed(context, SearchBusByMatPage.routeName,
                   arguments:_paramSearch(matricule,canResacn: true)
               );
@@ -95,14 +98,13 @@ class _BusBodyState extends State<BusBody> {
         matricule: matricule,
         canRescan: canResacn,
         onValidate: (context,bus){
-          Navigator.pushReplacement(context, MaterialPageRoute(builder:(context)=>BusDetailCotisationPage(bus: bus)));
-          // Navigator.pushReplacementNamed(
-          //     context,
-          //     SelectReceveurPage.routeName,
-          //     arguments: SelectReceveurParam(bus: gBus
-          //
-          //     )
-          // );
+          Navigator.pushNamed(context, SearchBusByMatPage.routeName,arguments: SearchBusByMatParam(
+              matricule: bus.matricule,
+              canRescan: true,
+              onValidate: (context,mybus){
+            Navigator.pushReplacement(context, MaterialPageRoute(builder:(context)=>BusDetailCotisationPage(bus: mybus)));
+
+          }));
         });
   }
 

@@ -68,54 +68,56 @@ class _SaveReceveurViewState extends State<SaveReceveurView> {
         title: Text('Nouveau receveur'),
         elevation: 2,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Form(
-          key: _formKey,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Icon(Icons.person_pin_rounded,size: 90,color: Colors.grey.shade800,),
-                ),
-                TextFormField(
-                  controller: _controllerNom,
-                  style: TextStyle(fontSize: 18),
-                  validator: (value){
-                    return ValidationUsine.make(value,'nom complet',[
-                      NotEmptyValidator()
-                    ]);
-                  },
-                  decoration: InputDecoration(
-                    label: Text("Prénom et nom"),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Form(
+            key: _formKey,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(Icons.person_pin_rounded,size: 90,color: Colors.grey.shade800,),
                   ),
+                  TextFormField(
+                    controller: _controllerNom,
+                    style: TextStyle(fontSize: 18),
+                    validator: (value){
+                      return ValidationUsine.make(value,'nom complet',[
+                        NotEmptyValidator()
+                      ]);
+                    },
+                    decoration: InputDecoration(
+                      label: Text("Prénom et nom"),
+                    ),
 
-                ),
-                SizedBox(height: 15,),
-                NplTextFieldPhone(
-                 style: TextStyle(fontSize: 18),
-                  disableValidate: false,
-                  onChanged: (number){
-                  _controllerTel.text=number;
-                  print(number);
-                 },
-                  minLength: 12,
-                  maxLength: 12,
-                ),
-                SizedBox(height: 30,),
-                BlocListener<ReceveurSaveBloc,ReceveurSaveState>(
-                  listener: (context,state){
-                    print('testtt');
-                    if(state.status == ReceveurSaveStatus.done){
-                      if(widget.onValidate!= null){
-                        widget.onValidate!(context,state.receveur!);
+                  ),
+                  SizedBox(height: 15,),
+                  NplTextFieldPhone(
+                   style: TextStyle(fontSize: 18),
+                    disableValidate: false,
+                    onChanged: (number){
+                    _controllerTel.text=number;
+                    print(number);
+                   },
+                    minLength: 12,
+                    maxLength: 12,
+                  ),
+                  SizedBox(height: 30,),
+                  BlocListener<ReceveurSaveBloc,ReceveurSaveState>(
+                    listener: (context,state){
+                      print('testtt');
+                      if(state.status == ReceveurSaveStatus.done){
+                        if(widget.onValidate!= null){
+                          widget.onValidate!(context,state.receveur!);
+                        }
                       }
-                    }
-                  },
-                  child: _buttonValidation(context),
-                )
-              ],
-            ),
+                    },
+                    child: _buttonValidation(context),
+                  )
+                ],
+              ),
+          ),
         ),
       ),
     );

@@ -7,8 +7,10 @@ part 'cotisation_save.g.dart';
 @Freezed()
 class CotisationSave with _$CotisationSave {
   const factory CotisationSave({
-    required int regulateurId,
+    required int userId,
     required int receveurId,
+    required String  receveurTel,
+    required String receveurNom,
     required int busId,
     required int montant,
   }) = _CotisationSave;

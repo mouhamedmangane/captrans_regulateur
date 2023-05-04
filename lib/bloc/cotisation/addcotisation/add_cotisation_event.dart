@@ -8,7 +8,7 @@ class AddCotisationEvent extends Equatable{
 }
 
 class AddCotisationSelectedBus extends AddCotisationEvent{
-  Bus bus;
+  final Bus bus;
   AddCotisationSelectedBus(this.bus);
 
   @override
@@ -17,7 +17,7 @@ class AddCotisationSelectedBus extends AddCotisationEvent{
 }
 
 class AddCotisationSelectedReceveur extends AddCotisationEvent{
-  Receveur receveur;
+  final Receveur receveur;
   AddCotisationSelectedReceveur(this.receveur);
 
   @override
@@ -26,7 +26,7 @@ class AddCotisationSelectedReceveur extends AddCotisationEvent{
 }
 
 class AddCotisationValidation extends AddCotisationEvent{
-  int montant;
+  final int montant;
   AddCotisationValidation(this.montant);
 
   @override

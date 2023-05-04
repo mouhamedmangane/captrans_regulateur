@@ -23,18 +23,21 @@ mixin _$Cotisation {
   int get id => throw _privateConstructorUsedError;
   int get montant => throw _privateConstructorUsedError;
   int get montantCotiser => throw _privateConstructorUsedError;
-  DateTime get dateDebut => throw _privateConstructorUsedError;
-  DateTime get dateFin => throw _privateConstructorUsedError;
-  DateTime? get created_at => throw _privateConstructorUsedError;
-  DateTime? get updated_at => throw _privateConstructorUsedError;
-  int get regulateurId => throw _privateConstructorUsedError;
-  int get receveurId => throw _privateConstructorUsedError;
-  int get busId => throw _privateConstructorUsedError;
+  DateTime? get dateDebut => throw _privateConstructorUsedError;
+  DateTime? get dateFin => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
+  int? get regulateurId => throw _privateConstructorUsedError;
+  int? get receveurId => throw _privateConstructorUsedError;
+  int? get busId => throw _privateConstructorUsedError;
   User? get regulateur => throw _privateConstructorUsedError;
   Bus? get bus => throw _privateConstructorUsedError;
   Receveur? get receveur => throw _privateConstructorUsedError;
   List<LigneCotisation>? get ligneCotisations =>
       throw _privateConstructorUsedError;
+  int? get compte => throw _privateConstructorUsedError;
+  int? get jourEtat => throw _privateConstructorUsedError;
+  int? get montantEtat => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -52,17 +55,20 @@ abstract class $CotisationCopyWith<$Res> {
       {int id,
       int montant,
       int montantCotiser,
-      DateTime dateDebut,
-      DateTime dateFin,
-      DateTime? created_at,
-      DateTime? updated_at,
-      int regulateurId,
-      int receveurId,
-      int busId,
+      DateTime? dateDebut,
+      DateTime? dateFin,
+      DateTime? createdAt,
+      DateTime? updatedAt,
+      int? regulateurId,
+      int? receveurId,
+      int? busId,
       User? regulateur,
       Bus? bus,
       Receveur? receveur,
-      List<LigneCotisation>? ligneCotisations});
+      List<LigneCotisation>? ligneCotisations,
+      int? compte,
+      int? jourEtat,
+      int? montantEtat});
 
   $UserCopyWith<$Res>? get regulateur;
   $BusCopyWith<$Res>? get bus;
@@ -85,17 +91,20 @@ class _$CotisationCopyWithImpl<$Res, $Val extends Cotisation>
     Object? id = null,
     Object? montant = null,
     Object? montantCotiser = null,
-    Object? dateDebut = null,
-    Object? dateFin = null,
-    Object? created_at = freezed,
-    Object? updated_at = freezed,
-    Object? regulateurId = null,
-    Object? receveurId = null,
-    Object? busId = null,
+    Object? dateDebut = freezed,
+    Object? dateFin = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? regulateurId = freezed,
+    Object? receveurId = freezed,
+    Object? busId = freezed,
     Object? regulateur = freezed,
     Object? bus = freezed,
     Object? receveur = freezed,
     Object? ligneCotisations = freezed,
+    Object? compte = freezed,
+    Object? jourEtat = freezed,
+    Object? montantEtat = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -110,34 +119,34 @@ class _$CotisationCopyWithImpl<$Res, $Val extends Cotisation>
           ? _value.montantCotiser
           : montantCotiser // ignore: cast_nullable_to_non_nullable
               as int,
-      dateDebut: null == dateDebut
+      dateDebut: freezed == dateDebut
           ? _value.dateDebut
           : dateDebut // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      dateFin: null == dateFin
+              as DateTime?,
+      dateFin: freezed == dateFin
           ? _value.dateFin
           : dateFin // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      created_at: freezed == created_at
-          ? _value.created_at
-          : created_at // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      updated_at: freezed == updated_at
-          ? _value.updated_at
-          : updated_at // ignore: cast_nullable_to_non_nullable
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      regulateurId: null == regulateurId
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      regulateurId: freezed == regulateurId
           ? _value.regulateurId
           : regulateurId // ignore: cast_nullable_to_non_nullable
-              as int,
-      receveurId: null == receveurId
+              as int?,
+      receveurId: freezed == receveurId
           ? _value.receveurId
           : receveurId // ignore: cast_nullable_to_non_nullable
-              as int,
-      busId: null == busId
+              as int?,
+      busId: freezed == busId
           ? _value.busId
           : busId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       regulateur: freezed == regulateur
           ? _value.regulateur
           : regulateur // ignore: cast_nullable_to_non_nullable
@@ -154,6 +163,18 @@ class _$CotisationCopyWithImpl<$Res, $Val extends Cotisation>
           ? _value.ligneCotisations
           : ligneCotisations // ignore: cast_nullable_to_non_nullable
               as List<LigneCotisation>?,
+      compte: freezed == compte
+          ? _value.compte
+          : compte // ignore: cast_nullable_to_non_nullable
+              as int?,
+      jourEtat: freezed == jourEtat
+          ? _value.jourEtat
+          : jourEtat // ignore: cast_nullable_to_non_nullable
+              as int?,
+      montantEtat: freezed == montantEtat
+          ? _value.montantEtat
+          : montantEtat // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 
@@ -206,17 +227,20 @@ abstract class _$$_CotisationCopyWith<$Res>
       {int id,
       int montant,
       int montantCotiser,
-      DateTime dateDebut,
-      DateTime dateFin,
-      DateTime? created_at,
-      DateTime? updated_at,
-      int regulateurId,
-      int receveurId,
-      int busId,
+      DateTime? dateDebut,
+      DateTime? dateFin,
+      DateTime? createdAt,
+      DateTime? updatedAt,
+      int? regulateurId,
+      int? receveurId,
+      int? busId,
       User? regulateur,
       Bus? bus,
       Receveur? receveur,
-      List<LigneCotisation>? ligneCotisations});
+      List<LigneCotisation>? ligneCotisations,
+      int? compte,
+      int? jourEtat,
+      int? montantEtat});
 
   @override
   $UserCopyWith<$Res>? get regulateur;
@@ -240,17 +264,20 @@ class __$$_CotisationCopyWithImpl<$Res>
     Object? id = null,
     Object? montant = null,
     Object? montantCotiser = null,
-    Object? dateDebut = null,
-    Object? dateFin = null,
-    Object? created_at = freezed,
-    Object? updated_at = freezed,
-    Object? regulateurId = null,
-    Object? receveurId = null,
-    Object? busId = null,
+    Object? dateDebut = freezed,
+    Object? dateFin = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? regulateurId = freezed,
+    Object? receveurId = freezed,
+    Object? busId = freezed,
     Object? regulateur = freezed,
     Object? bus = freezed,
     Object? receveur = freezed,
     Object? ligneCotisations = freezed,
+    Object? compte = freezed,
+    Object? jourEtat = freezed,
+    Object? montantEtat = freezed,
   }) {
     return _then(_$_Cotisation(
       id: null == id
@@ -265,34 +292,34 @@ class __$$_CotisationCopyWithImpl<$Res>
           ? _value.montantCotiser
           : montantCotiser // ignore: cast_nullable_to_non_nullable
               as int,
-      dateDebut: null == dateDebut
+      dateDebut: freezed == dateDebut
           ? _value.dateDebut
           : dateDebut // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      dateFin: null == dateFin
+              as DateTime?,
+      dateFin: freezed == dateFin
           ? _value.dateFin
           : dateFin // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      created_at: freezed == created_at
-          ? _value.created_at
-          : created_at // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      updated_at: freezed == updated_at
-          ? _value.updated_at
-          : updated_at // ignore: cast_nullable_to_non_nullable
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      regulateurId: null == regulateurId
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      regulateurId: freezed == regulateurId
           ? _value.regulateurId
           : regulateurId // ignore: cast_nullable_to_non_nullable
-              as int,
-      receveurId: null == receveurId
+              as int?,
+      receveurId: freezed == receveurId
           ? _value.receveurId
           : receveurId // ignore: cast_nullable_to_non_nullable
-              as int,
-      busId: null == busId
+              as int?,
+      busId: freezed == busId
           ? _value.busId
           : busId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       regulateur: freezed == regulateur
           ? _value.regulateur
           : regulateur // ignore: cast_nullable_to_non_nullable
@@ -309,6 +336,18 @@ class __$$_CotisationCopyWithImpl<$Res>
           ? _value._ligneCotisations
           : ligneCotisations // ignore: cast_nullable_to_non_nullable
               as List<LigneCotisation>?,
+      compte: freezed == compte
+          ? _value.compte
+          : compte // ignore: cast_nullable_to_non_nullable
+              as int?,
+      jourEtat: freezed == jourEtat
+          ? _value.jourEtat
+          : jourEtat // ignore: cast_nullable_to_non_nullable
+              as int?,
+      montantEtat: freezed == montantEtat
+          ? _value.montantEtat
+          : montantEtat // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -320,17 +359,20 @@ class _$_Cotisation extends _Cotisation {
       {required this.id,
       required this.montant,
       required this.montantCotiser,
-      required this.dateDebut,
-      required this.dateFin,
-      this.created_at,
-      this.updated_at,
-      required this.regulateurId,
-      required this.receveurId,
-      required this.busId,
+      this.dateDebut,
+      this.dateFin,
+      this.createdAt,
+      this.updatedAt,
+      this.regulateurId,
+      this.receveurId,
+      this.busId,
       this.regulateur,
       this.bus,
       this.receveur,
-      final List<LigneCotisation>? ligneCotisations})
+      final List<LigneCotisation>? ligneCotisations,
+      this.compte,
+      this.jourEtat,
+      this.montantEtat})
       : _ligneCotisations = ligneCotisations,
         super._();
 
@@ -344,19 +386,19 @@ class _$_Cotisation extends _Cotisation {
   @override
   final int montantCotiser;
   @override
-  final DateTime dateDebut;
+  final DateTime? dateDebut;
   @override
-  final DateTime dateFin;
+  final DateTime? dateFin;
   @override
-  final DateTime? created_at;
+  final DateTime? createdAt;
   @override
-  final DateTime? updated_at;
+  final DateTime? updatedAt;
   @override
-  final int regulateurId;
+  final int? regulateurId;
   @override
-  final int receveurId;
+  final int? receveurId;
   @override
-  final int busId;
+  final int? busId;
   @override
   final User? regulateur;
   @override
@@ -373,8 +415,15 @@ class _$_Cotisation extends _Cotisation {
   }
 
   @override
+  final int? compte;
+  @override
+  final int? jourEtat;
+  @override
+  final int? montantEtat;
+
+  @override
   String toString() {
-    return 'Cotisation(id: $id, montant: $montant, montantCotiser: $montantCotiser, dateDebut: $dateDebut, dateFin: $dateFin, created_at: $created_at, updated_at: $updated_at, regulateurId: $regulateurId, receveurId: $receveurId, busId: $busId, regulateur: $regulateur, bus: $bus, receveur: $receveur, ligneCotisations: $ligneCotisations)';
+    return 'Cotisation(id: $id, montant: $montant, montantCotiser: $montantCotiser, dateDebut: $dateDebut, dateFin: $dateFin, createdAt: $createdAt, updatedAt: $updatedAt, regulateurId: $regulateurId, receveurId: $receveurId, busId: $busId, regulateur: $regulateur, bus: $bus, receveur: $receveur, ligneCotisations: $ligneCotisations, compte: $compte, jourEtat: $jourEtat, montantEtat: $montantEtat)';
   }
 
   @override
@@ -389,10 +438,10 @@ class _$_Cotisation extends _Cotisation {
             (identical(other.dateDebut, dateDebut) ||
                 other.dateDebut == dateDebut) &&
             (identical(other.dateFin, dateFin) || other.dateFin == dateFin) &&
-            (identical(other.created_at, created_at) ||
-                other.created_at == created_at) &&
-            (identical(other.updated_at, updated_at) ||
-                other.updated_at == updated_at) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
             (identical(other.regulateurId, regulateurId) ||
                 other.regulateurId == regulateurId) &&
             (identical(other.receveurId, receveurId) ||
@@ -404,7 +453,12 @@ class _$_Cotisation extends _Cotisation {
             (identical(other.receveur, receveur) ||
                 other.receveur == receveur) &&
             const DeepCollectionEquality()
-                .equals(other._ligneCotisations, _ligneCotisations));
+                .equals(other._ligneCotisations, _ligneCotisations) &&
+            (identical(other.compte, compte) || other.compte == compte) &&
+            (identical(other.jourEtat, jourEtat) ||
+                other.jourEtat == jourEtat) &&
+            (identical(other.montantEtat, montantEtat) ||
+                other.montantEtat == montantEtat));
   }
 
   @JsonKey(ignore: true)
@@ -416,15 +470,18 @@ class _$_Cotisation extends _Cotisation {
       montantCotiser,
       dateDebut,
       dateFin,
-      created_at,
-      updated_at,
+      createdAt,
+      updatedAt,
       regulateurId,
       receveurId,
       busId,
       regulateur,
       bus,
       receveur,
-      const DeepCollectionEquality().hash(_ligneCotisations));
+      const DeepCollectionEquality().hash(_ligneCotisations),
+      compte,
+      jourEtat,
+      montantEtat);
 
   @JsonKey(ignore: true)
   @override
@@ -445,17 +502,20 @@ abstract class _Cotisation extends Cotisation {
       {required final int id,
       required final int montant,
       required final int montantCotiser,
-      required final DateTime dateDebut,
-      required final DateTime dateFin,
-      final DateTime? created_at,
-      final DateTime? updated_at,
-      required final int regulateurId,
-      required final int receveurId,
-      required final int busId,
+      final DateTime? dateDebut,
+      final DateTime? dateFin,
+      final DateTime? createdAt,
+      final DateTime? updatedAt,
+      final int? regulateurId,
+      final int? receveurId,
+      final int? busId,
       final User? regulateur,
       final Bus? bus,
       final Receveur? receveur,
-      final List<LigneCotisation>? ligneCotisations}) = _$_Cotisation;
+      final List<LigneCotisation>? ligneCotisations,
+      final int? compte,
+      final int? jourEtat,
+      final int? montantEtat}) = _$_Cotisation;
   const _Cotisation._() : super._();
 
   factory _Cotisation.fromJson(Map<String, dynamic> json) =
@@ -468,19 +528,19 @@ abstract class _Cotisation extends Cotisation {
   @override
   int get montantCotiser;
   @override
-  DateTime get dateDebut;
+  DateTime? get dateDebut;
   @override
-  DateTime get dateFin;
+  DateTime? get dateFin;
   @override
-  DateTime? get created_at;
+  DateTime? get createdAt;
   @override
-  DateTime? get updated_at;
+  DateTime? get updatedAt;
   @override
-  int get regulateurId;
+  int? get regulateurId;
   @override
-  int get receveurId;
+  int? get receveurId;
   @override
-  int get busId;
+  int? get busId;
   @override
   User? get regulateur;
   @override
@@ -489,6 +549,12 @@ abstract class _Cotisation extends Cotisation {
   Receveur? get receveur;
   @override
   List<LigneCotisation>? get ligneCotisations;
+  @override
+  int? get compte;
+  @override
+  int? get jourEtat;
+  @override
+  int? get montantEtat;
   @override
   @JsonKey(ignore: true)
   _$$_CotisationCopyWith<_$_Cotisation> get copyWith =>

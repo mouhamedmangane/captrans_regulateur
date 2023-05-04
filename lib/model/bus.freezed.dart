@@ -21,14 +21,15 @@ Bus _$BusFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Bus {
   int get id => throw _privateConstructorUsedError;
-  int get compte => throw _privateConstructorUsedError;
+  int? get compte => throw _privateConstructorUsedError;
   String get matricule => throw _privateConstructorUsedError;
-  int get proprietaireId => throw _privateConstructorUsedError;
-  int get numeroLigne => throw _privateConstructorUsedError;
+  int? get proprietaireId => throw _privateConstructorUsedError;
+  String get numeroLigne => throw _privateConstructorUsedError;
   String? get marque => throw _privateConstructorUsedError;
   DateTime? get lastDateCotisation => throw _privateConstructorUsedError;
-  DateTime? get created_at => throw _privateConstructorUsedError;
-  DateTime? get updated_at => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  DateTime? get dateEnVigueur => throw _privateConstructorUsedError;
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
   int? get jourEtat => throw _privateConstructorUsedError;
   int? get montantEtat => throw _privateConstructorUsedError;
   String? get nomGie => throw _privateConstructorUsedError;
@@ -48,14 +49,15 @@ abstract class $BusCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      int compte,
+      int? compte,
       String matricule,
-      int proprietaireId,
-      int numeroLigne,
+      int? proprietaireId,
+      String numeroLigne,
       String? marque,
       DateTime? lastDateCotisation,
-      DateTime? created_at,
-      DateTime? updated_at,
+      DateTime? createdAt,
+      DateTime? dateEnVigueur,
+      DateTime? updatedAt,
       int? jourEtat,
       int? montantEtat,
       String? nomGie,
@@ -79,14 +81,15 @@ class _$BusCopyWithImpl<$Res, $Val extends Bus> implements $BusCopyWith<$Res> {
   @override
   $Res call({
     Object? id = null,
-    Object? compte = null,
+    Object? compte = freezed,
     Object? matricule = null,
-    Object? proprietaireId = null,
+    Object? proprietaireId = freezed,
     Object? numeroLigne = null,
     Object? marque = freezed,
     Object? lastDateCotisation = freezed,
-    Object? created_at = freezed,
-    Object? updated_at = freezed,
+    Object? createdAt = freezed,
+    Object? dateEnVigueur = freezed,
+    Object? updatedAt = freezed,
     Object? jourEtat = freezed,
     Object? montantEtat = freezed,
     Object? nomGie = freezed,
@@ -99,22 +102,22 @@ class _$BusCopyWithImpl<$Res, $Val extends Bus> implements $BusCopyWith<$Res> {
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      compte: null == compte
+      compte: freezed == compte
           ? _value.compte
           : compte // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       matricule: null == matricule
           ? _value.matricule
           : matricule // ignore: cast_nullable_to_non_nullable
               as String,
-      proprietaireId: null == proprietaireId
+      proprietaireId: freezed == proprietaireId
           ? _value.proprietaireId
           : proprietaireId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       numeroLigne: null == numeroLigne
           ? _value.numeroLigne
           : numeroLigne // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       marque: freezed == marque
           ? _value.marque
           : marque // ignore: cast_nullable_to_non_nullable
@@ -123,13 +126,17 @@ class _$BusCopyWithImpl<$Res, $Val extends Bus> implements $BusCopyWith<$Res> {
           ? _value.lastDateCotisation
           : lastDateCotisation // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      created_at: freezed == created_at
-          ? _value.created_at
-          : created_at // ignore: cast_nullable_to_non_nullable
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      updated_at: freezed == updated_at
-          ? _value.updated_at
-          : updated_at // ignore: cast_nullable_to_non_nullable
+      dateEnVigueur: freezed == dateEnVigueur
+          ? _value.dateEnVigueur
+          : dateEnVigueur // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       jourEtat: freezed == jourEtat
           ? _value.jourEtat
@@ -179,14 +186,15 @@ abstract class _$$_BusCopyWith<$Res> implements $BusCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      int compte,
+      int? compte,
       String matricule,
-      int proprietaireId,
-      int numeroLigne,
+      int? proprietaireId,
+      String numeroLigne,
       String? marque,
       DateTime? lastDateCotisation,
-      DateTime? created_at,
-      DateTime? updated_at,
+      DateTime? createdAt,
+      DateTime? dateEnVigueur,
+      DateTime? updatedAt,
       int? jourEtat,
       int? montantEtat,
       String? nomGie,
@@ -208,14 +216,15 @@ class __$$_BusCopyWithImpl<$Res> extends _$BusCopyWithImpl<$Res, _$_Bus>
   @override
   $Res call({
     Object? id = null,
-    Object? compte = null,
+    Object? compte = freezed,
     Object? matricule = null,
-    Object? proprietaireId = null,
+    Object? proprietaireId = freezed,
     Object? numeroLigne = null,
     Object? marque = freezed,
     Object? lastDateCotisation = freezed,
-    Object? created_at = freezed,
-    Object? updated_at = freezed,
+    Object? createdAt = freezed,
+    Object? dateEnVigueur = freezed,
+    Object? updatedAt = freezed,
     Object? jourEtat = freezed,
     Object? montantEtat = freezed,
     Object? nomGie = freezed,
@@ -228,22 +237,22 @@ class __$$_BusCopyWithImpl<$Res> extends _$BusCopyWithImpl<$Res, _$_Bus>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      compte: null == compte
+      compte: freezed == compte
           ? _value.compte
           : compte // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       matricule: null == matricule
           ? _value.matricule
           : matricule // ignore: cast_nullable_to_non_nullable
               as String,
-      proprietaireId: null == proprietaireId
+      proprietaireId: freezed == proprietaireId
           ? _value.proprietaireId
           : proprietaireId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       numeroLigne: null == numeroLigne
           ? _value.numeroLigne
           : numeroLigne // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       marque: freezed == marque
           ? _value.marque
           : marque // ignore: cast_nullable_to_non_nullable
@@ -252,13 +261,17 @@ class __$$_BusCopyWithImpl<$Res> extends _$BusCopyWithImpl<$Res, _$_Bus>
           ? _value.lastDateCotisation
           : lastDateCotisation // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      created_at: freezed == created_at
-          ? _value.created_at
-          : created_at // ignore: cast_nullable_to_non_nullable
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      updated_at: freezed == updated_at
-          ? _value.updated_at
-          : updated_at // ignore: cast_nullable_to_non_nullable
+      dateEnVigueur: freezed == dateEnVigueur
+          ? _value.dateEnVigueur
+          : dateEnVigueur // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       jourEtat: freezed == jourEtat
           ? _value.jourEtat
@@ -293,14 +306,15 @@ class __$$_BusCopyWithImpl<$Res> extends _$BusCopyWithImpl<$Res, _$_Bus>
 class _$_Bus with DiagnosticableTreeMixin implements _Bus {
   const _$_Bus(
       {required this.id,
-      required this.compte,
+      this.compte,
       required this.matricule,
-      required this.proprietaireId,
+      this.proprietaireId,
       required this.numeroLigne,
       this.marque,
       this.lastDateCotisation,
-      this.created_at,
-      this.updated_at,
+      this.createdAt,
+      this.dateEnVigueur,
+      this.updatedAt,
       this.jourEtat,
       this.montantEtat,
       this.nomGie,
@@ -315,21 +329,23 @@ class _$_Bus with DiagnosticableTreeMixin implements _Bus {
   @override
   final int id;
   @override
-  final int compte;
+  final int? compte;
   @override
   final String matricule;
   @override
-  final int proprietaireId;
+  final int? proprietaireId;
   @override
-  final int numeroLigne;
+  final String numeroLigne;
   @override
   final String? marque;
   @override
   final DateTime? lastDateCotisation;
   @override
-  final DateTime? created_at;
+  final DateTime? createdAt;
   @override
-  final DateTime? updated_at;
+  final DateTime? dateEnVigueur;
+  @override
+  final DateTime? updatedAt;
   @override
   final int? jourEtat;
   @override
@@ -358,7 +374,7 @@ class _$_Bus with DiagnosticableTreeMixin implements _Bus {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Bus(id: $id, compte: $compte, matricule: $matricule, proprietaireId: $proprietaireId, numeroLigne: $numeroLigne, marque: $marque, lastDateCotisation: $lastDateCotisation, created_at: $created_at, updated_at: $updated_at, jourEtat: $jourEtat, montantEtat: $montantEtat, nomGie: $nomGie, proprietaire: $proprietaire, receveurs: $receveurs, etatBus: $etatBus)';
+    return 'Bus(id: $id, compte: $compte, matricule: $matricule, proprietaireId: $proprietaireId, numeroLigne: $numeroLigne, marque: $marque, lastDateCotisation: $lastDateCotisation, createdAt: $createdAt, dateEnVigueur: $dateEnVigueur, updatedAt: $updatedAt, jourEtat: $jourEtat, montantEtat: $montantEtat, nomGie: $nomGie, proprietaire: $proprietaire, receveurs: $receveurs, etatBus: $etatBus)';
   }
 
   @override
@@ -373,8 +389,9 @@ class _$_Bus with DiagnosticableTreeMixin implements _Bus {
       ..add(DiagnosticsProperty('numeroLigne', numeroLigne))
       ..add(DiagnosticsProperty('marque', marque))
       ..add(DiagnosticsProperty('lastDateCotisation', lastDateCotisation))
-      ..add(DiagnosticsProperty('created_at', created_at))
-      ..add(DiagnosticsProperty('updated_at', updated_at))
+      ..add(DiagnosticsProperty('createdAt', createdAt))
+      ..add(DiagnosticsProperty('dateEnVigueur', dateEnVigueur))
+      ..add(DiagnosticsProperty('updatedAt', updatedAt))
       ..add(DiagnosticsProperty('jourEtat', jourEtat))
       ..add(DiagnosticsProperty('montantEtat', montantEtat))
       ..add(DiagnosticsProperty('nomGie', nomGie))
@@ -399,10 +416,12 @@ class _$_Bus with DiagnosticableTreeMixin implements _Bus {
             (identical(other.marque, marque) || other.marque == marque) &&
             (identical(other.lastDateCotisation, lastDateCotisation) ||
                 other.lastDateCotisation == lastDateCotisation) &&
-            (identical(other.created_at, created_at) ||
-                other.created_at == created_at) &&
-            (identical(other.updated_at, updated_at) ||
-                other.updated_at == updated_at) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.dateEnVigueur, dateEnVigueur) ||
+                other.dateEnVigueur == dateEnVigueur) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
             (identical(other.jourEtat, jourEtat) ||
                 other.jourEtat == jourEtat) &&
             (identical(other.montantEtat, montantEtat) ||
@@ -426,8 +445,9 @@ class _$_Bus with DiagnosticableTreeMixin implements _Bus {
       numeroLigne,
       marque,
       lastDateCotisation,
-      created_at,
-      updated_at,
+      createdAt,
+      dateEnVigueur,
+      updatedAt,
       jourEtat,
       montantEtat,
       nomGie,
@@ -452,14 +472,15 @@ class _$_Bus with DiagnosticableTreeMixin implements _Bus {
 abstract class _Bus implements Bus {
   const factory _Bus(
       {required final int id,
-      required final int compte,
+      final int? compte,
       required final String matricule,
-      required final int proprietaireId,
-      required final int numeroLigne,
+      final int? proprietaireId,
+      required final String numeroLigne,
       final String? marque,
       final DateTime? lastDateCotisation,
-      final DateTime? created_at,
-      final DateTime? updated_at,
+      final DateTime? createdAt,
+      final DateTime? dateEnVigueur,
+      final DateTime? updatedAt,
       final int? jourEtat,
       final int? montantEtat,
       final String? nomGie,
@@ -472,21 +493,23 @@ abstract class _Bus implements Bus {
   @override
   int get id;
   @override
-  int get compte;
+  int? get compte;
   @override
   String get matricule;
   @override
-  int get proprietaireId;
+  int? get proprietaireId;
   @override
-  int get numeroLigne;
+  String get numeroLigne;
   @override
   String? get marque;
   @override
   DateTime? get lastDateCotisation;
   @override
-  DateTime? get created_at;
+  DateTime? get createdAt;
   @override
-  DateTime? get updated_at;
+  DateTime? get dateEnVigueur;
+  @override
+  DateTime? get updatedAt;
   @override
   int? get jourEtat;
   @override

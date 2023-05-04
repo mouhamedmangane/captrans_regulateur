@@ -8,6 +8,7 @@ part 'ligne_cotisation.g.dart';
 
 @Freezed()
 class LigneCotisation with _$LigneCotisation{
+  const LigneCotisation._();
   const factory LigneCotisation({
     required int id,
     required int nombreDeDepot,
@@ -16,8 +17,8 @@ class LigneCotisation with _$LigneCotisation{
     DateTime ? created_at,
     DateTime ? updated_at,
 
-    required int etatBusId,
-    required int cotisationId,
+    int ? etatBusId,
+    int ? cotisationId,
 
     required int prixGie,
     required int prixCaptrans,
@@ -28,4 +29,8 @@ class LigneCotisation with _$LigneCotisation{
 
   factory LigneCotisation.fromJson(Map<String, dynamic> json) =>
       _$LigneCotisationFromJson(json);
+
+  int prixTotal(){
+    return prixGie+prixCaptrans+(prixSupplementaire??0);
+  }
 }

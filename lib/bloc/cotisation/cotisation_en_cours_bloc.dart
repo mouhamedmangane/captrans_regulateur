@@ -1,51 +1,67 @@
 
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:captrans_regulateur/app_const.dart';
-import 'package:captrans_regulateur/model/cotisation.dart';
-import 'package:captrans_regulateur/modelDataTest/cotisation_data.dart';
-import 'package:noppal_util/bloc/enum_loadable_state.dart';
-import 'package:noppal_util/bloc/simple_loadable_state.dart';
+
+import 'package:noppal_util/bloc/simple_loadable_state_paginate.dart';
+import 'package:noppal_util/conf/env.dart';
 import 'package:noppal_util/repository/npl_treat_request_exception.dart';
 
+
+import '../../model/cotisation.dart';
 import '../../repository/cotisation/cotisation_repo.dart';
 
-class CotisationEnCoursBloc extends Cubit<SimpleLoadableState<List<Cotisation>>>{
-  CotisationRepo _cotisationRepo;
+class CotisationEnCoursBloc extends Cubit<SimpleLoadableStatePaginate<Cotisation>>{
+  final CotisationRepo _cotisationRepo;
   int cptTest=0;
   CotisationEnCoursBloc(CotisationRepo cotisationRepo):
       _cotisationRepo=cotisationRepo,
-       super(SimpleLoadableState.init());
+       super(SimpleLoadableStatePaginate());
 
+ Future<void> reinit() async{
+  state.clear();
+  await load();
+ }
 
   load() async{
-    //emit(SimpleLoadableState.loading());
-    //await Future.delayed(Duration(seconds: 1));
-    return;
-    await _cotisationRepo.en_cours().then((cotisations){
-      emit(SimpleLoadableState.done(cotisations));
-    }).catchError((error){
-      cptTest++;
-      if(cptTest>1){
-        emit(SimpleLoadableState.done(CotisationData(10).getData()));
+    if(!state.isLimit()){
+      if(state.value.currentPage>0) {
+        emit(state.loadingAdd());
+      } else {
+        emit(state.loading());
       }
-      else {
+      int id=MyConf.getNum(MyConfConstUser.ID_KEY).toInt();
+      await _cotisationRepo.en_cours(id,state.value.currentPage+1,cotisationId: state.param).then((dto){
+        if(dto.cotisations.currentPage==1 && dto.cotisations.data.isNotEmpty) {
+          emit(state.done(dto.cotisations,param: dto.cotisations.data.first.id.toString()));
+        } else {
+          emit(state.done(dto.cotisations));
+        }
+      }).catchError((error){
         String message;
-        if (error is NplTreatRequestException)
-          message = error.message;
-        else
-          message = AppConst.no_connexion;
-        emit(SimpleLoadableState.error(message));
-      }
-    });
+        if(error is NplTreatRequestException) {
+          message=error.message;
+        } else if(error is TimeoutException) {
+          message=AppConst.timeout;
+        } else {
+          message =  AppConst.noConnexion;
+        }
+
+        if(state.value.currentPage>0) {
+          emit(state.errorAdd(message));
+        } else {
+          emit(state.error(message));
+        }
+         throw error;
+      });
+    }
 
   }
 
-  Future<void> addNewCotisastion(Cotisation cotisation) async{
-    emit(SimpleLoadableState(value: state.value,state: EnumLoadableState.LOADING));
-    await Future.delayed(Duration(milliseconds: 500));
-    if(state.value==null)
-      state.value=[];
-      state.value!.add(cotisation);
-    emit(SimpleLoadableState.done(state.value!));
+
+
+  addNewCotisastion(Cotisation cotisation) async {
+    emit(state.insertInFirst(cotisation));
   }
 }

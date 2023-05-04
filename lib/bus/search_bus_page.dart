@@ -55,7 +55,7 @@ class _SearchBusViewState extends State<SearchBusView> {
     _scrollController.addListener(() {
       if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent){
         BusSearchBloc bloc= BlocProvider.of<BusSearchBloc>(context);
-        if(bloc.state.status != BusSearchStatus.loadingAdd && bloc.state.page<bloc.state.maxPage)
+        if(bloc.state.status != BusSearchStatus.loadingAdd && !bloc.state.buss.isLimit())
           bloc.add(BusSearchOnAdded());
       }
     });
@@ -168,7 +168,7 @@ class _SearchBusViewState extends State<SearchBusView> {
 
       controller: _scrollController,
       itemBuilder: (context,index){
-        if(index == state.buss.length){
+        if(index == state.buss.data.length){
           if(state.status == BusSearchStatus.loadingAdd)
             return Center(child: CircularProgressIndicator());
           else if(state.status == BusSearchStatus.errorAdd)
@@ -178,16 +178,16 @@ class _SearchBusViewState extends State<SearchBusView> {
         }
         else{
           return BusListTile(
-            bus: state.buss[index],
+            bus: state.buss.data[index],
             onPressed: (context,bus){
-              widget.onSelect!(context,bus);
+              widget.onSelect(context,bus);
             },
           );
         }
       },
       itemCount:(state.status==BusSearchStatus.done)
-          ? state.buss.length
-          : state.buss.length+1,
+          ? state.buss.data.length
+          : state.buss.data.length+1,
     );
   }
 }

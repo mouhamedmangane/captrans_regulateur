@@ -18,7 +18,6 @@ class CotisationData extends GenDataArrayImpl<Cotisation>{
   List<Cotisation> getData() {
    GenNombre nLigneCotisation=GenNombre(1,4);
    GenNombre montant= GenNombre(100, 800,pas: 100);
-   GenNombre nombre=GenNombre(1,7);
    BusData buss=BusData(taille);
    UserData users= UserData(taille);
    ReceveurData receveurs= ReceveurData(taille);
@@ -42,7 +41,7 @@ class CotisationData extends GenDataArrayImpl<Cotisation>{
         regulateur: regulateur,
         ligneCotisations: ligneCotisations,
         busId: bus.id,
-        created_at: DateTime.now(),
+        createdAt: DateTime.now(),
       );
    });
   }

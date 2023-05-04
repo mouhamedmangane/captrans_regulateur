@@ -15,32 +15,34 @@ class ListeCotisationBItemView extends StatelessWidget {
         if(onTap != null)
           onTap!(context,cotisation);
       },
-      leading: CircleAvatar(
-        radius: 28,
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.blue,
+      leading: Container(
+        width: 32,
+        height: 32,
+        decoration: BoxDecoration(
+          color: Colors.white,
+        ),
+
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('1${cotisation.dateFin.difference(cotisation.dateDebut).inDays}',style: TextStyle(fontSize: 14,fontWeight:FontWeight.bold)),
+            Text('${cotisation.interValJour() }',style: TextStyle(fontSize: 14,fontWeight:FontWeight.bold)),
             Text('jours',style: TextStyle(fontSize: 12),),
           ],
         ),
       ),
-      title: Text('${cotisation.receveur!.nom} '),
+      title: Text('${(cotisation.receveur!=null)?cotisation.receveur!.nom:'Aucun'} '),
       subtitle: Text('[ ${NplDateFormat.dayFormat(cotisation.dateDebut,separator: '-')} , ${NplDateFormat.dayFormat(cotisation.dateFin,separator: '-')} ]'),
       trailing: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Chip(
-
-             labelPadding: EdgeInsets.symmetric(horizontal: 10,vertical: 0),
+            labelPadding: EdgeInsets.symmetric(horizontal: 10,vertical: 0),
             backgroundColor: Colors.blue,
             label: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('${NumberHelper.format(cotisation.montant??0)}',style: TextStyle(color: Colors.white),),
+                Text('${NumberHelper.format(cotisation.montant)}',style: TextStyle(color: Colors.white),),
                 Text(" F",style: TextStyle(color: Colors.white))
               ],
             ),

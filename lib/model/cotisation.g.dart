@@ -10,18 +10,22 @@ _$_Cotisation _$$_CotisationFromJson(Map<String, dynamic> json) =>
     _$_Cotisation(
       id: json['id'] as int,
       montant: json['montant'] as int,
-      montantCotiser: json['montantCotiser'] as int,
-      dateDebut: DateTime.parse(json['dateDebut'] as String),
-      dateFin: DateTime.parse(json['dateFin'] as String),
-      created_at: json['created_at'] == null
+      montantCotiser: json['montant_cotiser'] as int,
+      dateDebut: json['date_debut'] == null
+          ? null
+          : DateTime.parse(json['date_debut'] as String),
+      dateFin: json['date_fin'] == null
+          ? null
+          : DateTime.parse(json['date_fin'] as String),
+      createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
-      updated_at: json['updated_at'] == null
+      updatedAt: json['updated_at'] == null
           ? null
           : DateTime.parse(json['updated_at'] as String),
-      regulateurId: json['regulateurId'] as int,
-      receveurId: json['receveurId'] as int,
-      busId: json['busId'] as int,
+      regulateurId: json['regulateur_id'] as int?,
+      receveurId: json['receveur_id'] as int?,
+      busId: json['bus_id'] as int?,
       regulateur: json['regulateur'] == null
           ? null
           : User.fromJson(json['regulateur'] as Map<String, dynamic>),
@@ -31,25 +35,31 @@ _$_Cotisation _$$_CotisationFromJson(Map<String, dynamic> json) =>
       receveur: json['receveur'] == null
           ? null
           : Receveur.fromJson(json['receveur'] as Map<String, dynamic>),
-      ligneCotisations: (json['ligneCotisations'] as List<dynamic>?)
+      ligneCotisations: (json['ligne_cotisations'] as List<dynamic>?)
           ?.map((e) => LigneCotisation.fromJson(e as Map<String, dynamic>))
           .toList(),
+      compte: json['compte'] as int?,
+      jourEtat: json['jour_etat'] as int?,
+      montantEtat: json['montant_etat'] as int?,
     );
 
 Map<String, dynamic> _$$_CotisationToJson(_$_Cotisation instance) =>
     <String, dynamic>{
       'id': instance.id,
       'montant': instance.montant,
-      'montantCotiser': instance.montantCotiser,
-      'dateDebut': instance.dateDebut.toIso8601String(),
-      'dateFin': instance.dateFin.toIso8601String(),
-      'created_at': instance.created_at?.toIso8601String(),
-      'updated_at': instance.updated_at?.toIso8601String(),
-      'regulateurId': instance.regulateurId,
-      'receveurId': instance.receveurId,
-      'busId': instance.busId,
+      'montant_cotiser': instance.montantCotiser,
+      'date_debut': instance.dateDebut?.toIso8601String(),
+      'date_fin': instance.dateFin?.toIso8601String(),
+      'created_at': instance.createdAt?.toIso8601String(),
+      'updated_at': instance.updatedAt?.toIso8601String(),
+      'regulateur_id': instance.regulateurId,
+      'receveur_id': instance.receveurId,
+      'bus_id': instance.busId,
       'regulateur': instance.regulateur,
       'bus': instance.bus,
       'receveur': instance.receveur,
-      'ligneCotisations': instance.ligneCotisations,
+      'ligne_cotisations': instance.ligneCotisations,
+      'compte': instance.compte,
+      'jour_etat': instance.jourEtat,
+      'montant_etat': instance.montantEtat,
     };

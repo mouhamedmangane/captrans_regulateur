@@ -10,7 +10,7 @@ class ReceveurSearchEvent extends Equatable{
 }
 
 class ReceveurSearchLoad extends ReceveurSearchEvent{
-  String search;
+  final String search;
   ReceveurSearchLoad({required this.search});
   List<Object?> get props => [search];
 }

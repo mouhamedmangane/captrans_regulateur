@@ -2,6 +2,7 @@
 
 
 import 'package:captrans_regulateur/model/user.dart';
+import 'package:noppal_util/repository/local_repo_string.dart';
 import 'package:noppal_util/repository/local_reposiroty.dart';
 import 'package:noppal_util/repository/local_repo_object_item.dart';
 import 'package:noppal_util/repository/npl_treat_request_exception.dart';
@@ -11,6 +12,8 @@ class UserLocalRepo extends NplLocalReposiroty{
     key: "user_object",
     create: (json)=>User.fromJson(json),
   );
+  LocalRepoStringItem isLoadedPhotoDriver=LocalRepoStringItem('user_loaded_photo_profil');
+
 
   UserLocalRepo():super("user");
   
@@ -27,6 +30,14 @@ class UserLocalRepo extends NplLocalReposiroty{
       throw NplTreatRequestException("Impossible de recuperer l'utilisateur.");
   }
 
+  Future<String?> isLoadedPhoto()async {
+    return await get(isLoadedPhotoDriver);
+
+  }
+
+  Future<void> saveLoadedPhoto(String state)async {
+    set(isLoadedPhotoDriver,state);
+  }
 
 
 }

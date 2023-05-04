@@ -1,48 +1,80 @@
 
-
 import 'package:captrans_regulateur/bloc/cotisation/cotisation_bloc.dart';
-import 'package:captrans_regulateur/model/ligne_cotisation.dart';
+import 'package:captrans_regulateur/bus/detail_bus_page.dart';
+import 'package:captrans_regulateur/cotisation/detail/cadre_montant_view.dart';
+import 'package:captrans_regulateur/cotisation/time_line_auto_view.dart';
+import 'package:captrans_regulateur/cotisation/time_line_last_view.dart';
+import 'package:captrans_regulateur/cotisation/time_line_prev_view.dart';
+import 'package:captrans_regulateur/model_dto/cotisation_success.dart';
 import 'package:captrans_regulateur/receveur/receveur_list_tile.dart';
 import 'package:captrans_regulateur/repository/cotisation/cotisation_repo.dart';
-import 'package:captrans_regulateur/ui/listitem/cle_valeur_view.dart';
+import 'package:captrans_regulateur/ui/button/error_body_view.dart';
+import 'package:captrans_regulateur/ui/loading/loading_body_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:noppal_util/bloc/enum_loadable_state.dart';
-import 'package:noppal_util/bloc/simple_loadable_state.dart';
-import 'package:noppal_util/date/npl_date_format.dart';
-import 'package:noppal_util/format/number_helper.dart';
+import 'package:noppal_util/ui/croquis/card_croquis.dart';
 
+import '../bus/search_bus_by_mat_page.dart';
 import '../model/cotisation.dart';
+import 'detail/actual_state_bus_view.dart';
+import 'detail/cadre_bus_view.dart';
 
-class CotisationParam {
+abstract class CotisationParam{
+  dynamic getInitValue();
+}
+class CotisationParamWithCotisation extends CotisationParam {
   final Cotisation cotisation;
-  final bool mustCompleted;
-  CotisationParam({required this.cotisation,this.mustCompleted=false});
+  CotisationParamWithCotisation({required this.cotisation});
+  @override
+  getInitValue() {
+    return cotisation;
+  }
+}
+
+class CotisationParamWithId extends CotisationParam{
+  final int cotisationId;
+  CotisationParamWithId({required this.cotisationId});
+  @override
+  getInitValue() {
+    return cotisationId;
+  }
+
+}
+class CotisationParamComplete extends CotisationParam{
+  final CotisationSuccess cotisationSuccess;
+  CotisationParamComplete({required this.cotisationSuccess});
+  @override
+  getInitValue() {
+    return cotisationSuccess;
+  }
 }
 class CotisationPageArgs extends StatelessWidget{
   static const String routeName='/cotisation/complete';
+
+  const CotisationPageArgs({Key? key}):super(key:key);
   @override
   Widget build(BuildContext context){
     CotisationParam param= ModalRoute.of(context)!.settings.arguments as CotisationParam;
     return CotisationPage(
-      cotisation: param.cotisation,
-      mustCompleted: param.mustCompleted,
+          initValue: param.getInitValue(),
     );
   }
 }
+
 class CotisationPage extends StatelessWidget {
-  final bool mustCompleted;
-  final Cotisation cotisation;
-  const CotisationPage({required this.cotisation,this.mustCompleted=false,Key? key}) : super(key: key);
+  final dynamic initValue;
+  const CotisationPage({required this.initValue,Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<CotisationBloc>(
-      create: (context)=>CotisationBloc(cotisationRepo: context.read<CotisationRepo>())..init(cotisation, mustCompleted),
-      child: CotisationView(),
+      create: (context)=>CotisationBloc(cotisationRepo: context.read<CotisationRepo>())..add(CotisationInit(initValue)),
+      child: const CotisationView(),
     );
   }
 }
+
+
 
 class CotisationView extends StatelessWidget {
   const CotisationView({Key? key}) : super(key: key);
@@ -50,247 +82,297 @@ class CotisationView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
+      //backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
         elevation: 2,
         titleSpacing: 0,
-        title: _titleText(),
+        title:BlocBuilder<CotisationBloc,CotisationState>(
+          builder: (context,state){
+            String info="-----------";
+            if(state.status!=CotisationStatus.init ){
+              info=state.cotisationId.toString();
+            }
+
+            return Text('Cotisation N°$info ');
+
+          },
+        ),
         actions: [
           _iconBtnBus(),
         ],
       ),
       body: Padding(
         padding: const EdgeInsets.only( ),
-        child: BlocBuilder<CotisationBloc,SimpleLoadableState<Cotisation>>(
-          builder: (context,state){
-            if([EnumLoadableState.DONE,EnumLoadableState.ERROR].contains(state.state)){
-              return _cotisationDone(context,state.value!);
+        child: BlocBuilder<CotisationBloc,CotisationState>(
+          buildWhen: (previous,current){
+            List<CotisationStatus> statuss=[CotisationStatus.errorComplete,CotisationStatus.loadingComplete,CotisationStatus.success];
+            if(statuss.contains(previous.status) && statuss.contains(current.status) && previous.cotisationId==current.cotisationId){
+              return false;
             }
-            return _loading();
+            return true;
+          },
+          builder: (context,state){
+            if(state.status ==CotisationStatus.loading || state.status==CotisationStatus.init){
+              return  const LoadingBodyView();
+            }
+            else if(state.status == CotisationStatus.error) {
+              return ErrorBodyView(
+                title: 'Echec recuparation cotisation',
+                message: state.message!,
+                onTap: (){
+                  context.read<CotisationBloc>().add(CotisationLoadWithId(state.cotisationId!));
+                },
+              );
+            }
+            return _showCotisation(context,state);
+
           },
         ),
       ),
-      floatingActionButton:FloatingActionButton(
-        onPressed: (){
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton:BlocBuilder<CotisationBloc,CotisationState>(
+        builder:(context,state){
+          bool isCompled =state.bus!=null && state.status==CotisationStatus.success;
+          return FloatingActionButton.extended(
+              onPressed: (){
 
-        },
-        child: Icon(Icons.print),
-      )
-
-
-    );
-  }
-
-  Widget _titleText(){
-    return BlocBuilder<CotisationBloc,SimpleLoadableState<Cotisation>>(
-      builder: (context,state){
-        String info="-----------";
-        if(state.state==EnumLoadableState.DONE){
-          info=state.value!.id.toString();
+              },
+              elevation: isCompled ? null : 0,
+              disabledElevation: isCompled ? null : 0,
+              enableFeedback: isCompled,
+              backgroundColor: isCompled ? Colors.blue : Colors.blue.shade100,
+              label: Row(
+                children: const [
+                  Icon(Icons.print_outlined),
+                  SizedBox(width: 4,),
+                  Text('Imprimer'),
+                ],
+              ),
+          //child: Icon(Icons.print),
+          );
         }
-        return Text('Cotisation N°${info} ');
-      },
+      )
     );
   }
+
+
 
   Widget _iconBtnBus(){
-    return BlocBuilder<CotisationBloc,SimpleLoadableState<Cotisation>>(
-        builder: (context,state){
-      bool isDone= state.state==EnumLoadableState.DONE;
-      return IconButton(
-        disabledColor: Colors.grey,
+    return BlocBuilder<CotisationBloc,CotisationState>(
+      builder: (context,state){
+        bool isDone= state.status==CotisationStatus.success;
+        return IconButton(
+          disabledColor: Colors.grey,
+          onPressed: (){
+            if(isDone){
+              Navigator.pushNamed(context, SearchBusByMatPage.routeName,arguments: SearchBusByMatParam(
+                  matricule: state.bus!.matricule,
+                  canRescan: true,
+                  onValidate: (context,mybus){
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder:(context)=>BusDetailCotisationPage(bus: mybus)));
 
-        onPressed: (){
-          if(isDone){
-
-          }
-        },
-        icon: Icon(Icons.bus_alert),
-      );
+                  }));
+            }
+          },
+          icon: const Icon(Icons.directions_bus),
+        );
       }
     );
   }
 
-  Widget _loading() {
-    return Container(
-    );
-  }
 
-  Widget _cotisationDone(BuildContext context,Cotisation cotisation){
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _cotisationEntete(cotisation),
-          SizedBox(height: 5,),
-          _ligneCotisation(context,cotisation.ligneCotisations!),
-          SizedBox(height: 30,),
+  Widget _showCotisation(BuildContext context,CotisationState state){
+    return RefreshIndicator(
 
-        ],
-      ),
-    );
-  }
-  Widget _montant(Cotisation cotisation){
-    return Card(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top:20.0),
-            child: ListTile(
-              title:Text('${NumberHelper.format(cotisation.montant)} FCFA',style: TextStyle(fontSize: 29,fontWeight: FontWeight.bold),) ,
-              subtitle: Text('Montant cotisation'),
-            ),
-          ),
-          CleValeurView(
-            cle: Text('Montant Cotissé',),
-            valeur: Chip(
-                label: Text('${NumberHelper.format(cotisation.montant)} FCFA',style: TextStyle(color: Colors.white),),
-                 backgroundColor: Colors.blue,
-            ),
-            icon: Icons.payment,
-          ),
-          CleValeurView(
-            icon: Icons.sunny,
-            cle:Text('Date enregistrement',),
-            valeur:Text(' ${NplDateFormat.simpleFormat(cotisation.created_at!)}'),
-          ),
-          ListTile(
-            title: Text('Periode cotisé',),
-            subtitle: Text('[ ${NplDateFormat.dayFormat(cotisation.dateDebut,separator: '-')} , ${NplDateFormat.dayFormat(cotisation.dateFin,separator: '-')} ] '),
-            leading: Icon(Icons.calendar_month),
-          ),
-        ],
-      ),
-    );
-  }
+      onRefresh: ()async{
+        context.read<CotisationBloc>().add(CotisationLoadWithId(state.cotisationId!));
+      },
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _chargement(),
+            const SizedBox(height: 5,),
+            _resume(),
+            const SizedBox(height: 5,),
 
-  Widget _bus(Cotisation cotisation){
-    return Card(
-      child: Column(
-        children: [
-          ListTile(
-            trailing:Text(' ${cotisation.bus!.matricule}  ',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold)) ,
-            title: Text('Matricule Bus'),
-            leading: Icon(Icons.departure_board,),
-          ),
-
-          CleValeurView(
-            cle: Text('Proprietaire Bus'),
-            valeur: Text('${cotisation.bus!.proprietaire!.nom}',),
-            icon: Icons.personal_injury,
-          ),
-
-          CleValeurView(
-            cle: Text('Gie'),
-            valeur:Text('${cotisation.bus!.nomGie} '),
-            icon: Icons.group_work,
-          ),
-          CleValeurView(
-            cle: Text('Numero ligne'),
-            valeur:Text('${cotisation.bus!.numeroLigne}',),
-            icon: Icons.line_axis,
-          ),
-
-        ],
+            Card(child: _timelines()),
+            const SizedBox(height: 10,),
+            Card(child: _receveur(state)),
+            const SizedBox(height: 10,),
+            Card(child: _etatActuel()),
+            const SizedBox(height: 120,),
+          ],
+        ),
       ),
     );
   }
 
 
-  Widget _receveur(Cotisation cotisation){
-    return Card(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+  Widget _resume(){
+    return BlocBuilder<CotisationBloc,CotisationState>(
+      builder: (context,state){
+        return Column(
+          children: [
             Padding(
-            padding: EdgeInsets.only(left:15,top: 10,),
-            child: Text('Receveur'),
-          ),
-          ReceveurListTile(receveur: cotisation.receveur!)
-        ]
-      )
+              padding: const EdgeInsets.only(top:10.0,left: 10,right: 10,bottom: 10),
+              child: Row(
+                children:const [
+                  Expanded(
+                    child:  CadreMontantView(),
+                  ),
+                  SizedBox(width: 10,),
+                  Expanded(
+                    child:CadreBusView(),
+                  )
+                ],
+              ),
+            ),
+
+          ],
+        );
+      }
     );
   }
-  
-  Widget _cotisationEntete(Cotisation cotisation){
-    return Column(
-      children: [
-        _montant(cotisation),
-        SizedBox(height: 5,),
-        _bus(cotisation),
-        SizedBox(height: 5,),
-        _receveur(cotisation),
+  Widget _receveur(CotisationState state){
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 15),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children:[
+          const Text('Receveur',style:  TextStyle(fontWeight: FontWeight.bold),),
+          const SizedBox(height: 5,),
+          _receveurItem(state)
+        ],
+      ),
+    );
+  }
+  Widget _receveurItem(CotisationState state){
+    if(state.cotisation!=null){
+      if(state.cotisation!.receveur!=null){
+        return ReceveurListTile(receveur: state.cotisation!.receveur!,);
+      }
+    }
+    return ListTile(title: Text('Aucun receveur'));
+  }
 
-
-      ],
+  Widget _etatActuel(){
+    return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 15),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: const [
+          Text('Etat actuel du bus',style:  TextStyle(fontWeight: FontWeight.bold),),
+          SizedBox(height: 15,),
+          ActualStateBus(),
+        ],
+      ),
     );
   }
 
 
-
-
-
-  Widget _ligneCotisation(BuildContext context,List<LigneCotisation> ligneCotisations){
-    return Card(
-
-      child:Column(
+  Widget _timelines(){
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 15),
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: EdgeInsets.only(top: 10,bottom: 15,left: 15),
-            child: Text('Details Cotisations'),
-          ),
-         // MyDivider(color: Colors.grey.shade200),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          const Text('Chronologie',style: TextStyle(fontWeight: FontWeight.bold),),
+          const SizedBox(height: 15,),
+          BlocBuilder<CotisationBloc,CotisationState>(
+            builder: (context,state) {
+              if(state.status==CotisationStatus.error || state.status==CotisationStatus.errorComplete){
+                return Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Container(
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    height:120,
+                    child: const Text('error ...'),
+                  ),
+                );
+              }
+              else if(state.status == CotisationStatus.loading || state.status==CotisationStatus.loadingComplete){
+                return  CardCroquis(
+                  height: 240,
+                  width: double.infinity,
+                  borderRadius: BorderRadius.circular(20),
+                  backgroundColor: Colors.grey.shade300,
+                );
+              }
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
 
-            child: Column(
-              children: ListTile.divideTiles(
-                context: context ,
-                tiles:ligneCotisations.map((e) => _ligneCotisationItem(e)).toList(),
-              ).toList(),
-            ),
-          )
-        ],
-      ) ,
-    );
-  }
+                children: [
+                  if(state.cotisation != null)...[
 
-  ListTile _ligneCotisationItem(LigneCotisation ligneCotisation){
-    TextStyle style=TextStyle(color:Colors.grey.shade800,fontSize: 14);
-    return ListTile(
-      trailing: Text('${ligneCotisation.nombreDeDepot} j',),
-      contentPadding: EdgeInsets.zero,
-     // minLeadingWidth: 0,
-      minVerticalPadding: 10,
-      title:Text('${NumberHelper.format(ligneCotisation.total!)} FCFA',style: TextStyle(fontSize: 20,),),
-      subtitle: Column(
-        children: [
-          SizedBox(height: 10,),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+                    TimeLineLastView(cotisation:state.cotisation!,nombreDeJour: (state.cotisationAuto==null)?0:state.cotisationAuto!.nombreTotalDeJour(),),
+                  ],
+                  if(state.cotisationAuto!=null)...[
+                    TimeLineAutoView(cotisationAuto: state.cotisationAuto!),
+                  ],
+                  if(state.resumeLastCotisation!=null)...[
+                    TimeLinePrevView(cotisationResume: state.resumeLastCotisation!),
+                  ],
 
-            children: [
-              Chip(label: Text('De : ${NplDateFormat.dayFormat(ligneCotisation.dateDebut!)}',style: style),),
-              SizedBox(width: 5,),
-              Chip(label: Text(' A : ${NplDateFormat.dayFormat(ligneCotisation.dateFin!)}',style: style,)),
-            ],
-          ),
-          Row(
-            //mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Chip(label:Text('P.Cap : ${NumberHelper.format(ligneCotisation.prixCaptrans)}',style: style,)),
-              SizedBox(width: 5,),
-              Chip(label :Text('P.Gie : ${NumberHelper.format(ligneCotisation.prixGie)}',style: style,)),
-              SizedBox(width: 5,),
-              Chip(label: Text('P.Sup : ${NumberHelper.format(ligneCotisation.prixCaptrans)}',style: style,)),
-            ],
+                ],
+              );
+            }
           ),
         ],
       ),
     );
   }
+
+  Widget _chargement(){
+    return BlocBuilder<CotisationBloc,CotisationState>(
+      builder:(context,state){
+        if(state.status==CotisationStatus.loadingComplete){
+          return  const LinearProgressIndicator();
+        }
+        else if(state.status==CotisationStatus.errorComplete){
+          return Container(
+            color: Colors.red.shade100,
+            padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+            child: Row(
+              children: [
+                Expanded(child: Text('${state.message}',style:const TextStyle(fontSize: 15),overflow: TextOverflow.ellipsis,maxLines: 2,)),
+                const SizedBox(width: 10,),
+                MaterialButton(
+                  color: Colors.red,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)
+                    ),
+                    onPressed: (){
+                      context.read<CotisationBloc>().add(CotisationLoadWithId(state.cotisationId!));
+                    },
+                    child: const Text("Actualise",style: TextStyle(color: Colors.white),)
+                )
+              ],
+            ),
+          );
+        }
+        return Container();
+      }
+    );
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
 

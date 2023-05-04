@@ -5,24 +5,20 @@ part of 'bus_search_bloc.dart';
 enum BusSearchStatus {init,loading,error,done,loadingAdd,errorAdd}
 
 class BusSearchState extends Equatable{
-  BusSearchStatus status;
-  List<Bus> buss=[];
-  int  page;
-  int maxPage;
-  String ? search;
-  String ? message;
+  final BusSearchStatus status;
+  final ListPaginate<Bus> buss;
+  final String ? search;
+  final String ? message;
   BusSearchState({
     BusSearchStatus ? status,
-    List<Bus> ?buss,
+    ListPaginate<Bus> ?buss,
     int ? page,
     int ? maxPage,
     String ? search,
     String ?message,
   }):
   status=status ?? BusSearchStatus.init,
-  buss=buss??[],
-  page=page ?? 0,
-  maxPage =maxPage ?? 0,
+  buss=buss??ListPaginate(),
   search=search ?? '',
   message = message ?? ''
   ;
@@ -30,16 +26,12 @@ class BusSearchState extends Equatable{
 
   BusSearchState copyWith({
     BusSearchStatus ? status,
-    List<Bus> ?buss,
-    int ? page,
-    int ? maxPage,
+    ListPaginate<Bus> ?buss,
     String ? search,
     String ?message,
 })=> BusSearchState(
       status: status ?? this.status,
      buss:buss ?? this.buss,
-      page:  page ?? this.page,
-      maxPage: maxPage  ?? this.maxPage,
       search : search ?? this.search,
       message : message ?? this.message
   );
@@ -47,5 +39,5 @@ class BusSearchState extends Equatable{
 
   @override
   // TODO: implement props
-  List<Object?> get props => [buss,status,page,maxPage,message];
+  List<Object?> get props => [buss,status,message];
 }

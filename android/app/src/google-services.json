@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "587388623113",
+    "project_id": "noppal-captrans",
+    "storage_bucket": "noppal-captrans.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:587388623113:android:a2f7a2d993480685a3dbd8",
+        "android_client_info": {
+          "package_name": "com.noppal.captrans_regulateur"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "587388623113-qofqtmv550jna7h85ofbf881tk7pg825.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPXhu0wk55t3y4fN_0-LmXZNxPM2d74B8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "587388623113-qofqtmv550jna7h85ofbf881tk7pg825.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -7,15 +7,15 @@ class ReceveurSaveEvent extends Equatable{
 }
 
 class ReceveurSaveSubmit extends ReceveurSaveEvent{
-  String nom;
-  String tel;
+  final String nom;
+  final String tel;
 
   ReceveurSaveSubmit({ required this.nom, required this.tel});
   List<Object?> get props => [nom,tel];
 }
 
 class ReceveurSaveWantChangeOp extends ReceveurSaveState{
-  ReceveurSaveOperationType type;
+  final ReceveurSaveOperationType type;
   ReceveurSaveWantChangeOp(this.type);
   List<Object?> get props => [type] ;
 }

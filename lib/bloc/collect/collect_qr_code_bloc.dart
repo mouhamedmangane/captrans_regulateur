@@ -4,30 +4,35 @@
 
 
 import 'package:bloc/bloc.dart';
-import 'package:captrans_regulateur/repository/user/user_local_repo.dart';
 import 'package:noppal_util/bloc/simple_loadable_state.dart';
+import 'package:noppal_util/conf/env.dart';
 import 'package:noppal_util/repository/npl_treat_request_exception.dart';
 
 import '../../app_const.dart';
+import '../../repository/user/user_dis_repo.dart';
 
 class CollectQrCodeBloc extends Cubit<SimpleLoadableState<String>>{
-  UserLocalRepo _userLocalRepo;
-  CollectQrCodeBloc({required UserLocalRepo userLocalRepo}):
-  _userLocalRepo=userLocalRepo,
+  final UserDisRepo _userDisRepo;
+  CollectQrCodeBloc({required UserDisRepo userDisRepo}):
+  _userDisRepo=userDisRepo,
   super(SimpleLoadableState.init());
 
 
   load()async{
 
     emit(SimpleLoadableState.loading());
-    await Future.delayed(Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 500));
+    int id=MyConf.getNum(MyConfConstUser.ID_KEY).toInt();
 
-    await _userLocalRepo.getUser().then((user) {
-      emit(SimpleLoadableState.done('noppal_captrans_qrcode_${user.id}'));
+    await _userDisRepo.code(id).then((code) {
+      emit(SimpleLoadableState.done(code));
     }).catchError((error){
       String message='';
-      if(error is NplTreatRequestException) message=error.message;
-      else message =  AppConst.no_connexion;
+      if(error is NplTreatRequestException) {
+        message = error.message;
+      } else {
+        message = AppConst.noConnexion;
+      }
       emit(SimpleLoadableState.error(message));
     });
   }

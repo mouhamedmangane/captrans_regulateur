@@ -26,8 +26,8 @@ mixin _$LigneCotisation {
   DateTime? get dateFin => throw _privateConstructorUsedError;
   DateTime? get created_at => throw _privateConstructorUsedError;
   DateTime? get updated_at => throw _privateConstructorUsedError;
-  int get etatBusId => throw _privateConstructorUsedError;
-  int get cotisationId => throw _privateConstructorUsedError;
+  int? get etatBusId => throw _privateConstructorUsedError;
+  int? get cotisationId => throw _privateConstructorUsedError;
   int get prixGie => throw _privateConstructorUsedError;
   int get prixCaptrans => throw _privateConstructorUsedError;
   int? get prixSupplementaire => throw _privateConstructorUsedError;
@@ -52,8 +52,8 @@ abstract class $LigneCotisationCopyWith<$Res> {
       DateTime? dateFin,
       DateTime? created_at,
       DateTime? updated_at,
-      int etatBusId,
-      int cotisationId,
+      int? etatBusId,
+      int? cotisationId,
       int prixGie,
       int prixCaptrans,
       int? prixSupplementaire,
@@ -79,8 +79,8 @@ class _$LigneCotisationCopyWithImpl<$Res, $Val extends LigneCotisation>
     Object? dateFin = freezed,
     Object? created_at = freezed,
     Object? updated_at = freezed,
-    Object? etatBusId = null,
-    Object? cotisationId = null,
+    Object? etatBusId = freezed,
+    Object? cotisationId = freezed,
     Object? prixGie = null,
     Object? prixCaptrans = null,
     Object? prixSupplementaire = freezed,
@@ -111,14 +111,14 @@ class _$LigneCotisationCopyWithImpl<$Res, $Val extends LigneCotisation>
           ? _value.updated_at
           : updated_at // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      etatBusId: null == etatBusId
+      etatBusId: freezed == etatBusId
           ? _value.etatBusId
           : etatBusId // ignore: cast_nullable_to_non_nullable
-              as int,
-      cotisationId: null == cotisationId
+              as int?,
+      cotisationId: freezed == cotisationId
           ? _value.cotisationId
           : cotisationId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       prixGie: null == prixGie
           ? _value.prixGie
           : prixGie // ignore: cast_nullable_to_non_nullable
@@ -154,8 +154,8 @@ abstract class _$$_LigneCotisationCopyWith<$Res>
       DateTime? dateFin,
       DateTime? created_at,
       DateTime? updated_at,
-      int etatBusId,
-      int cotisationId,
+      int? etatBusId,
+      int? cotisationId,
       int prixGie,
       int prixCaptrans,
       int? prixSupplementaire,
@@ -179,8 +179,8 @@ class __$$_LigneCotisationCopyWithImpl<$Res>
     Object? dateFin = freezed,
     Object? created_at = freezed,
     Object? updated_at = freezed,
-    Object? etatBusId = null,
-    Object? cotisationId = null,
+    Object? etatBusId = freezed,
+    Object? cotisationId = freezed,
     Object? prixGie = null,
     Object? prixCaptrans = null,
     Object? prixSupplementaire = freezed,
@@ -211,14 +211,14 @@ class __$$_LigneCotisationCopyWithImpl<$Res>
           ? _value.updated_at
           : updated_at // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      etatBusId: null == etatBusId
+      etatBusId: freezed == etatBusId
           ? _value.etatBusId
           : etatBusId // ignore: cast_nullable_to_non_nullable
-              as int,
-      cotisationId: null == cotisationId
+              as int?,
+      cotisationId: freezed == cotisationId
           ? _value.cotisationId
           : cotisationId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       prixGie: null == prixGie
           ? _value.prixGie
           : prixGie // ignore: cast_nullable_to_non_nullable
@@ -241,7 +241,7 @@ class __$$_LigneCotisationCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_LigneCotisation implements _LigneCotisation {
+class _$_LigneCotisation extends _LigneCotisation {
   const _$_LigneCotisation(
       {required this.id,
       required this.nombreDeDepot,
@@ -249,12 +249,13 @@ class _$_LigneCotisation implements _LigneCotisation {
       this.dateFin,
       this.created_at,
       this.updated_at,
-      required this.etatBusId,
-      required this.cotisationId,
+      this.etatBusId,
+      this.cotisationId,
       required this.prixGie,
       required this.prixCaptrans,
       this.prixSupplementaire,
-      this.total});
+      this.total})
+      : super._();
 
   factory _$_LigneCotisation.fromJson(Map<String, dynamic> json) =>
       _$$_LigneCotisationFromJson(json);
@@ -272,9 +273,9 @@ class _$_LigneCotisation implements _LigneCotisation {
   @override
   final DateTime? updated_at;
   @override
-  final int etatBusId;
+  final int? etatBusId;
   @override
-  final int cotisationId;
+  final int? cotisationId;
   @override
   final int prixGie;
   @override
@@ -347,7 +348,7 @@ class _$_LigneCotisation implements _LigneCotisation {
   }
 }
 
-abstract class _LigneCotisation implements LigneCotisation {
+abstract class _LigneCotisation extends LigneCotisation {
   const factory _LigneCotisation(
       {required final int id,
       required final int nombreDeDepot,
@@ -355,12 +356,13 @@ abstract class _LigneCotisation implements LigneCotisation {
       final DateTime? dateFin,
       final DateTime? created_at,
       final DateTime? updated_at,
-      required final int etatBusId,
-      required final int cotisationId,
+      final int? etatBusId,
+      final int? cotisationId,
       required final int prixGie,
       required final int prixCaptrans,
       final int? prixSupplementaire,
       final int? total}) = _$_LigneCotisation;
+  const _LigneCotisation._() : super._();
 
   factory _LigneCotisation.fromJson(Map<String, dynamic> json) =
       _$_LigneCotisation.fromJson;
@@ -378,9 +380,9 @@ abstract class _LigneCotisation implements LigneCotisation {
   @override
   DateTime? get updated_at;
   @override
-  int get etatBusId;
+  int? get etatBusId;
   @override
-  int get cotisationId;
+  int? get cotisationId;
   @override
   int get prixGie;
   @override

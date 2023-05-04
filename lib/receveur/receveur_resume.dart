@@ -15,24 +15,29 @@ class ReceveurResume extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         CircleAvatar(
-          backgroundImage: Image.asset('asset/user/${receveur.id+1}.jpeg').image,
+          radius: 30,
+          backgroundColor: Colors.blue,
+          child: Icon(Icons.person,size: 32,color: Colors.white,),
         ),
         SizedBox(width: 15,),
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text('${receveur.nom} ',style:TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.blue)),
-                Text(' ( ${receveur.tel!} )',style:TextStyle(fontSize: 16,color: Colors.blue)),
-              ],
-            ),
-            SizedBox(height: 2,),
-            _subrillance("Receveur", Colors.green.shade100,Colors.black),
-          ],
+        Flexible(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('${receveur.nom} ',style:const TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.black)),
+                  const SizedBox(height: 2,),
+                  _subrillance(" Receveur ", Colors.blue,Colors.white),
+                ],
+              ),
+              Flexible(child: Text(' - ${receveur.tel} ',style:TextStyle(fontSize: 16,color: Colors.black,),)),
+
+            ],
+          ),
         ),
       ],
     );
@@ -43,9 +48,9 @@ class ReceveurResume extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 5),
             decoration: BoxDecoration(
             color: backColor,
-            borderRadius: BorderRadius.circular(4)
+            borderRadius: BorderRadius.circular(8)
             ),
-            child: Text(text,style: TextStyle(fontSize: 16,color:foreColor,))
+            child: Text(text,style: TextStyle(fontSize: 18,color:foreColor,))
             );
     }
 

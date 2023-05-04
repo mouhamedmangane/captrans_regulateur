@@ -8,14 +8,18 @@ abstract class SearchBusByMatEvent extends Equatable{
 }
 
 class SearchBusByMatCharger extends SearchBusByMatEvent{
-  String matricule;
+  final String matricule;
   SearchBusByMatCharger(this.matricule);
+
+  @override
   List<Object?> get props => [matricule];
 }
 class SearchBusByMatFailled extends SearchBusByMatEvent{
-  String message;
-  bool hasConnexion;
+  final String message;
+  final bool hasConnexion;
   SearchBusByMatFailled(this.message, {this.hasConnexion = false});
+
+  @override
   List<Object?> get props => [message,hasConnexion];
 }
 class SearchBusByMatScanner extends SearchBusByMatEvent{}

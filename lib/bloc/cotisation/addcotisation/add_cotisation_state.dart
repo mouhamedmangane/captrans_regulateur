@@ -4,15 +4,15 @@ enum AddCotisationStatus {initial,loading,success,failure}
 
 class AddCotisationState extends Equatable{
 
-  AddCotisationStatus status;
-  Bus ? bus;
-  Receveur ? receveur;
-  int ? montant;
-  String ? message;
-  Cotisation  ? cotisation;
+  final AddCotisationStatus status;
+  final Bus ? bus;
+  final Receveur ? receveur;
+  final int ? montant;
+  final String ? message;
+  final CotisationSuccessWithMoantant  ? cotisation;
 
 
-  AddCotisationState({
+  const AddCotisationState({
     this.status=AddCotisationStatus.initial,
     this.bus ,
     this.receveur ,
@@ -27,7 +27,7 @@ class AddCotisationState extends Equatable{
     Receveur ? receveur,
     int ? montant,
     String ? message,
-    Cotisation ? cotisation,
+    CotisationSuccessWithMoantant ? cotisation,
   }){
     return AddCotisationState(
         status: status ?? this.status,

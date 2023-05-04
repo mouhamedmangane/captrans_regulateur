@@ -8,14 +8,13 @@ class MySimpleAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Row(
+    return Row(
           children: [
             MyAppBar(titre),
-            Spacer(),
-            UserAvatarButton(),
+            const Spacer(),
+            const UserAvatarButton(),
           ],
-        ),
-    );
+        )
+    ;
   }
 }

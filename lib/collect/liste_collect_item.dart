@@ -2,6 +2,9 @@ import 'package:captrans_regulateur/model/collect.dart';
 import 'package:flutter/material.dart';
 import 'package:noppal_util/date/npl_date_format.dart';
 import 'package:noppal_util/format/number_helper.dart';
+import 'package:noppal_util/repository/dis_repo.dart';
+
+import '../ui/avatar/circle_cached_avatar.dart';
 
 class ListeCollectItem extends StatelessWidget {
   final Collect collect;
@@ -18,14 +21,13 @@ class ListeCollectItem extends StatelessWidget {
         if(onSelect != null)
           onSelect!(context,collect);
       },
-      leading: CircleAvatar(
-        backgroundImage: Image.asset("asset/user/${collect.collecteur!.id}.jpeg").image,
-        radius: 23,
+      leading: CircleCachedAvatar(
+        urlDistant: DisRepo.getGlobalUrl('${collect.collecteur!.profil}'),
 
       ),
-      subtitle: Text(NplDateFormat.simpleFormat(collect.created_at!)),
+      subtitle: Text(NplDateFormat.simpleFormat(collect.date,addTime: true)),
       trailing: Text("${NumberHelper.format(collect.montant)} F",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
-      title: Text(collect.collecteur!.nom) ,
+      title: Text(collect.collecteur!.name) ,
     );
   }
 }

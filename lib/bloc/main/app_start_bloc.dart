@@ -19,4 +19,7 @@ class AppStartBloc extends Cubit<int>{
     else
       emit(1);
   }
+  change(int num){
+    emit(num);
+  }
 }

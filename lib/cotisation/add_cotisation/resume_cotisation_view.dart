@@ -20,22 +20,25 @@ class ResumeCotisationView extends StatelessWidget {
       child: Container(
           width: double.infinity,
          // margin: EdgeInsets.only(bottom: 2,left: 2,right: 2),
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.all(15),
           decoration: BoxDecoration(
-            color:Colors.grey.shade100,
+            color:Color.fromRGBO(246, 247, 248, 1.0),
             border: Border.all(color: Colors.blue,width: 1,),
             boxShadow: [
              // BoxShadow(color: Colors.black,blurRadius: 0.01),
             ],
             borderRadius: BorderRadius.circular(20) ,
           ),
-          height:(receveur!=null) ? 150:95,
+          height:(receveur!=null) ? 190:95,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if(receveur!=null)...[
                 ReceveurResume(receveur: receveur!,),
-                SizedBox(height: 10,),
+                SizedBox(height: 7,),
+                Divider(color: Colors.blue.shade300,),
+                SizedBox(height: 7,),
+
               ],
               BusResume(bus),
 

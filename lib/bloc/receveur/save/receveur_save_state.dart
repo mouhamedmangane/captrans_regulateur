@@ -3,9 +3,9 @@ part of 'receveur_save_bloc.dart';
 enum ReceveurSaveOperationType{add,update}
 enum ReceveurSaveStatus{init,loading,faillure,done}
 class ReceveurSaveState extends Equatable{
-  Receveur ? receveur;
-  ReceveurSaveOperationType operationType;
-  ReceveurSaveStatus status;
+  final Receveur ? receveur;
+  final ReceveurSaveOperationType operationType;
+  final ReceveurSaveStatus status;
 
   ReceveurSaveState({
     this.status= ReceveurSaveStatus.init,

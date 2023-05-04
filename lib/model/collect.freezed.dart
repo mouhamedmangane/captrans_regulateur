@@ -22,10 +22,12 @@ Collect _$CollectFromJson(Map<String, dynamic> json) {
 mixin _$Collect {
   int get id => throw _privateConstructorUsedError;
   int get montant => throw _privateConstructorUsedError;
-  int get collecteurId => throw _privateConstructorUsedError;
-  int get regulateurId => throw _privateConstructorUsedError;
+  int? get collecteurId => throw _privateConstructorUsedError;
+  int? get regulateurId => throw _privateConstructorUsedError;
+  DateTime? get date => throw _privateConstructorUsedError;
   DateTime? get created_at => throw _privateConstructorUsedError;
   DateTime? get updated_at => throw _privateConstructorUsedError;
+  String? get profil => throw _privateConstructorUsedError;
   User? get collecteur => throw _privateConstructorUsedError;
   User? get regulateur => throw _privateConstructorUsedError;
   List<Cotisation>? get cotisations => throw _privateConstructorUsedError;
@@ -43,10 +45,12 @@ abstract class $CollectCopyWith<$Res> {
   $Res call(
       {int id,
       int montant,
-      int collecteurId,
-      int regulateurId,
+      int? collecteurId,
+      int? regulateurId,
+      DateTime? date,
       DateTime? created_at,
       DateTime? updated_at,
+      String? profil,
       User? collecteur,
       User? regulateur,
       List<Cotisation>? cotisations});
@@ -70,10 +74,12 @@ class _$CollectCopyWithImpl<$Res, $Val extends Collect>
   $Res call({
     Object? id = null,
     Object? montant = null,
-    Object? collecteurId = null,
-    Object? regulateurId = null,
+    Object? collecteurId = freezed,
+    Object? regulateurId = freezed,
+    Object? date = freezed,
     Object? created_at = freezed,
     Object? updated_at = freezed,
+    Object? profil = freezed,
     Object? collecteur = freezed,
     Object? regulateur = freezed,
     Object? cotisations = freezed,
@@ -87,14 +93,18 @@ class _$CollectCopyWithImpl<$Res, $Val extends Collect>
           ? _value.montant
           : montant // ignore: cast_nullable_to_non_nullable
               as int,
-      collecteurId: null == collecteurId
+      collecteurId: freezed == collecteurId
           ? _value.collecteurId
           : collecteurId // ignore: cast_nullable_to_non_nullable
-              as int,
-      regulateurId: null == regulateurId
+              as int?,
+      regulateurId: freezed == regulateurId
           ? _value.regulateurId
           : regulateurId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
+      date: freezed == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       created_at: freezed == created_at
           ? _value.created_at
           : created_at // ignore: cast_nullable_to_non_nullable
@@ -103,6 +113,10 @@ class _$CollectCopyWithImpl<$Res, $Val extends Collect>
           ? _value.updated_at
           : updated_at // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      profil: freezed == profil
+          ? _value.profil
+          : profil // ignore: cast_nullable_to_non_nullable
+              as String?,
       collecteur: freezed == collecteur
           ? _value.collecteur
           : collecteur // ignore: cast_nullable_to_non_nullable
@@ -153,10 +167,12 @@ abstract class _$$_CollectCopyWith<$Res> implements $CollectCopyWith<$Res> {
   $Res call(
       {int id,
       int montant,
-      int collecteurId,
-      int regulateurId,
+      int? collecteurId,
+      int? regulateurId,
+      DateTime? date,
       DateTime? created_at,
       DateTime? updated_at,
+      String? profil,
       User? collecteur,
       User? regulateur,
       List<Cotisation>? cotisations});
@@ -179,10 +195,12 @@ class __$$_CollectCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? montant = null,
-    Object? collecteurId = null,
-    Object? regulateurId = null,
+    Object? collecteurId = freezed,
+    Object? regulateurId = freezed,
+    Object? date = freezed,
     Object? created_at = freezed,
     Object? updated_at = freezed,
+    Object? profil = freezed,
     Object? collecteur = freezed,
     Object? regulateur = freezed,
     Object? cotisations = freezed,
@@ -196,14 +214,18 @@ class __$$_CollectCopyWithImpl<$Res>
           ? _value.montant
           : montant // ignore: cast_nullable_to_non_nullable
               as int,
-      collecteurId: null == collecteurId
+      collecteurId: freezed == collecteurId
           ? _value.collecteurId
           : collecteurId // ignore: cast_nullable_to_non_nullable
-              as int,
-      regulateurId: null == regulateurId
+              as int?,
+      regulateurId: freezed == regulateurId
           ? _value.regulateurId
           : regulateurId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
+      date: freezed == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       created_at: freezed == created_at
           ? _value.created_at
           : created_at // ignore: cast_nullable_to_non_nullable
@@ -212,6 +234,10 @@ class __$$_CollectCopyWithImpl<$Res>
           ? _value.updated_at
           : updated_at // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      profil: freezed == profil
+          ? _value.profil
+          : profil // ignore: cast_nullable_to_non_nullable
+              as String?,
       collecteur: freezed == collecteur
           ? _value.collecteur
           : collecteur // ignore: cast_nullable_to_non_nullable
@@ -234,10 +260,12 @@ class _$_Collect with DiagnosticableTreeMixin implements _Collect {
   const _$_Collect(
       {required this.id,
       required this.montant,
-      required this.collecteurId,
-      required this.regulateurId,
+      this.collecteurId,
+      this.regulateurId,
+      this.date,
       this.created_at,
       this.updated_at,
+      this.profil,
       this.collecteur,
       this.regulateur,
       final List<Cotisation>? cotisations})
@@ -251,13 +279,17 @@ class _$_Collect with DiagnosticableTreeMixin implements _Collect {
   @override
   final int montant;
   @override
-  final int collecteurId;
+  final int? collecteurId;
   @override
-  final int regulateurId;
+  final int? regulateurId;
+  @override
+  final DateTime? date;
   @override
   final DateTime? created_at;
   @override
   final DateTime? updated_at;
+  @override
+  final String? profil;
   @override
   final User? collecteur;
   @override
@@ -273,7 +305,7 @@ class _$_Collect with DiagnosticableTreeMixin implements _Collect {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Collect(id: $id, montant: $montant, collecteurId: $collecteurId, regulateurId: $regulateurId, created_at: $created_at, updated_at: $updated_at, collecteur: $collecteur, regulateur: $regulateur, cotisations: $cotisations)';
+    return 'Collect(id: $id, montant: $montant, collecteurId: $collecteurId, regulateurId: $regulateurId, date: $date, created_at: $created_at, updated_at: $updated_at, profil: $profil, collecteur: $collecteur, regulateur: $regulateur, cotisations: $cotisations)';
   }
 
   @override
@@ -285,8 +317,10 @@ class _$_Collect with DiagnosticableTreeMixin implements _Collect {
       ..add(DiagnosticsProperty('montant', montant))
       ..add(DiagnosticsProperty('collecteurId', collecteurId))
       ..add(DiagnosticsProperty('regulateurId', regulateurId))
+      ..add(DiagnosticsProperty('date', date))
       ..add(DiagnosticsProperty('created_at', created_at))
       ..add(DiagnosticsProperty('updated_at', updated_at))
+      ..add(DiagnosticsProperty('profil', profil))
       ..add(DiagnosticsProperty('collecteur', collecteur))
       ..add(DiagnosticsProperty('regulateur', regulateur))
       ..add(DiagnosticsProperty('cotisations', cotisations));
@@ -303,10 +337,12 @@ class _$_Collect with DiagnosticableTreeMixin implements _Collect {
                 other.collecteurId == collecteurId) &&
             (identical(other.regulateurId, regulateurId) ||
                 other.regulateurId == regulateurId) &&
+            (identical(other.date, date) || other.date == date) &&
             (identical(other.created_at, created_at) ||
                 other.created_at == created_at) &&
             (identical(other.updated_at, updated_at) ||
                 other.updated_at == updated_at) &&
+            (identical(other.profil, profil) || other.profil == profil) &&
             (identical(other.collecteur, collecteur) ||
                 other.collecteur == collecteur) &&
             (identical(other.regulateur, regulateur) ||
@@ -323,8 +359,10 @@ class _$_Collect with DiagnosticableTreeMixin implements _Collect {
       montant,
       collecteurId,
       regulateurId,
+      date,
       created_at,
       updated_at,
+      profil,
       collecteur,
       regulateur,
       const DeepCollectionEquality().hash(_cotisations));
@@ -347,10 +385,12 @@ abstract class _Collect implements Collect {
   const factory _Collect(
       {required final int id,
       required final int montant,
-      required final int collecteurId,
-      required final int regulateurId,
+      final int? collecteurId,
+      final int? regulateurId,
+      final DateTime? date,
       final DateTime? created_at,
       final DateTime? updated_at,
+      final String? profil,
       final User? collecteur,
       final User? regulateur,
       final List<Cotisation>? cotisations}) = _$_Collect;
@@ -362,13 +402,17 @@ abstract class _Collect implements Collect {
   @override
   int get montant;
   @override
-  int get collecteurId;
+  int? get collecteurId;
   @override
-  int get regulateurId;
+  int? get regulateurId;
+  @override
+  DateTime? get date;
   @override
   DateTime? get created_at;
   @override
   DateTime? get updated_at;
+  @override
+  String? get profil;
   @override
   User? get collecteur;
   @override

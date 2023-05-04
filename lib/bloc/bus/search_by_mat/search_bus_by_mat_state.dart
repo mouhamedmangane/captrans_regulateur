@@ -12,7 +12,7 @@ class SearchBusByMatState extends Equatable{
     this.status = SearchBusByMatStatus.loading,
     this.matricule='',
     this.message='',
-    this.bus=null,
+    this.bus
   });
 
   SearchBusByMatState copyWith({

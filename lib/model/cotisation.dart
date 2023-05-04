@@ -5,7 +5,6 @@ import 'package:captrans_regulateur/model/bus.dart';
 import 'package:captrans_regulateur/model/ligne_cotisation.dart';
 import 'package:captrans_regulateur/model/receveur.dart';
 import 'package:captrans_regulateur/model/user.dart';
-import 'package:captrans_regulateur/modelDataTest/ligne_cotisation_data.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'cotisation.freezed.dart';
@@ -18,17 +17,21 @@ class Cotisation with _$Cotisation{
     required int id,
     required int montant,
     required int montantCotiser,
-    required DateTime dateDebut,
-    required DateTime dateFin,
-    DateTime ? created_at,
-    DateTime ? updated_at,
-    required int regulateurId,
-    required int receveurId,
-    required int busId,
+    DateTime ? dateDebut,
+    DateTime ? dateFin,
+    DateTime ? createdAt,
+    DateTime ? updatedAt,
+    int ? regulateurId,
+    int ? receveurId,
+    int ?  busId,
     User ? regulateur,
     Bus ? bus,
     Receveur ? receveur,
     List<LigneCotisation> ? ligneCotisations,
+
+    int ? compte,
+    int ? jourEtat,
+    int ? montantEtat,
 
   }) = _Cotisation;
 
@@ -36,6 +39,23 @@ class Cotisation with _$Cotisation{
       _$CotisationFromJson(json);
 
   int interValJour(){
-    return dateDebut.difference(dateFin).inDays;
+    int cpt=0;
+    if(ligneCotisations!=null){
+      for(LigneCotisation ligneCotisation in ligneCotisations!){
+        cpt+=ligneCotisation.nombreDeDepot;
+      }
+    }
+
+    return cpt;
+  }
+
+  int nombreTotalDeJour(){
+    int somme=0;
+    if(ligneCotisations!=0){
+      ligneCotisations!.forEach((element) {
+        somme+=element.nombreDeDepot;
+      });
+    }
+    return somme;
   }
 }

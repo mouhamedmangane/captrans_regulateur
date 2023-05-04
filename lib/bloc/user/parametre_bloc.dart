@@ -5,8 +5,8 @@ import '../../model/user.dart';
 
 enum ParametreStatus{init,loading,success,error}
 class ParametreState extends Equatable{
-  User? user;
-  ParametreStatus status;
+  final User? user;
+  final ParametreStatus status;
   ParametreState({
     User ? user,
     ParametreStatus ? status,

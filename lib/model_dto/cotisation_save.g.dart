@@ -8,16 +8,20 @@ part of 'cotisation_save.dart';
 
 _$_CotisationSave _$$_CotisationSaveFromJson(Map<String, dynamic> json) =>
     _$_CotisationSave(
-      regulateurId: json['regulateurId'] as int,
-      receveurId: json['receveurId'] as int,
-      busId: json['busId'] as int,
+      userId: json['user_id'] as int,
+      receveurId: json['receveur_id'] as int,
+      receveurTel: json['receveur_tel'] as String,
+      receveurNom: json['receveur_nom'] as String,
+      busId: json['bus_id'] as int,
       montant: json['montant'] as int,
     );
 
 Map<String, dynamic> _$$_CotisationSaveToJson(_$_CotisationSave instance) =>
     <String, dynamic>{
-      'regulateurId': instance.regulateurId,
-      'receveurId': instance.receveurId,
-      'busId': instance.busId,
+      'user_id': instance.userId,
+      'receveur_id': instance.receveurId,
+      'receveur_tel': instance.receveurTel,
+      'receveur_nom': instance.receveurNom,
+      'bus_id': instance.busId,
       'montant': instance.montant,
     };

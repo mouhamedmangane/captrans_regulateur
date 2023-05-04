@@ -37,6 +37,8 @@ class SelectReceveurPage extends StatelessWidget {
         body: BlocBuilder<ReceveurRecentesBloc,SimpleLoadableState<List<Receveur>>>(
            builder: (context,state){
              print(state.state);
+             print('rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr');
+             print(state);
 ;
                if(state.state == EnumLoadableState.DONE) return SelectReceveurView(receveurs: state.value!,);
                else return ListCroquisSliver(
@@ -67,12 +69,12 @@ class SelectReceveurView extends StatelessWidget {
         SizedBox(height: 10,),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 10),
-          child: SearchLInk("Ajouter ou rechercher un receveur . . .",
+          child: SearchLInk("Ajouter ou rechercher un receveur ...",
             onTap: (){
               Navigator.push(context,_goSearchReceveur());
             },
             leading: Padding(
-            padding: EdgeInsets.only(right: 25),
+            padding: EdgeInsets.only(right: 10),
               child: Icon(Icons.person_search_outlined,color: Colors.grey.shade600,size: 20),
             ),
             background: Colors.grey.shade300,

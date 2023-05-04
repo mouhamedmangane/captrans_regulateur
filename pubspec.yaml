@@ -37,20 +37,28 @@ dependencies:
   flutter_barcode_scanner: ^2.0.0
   intl: ^0.17.0
   qr_flutter: ^4.0.0
+  cached_network_image: ^3.2.3
+
 
   bloc: ^8.1.0
   flutter_bloc: ^8.1.1
   equatable: ^2.0.5
 
-
-  noppal_secure_preferences:
-    path: ../noppal_secure_preferences/
   noppal_util:
     path: ../noppal_util/
   json_annotation: ^4.6.0
   freezed_annotation: ^2.1.0
   bloc_concurrency: ^0.2.0
-  crypto: ^3.0.2
+  timeline_tile: ^2.0.0
+  blue_thermal_printer: ^1.2.3
+  image_picker: ^0.8.6
+  path_provider: ^2.0.11
+  firebase_core: ^1.10.0
+  firebase_core_platform_interface: 4.5.1
+  firebase_messaging: ^12.0.3
+  flutter_launcher_icons: ^0.11.0
+  flutter_local_notifications: ^9.0.2
+
 
 dev_dependencies:
   build_runner: ^2.2.1
@@ -59,6 +67,11 @@ dev_dependencies:
   freezed: ^2.0.4
   json_serializable: ^6.3.1
 
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "asset/logo.png"
+
 
 
   # The "flutter_lints" package below contains a set of recommended lints to
@@ -66,7 +79,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^1.0.0
+  flutter_lints: ^2.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -81,9 +94,9 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-     - asset/logo.jpg
      - asset/logo.png
      - asset/user/
+     - asset/images/person.png
      - asset/images/money1.png
      - asset/images/money2.png
      - conf/app.json

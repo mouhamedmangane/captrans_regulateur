@@ -10,8 +10,10 @@ class BusSearchEvent extends Equatable{
 }
 
 class BusSearchLoad extends BusSearchEvent{
-  String search;
+  final String search;
   BusSearchLoad({required this.search});
+
+  @override
   List<Object?> get props => [search];
 }
 

@@ -20,8 +20,10 @@ CotisationSave _$CotisationSaveFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CotisationSave {
-  int get regulateurId => throw _privateConstructorUsedError;
+  int get userId => throw _privateConstructorUsedError;
   int get receveurId => throw _privateConstructorUsedError;
+  String get receveurTel => throw _privateConstructorUsedError;
+  String get receveurNom => throw _privateConstructorUsedError;
   int get busId => throw _privateConstructorUsedError;
   int get montant => throw _privateConstructorUsedError;
 
@@ -37,7 +39,13 @@ abstract class $CotisationSaveCopyWith<$Res> {
           CotisationSave value, $Res Function(CotisationSave) then) =
       _$CotisationSaveCopyWithImpl<$Res, CotisationSave>;
   @useResult
-  $Res call({int regulateurId, int receveurId, int busId, int montant});
+  $Res call(
+      {int userId,
+      int receveurId,
+      String receveurTel,
+      String receveurNom,
+      int busId,
+      int montant});
 }
 
 /// @nodoc
@@ -53,20 +61,30 @@ class _$CotisationSaveCopyWithImpl<$Res, $Val extends CotisationSave>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? regulateurId = null,
+    Object? userId = null,
     Object? receveurId = null,
+    Object? receveurTel = null,
+    Object? receveurNom = null,
     Object? busId = null,
     Object? montant = null,
   }) {
     return _then(_value.copyWith(
-      regulateurId: null == regulateurId
-          ? _value.regulateurId
-          : regulateurId // ignore: cast_nullable_to_non_nullable
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
               as int,
       receveurId: null == receveurId
           ? _value.receveurId
           : receveurId // ignore: cast_nullable_to_non_nullable
               as int,
+      receveurTel: null == receveurTel
+          ? _value.receveurTel
+          : receveurTel // ignore: cast_nullable_to_non_nullable
+              as String,
+      receveurNom: null == receveurNom
+          ? _value.receveurNom
+          : receveurNom // ignore: cast_nullable_to_non_nullable
+              as String,
       busId: null == busId
           ? _value.busId
           : busId // ignore: cast_nullable_to_non_nullable
@@ -87,7 +105,13 @@ abstract class _$$_CotisationSaveCopyWith<$Res>
       __$$_CotisationSaveCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int regulateurId, int receveurId, int busId, int montant});
+  $Res call(
+      {int userId,
+      int receveurId,
+      String receveurTel,
+      String receveurNom,
+      int busId,
+      int montant});
 }
 
 /// @nodoc
@@ -101,20 +125,30 @@ class __$$_CotisationSaveCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? regulateurId = null,
+    Object? userId = null,
     Object? receveurId = null,
+    Object? receveurTel = null,
+    Object? receveurNom = null,
     Object? busId = null,
     Object? montant = null,
   }) {
     return _then(_$_CotisationSave(
-      regulateurId: null == regulateurId
-          ? _value.regulateurId
-          : regulateurId // ignore: cast_nullable_to_non_nullable
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
               as int,
       receveurId: null == receveurId
           ? _value.receveurId
           : receveurId // ignore: cast_nullable_to_non_nullable
               as int,
+      receveurTel: null == receveurTel
+          ? _value.receveurTel
+          : receveurTel // ignore: cast_nullable_to_non_nullable
+              as String,
+      receveurNom: null == receveurNom
+          ? _value.receveurNom
+          : receveurNom // ignore: cast_nullable_to_non_nullable
+              as String,
       busId: null == busId
           ? _value.busId
           : busId // ignore: cast_nullable_to_non_nullable
@@ -131,8 +165,10 @@ class __$$_CotisationSaveCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_CotisationSave implements _CotisationSave {
   const _$_CotisationSave(
-      {required this.regulateurId,
+      {required this.userId,
       required this.receveurId,
+      required this.receveurTel,
+      required this.receveurNom,
       required this.busId,
       required this.montant});
 
@@ -140,9 +176,13 @@ class _$_CotisationSave implements _CotisationSave {
       _$$_CotisationSaveFromJson(json);
 
   @override
-  final int regulateurId;
+  final int userId;
   @override
   final int receveurId;
+  @override
+  final String receveurTel;
+  @override
+  final String receveurNom;
   @override
   final int busId;
   @override
@@ -150,7 +190,7 @@ class _$_CotisationSave implements _CotisationSave {
 
   @override
   String toString() {
-    return 'CotisationSave(regulateurId: $regulateurId, receveurId: $receveurId, busId: $busId, montant: $montant)';
+    return 'CotisationSave(userId: $userId, receveurId: $receveurId, receveurTel: $receveurTel, receveurNom: $receveurNom, busId: $busId, montant: $montant)';
   }
 
   @override
@@ -158,18 +198,21 @@ class _$_CotisationSave implements _CotisationSave {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_CotisationSave &&
-            (identical(other.regulateurId, regulateurId) ||
-                other.regulateurId == regulateurId) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.receveurId, receveurId) ||
                 other.receveurId == receveurId) &&
+            (identical(other.receveurTel, receveurTel) ||
+                other.receveurTel == receveurTel) &&
+            (identical(other.receveurNom, receveurNom) ||
+                other.receveurNom == receveurNom) &&
             (identical(other.busId, busId) || other.busId == busId) &&
             (identical(other.montant, montant) || other.montant == montant));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, regulateurId, receveurId, busId, montant);
+  int get hashCode => Object.hash(runtimeType, userId, receveurId, receveurTel,
+      receveurNom, busId, montant);
 
   @JsonKey(ignore: true)
   @override
@@ -187,8 +230,10 @@ class _$_CotisationSave implements _CotisationSave {
 
 abstract class _CotisationSave implements CotisationSave {
   const factory _CotisationSave(
-      {required final int regulateurId,
+      {required final int userId,
       required final int receveurId,
+      required final String receveurTel,
+      required final String receveurNom,
       required final int busId,
       required final int montant}) = _$_CotisationSave;
 
@@ -196,9 +241,13 @@ abstract class _CotisationSave implements CotisationSave {
       _$_CotisationSave.fromJson;
 
   @override
-  int get regulateurId;
+  int get userId;
   @override
   int get receveurId;
+  @override
+  String get receveurTel;
+  @override
+  String get receveurNom;
   @override
   int get busId;
   @override
