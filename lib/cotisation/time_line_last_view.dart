@@ -108,9 +108,9 @@ class TimeLineLastView extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('$nombre jours',style: const TextStyle(color:Colors.black,fontWeight: FontWeight.bold),),
+                Text('${ligneCotisation.nombreDeDepot} jours',style: const TextStyle(color:Colors.black,fontWeight: FontWeight.bold),),
                 const SizedBox(height: 4,),
-                if(nombre>1)...[
+                if(ligneCotisation.nombreDeDepot>1)...[
 
                   Text("${NplDateFormat.dayFormat(ligneCotisation.dateDebut,separator: '-')}"),
                   const SizedBox(height: 4,),
@@ -144,7 +144,7 @@ class TimeLineLastView extends StatelessWidget {
                   Wrap(
                     children: [
                       const Text('Total',style: TextStyle(fontWeight: FontWeight.bold),),
-                      Text(" : $nombre jours x ${ligneCotisation.prixTotal()} f ",style: const TextStyle()),
+                      Text(" : ${ligneCotisation.nombreDeDepot} jours x ${ligneCotisation.prixTotal()} f ",style: const TextStyle()),
                       Text("= ${NumberHelper.format(ligneCotisation.total!)} f",style: TextStyle(fontWeight: FontWeight.bold),)
 
                     ],

@@ -153,13 +153,16 @@ class _SearchBusViewState extends State<SearchBusView> {
   }
 
   Widget _errorView(BuildContext context,BusSearchState state){
-    return ErrorBodyView(
-      onTap: (){
-        context.read<BusSearchBloc>().add(BusSearchLoad(search: _controller.text));
-      },
-      title: "Data Faillure",
-      message: state.message??'',
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+      child: ErrorBodyView(
+        onTap: (){
+          context.read<BusSearchBloc>().add(BusSearchLoad(search: _controller.text));
+        },
+        title: "Echec Chargement",
+        message: state.message??'',
 
+      ),
     ) ;
   }
 

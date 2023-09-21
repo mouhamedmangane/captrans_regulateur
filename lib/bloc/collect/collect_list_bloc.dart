@@ -32,7 +32,7 @@ class CollectListBloc extends Cubit<SimpleLoadableState<List<Collect>>>{
         message = AppConst.noConnexion;
       }
       emit(SimpleLoadableState.error(message));
-      throw error;
+      //throw error;
     });
   }
 }

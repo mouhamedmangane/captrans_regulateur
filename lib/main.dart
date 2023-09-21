@@ -1,4 +1,6 @@
 import 'package:captrans_regulateur/bloc/cotisation/addcotisation/add_cotisation_bloc.dart';
+import 'package:captrans_regulateur/bloc/cotisation/cotisation_en_cours_actif_bloc.dart';
+import 'package:captrans_regulateur/bloc/cotisation/cotisation_en_cours_par_jour_bloc.dart';
 import 'package:captrans_regulateur/bloc/fcm/fcm_bloc.dart';
 import 'package:captrans_regulateur/bloc/main/app_material_bloc.dart';
 import 'package:captrans_regulateur/bloc/main/app_start_bloc.dart';
@@ -40,12 +42,16 @@ import 'bloc/cotisation/cotisation_en_cours_bloc.dart';
 import 'bloc/cotisation/total_cotisation_bloc.dart';
 import 'connexion/connexion_page.dart';
 import 'notification_fcm/key_fcm.dart';
+import 'notification_fcm/line_np_new_versement.dart';
 
 
 late AndroidNotificationChannel channel;
 late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+
+//pour les traitement background et autre
 CenterNp centerNp=CenterNp(lines: [
   LineNpNewCollecte(KeyFcm.NOUVEAU_COLLECTE),
+  LineNpNewVersement(KeyFcm.NOUVEAU_VERSEMENT),
 ]);
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -175,7 +181,8 @@ class _AppState extends State<App> {
           FcmArrived(
               title:notification.title,
               message:notification.body,
-              data:event.data
+              data:event.data,
+              onOpen: true
       ));
     });
 
@@ -289,9 +296,13 @@ class _AppBodyState extends State<AppBody> {
   Widget wrapRoute(Widget widget){
     return BlocListener<FcmBloc,FcmState>(
       listener: (context,state){
-        if(state.data!=null){
+        if(state.data!=null && state.onOpen){
           print('tanter navigation --------------------------------------');
-          if(state.data!['name']==KeyFcm.NOUVEAU_COLLECTE){
+          if(state.data!['name']==KeyFcm.NOUVEAU_COLLECTE
+               || state.data!['name']==KeyFcm.NOUVEAU_VERSEMENT
+              || state.data!['name']==KeyFcm.SUPPRIMER_COTISATION
+              || state.data!['name']==KeyFcm.MODIFIER_LIGNE_USER
+            ){
             Navigator.popUntil(context, (route) => route.settings.name == MyHomePage.routeName);
           }
 
@@ -322,6 +333,12 @@ class _AppBodyState extends State<AppBody> {
           ),
           BlocProvider<CotisationEnCoursBloc>(
             create: (context) => CotisationEnCoursBloc(context.read<CotisationRepo>())..load(),
+          ),
+          BlocProvider<CotisationEnCoursParJourBloc>(
+            create: (context) => CotisationEnCoursParJourBloc(context.read<CotisationRepo>())..load(),
+          ),
+          BlocProvider<CotisationEnCoursActifBloc>(
+            create: (context) => CotisationEnCoursActifBloc(),
           ),
         ],
         child: MaterialApp(

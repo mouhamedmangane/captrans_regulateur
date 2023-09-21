@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:captrans_regulateur/model/cotisation.dart';
+import 'package:captrans_regulateur/model_dto/cotisation_et_total_par_jour_dto.dart';
+import 'package:captrans_regulateur/model_dto/cotisation_global_info_jour_dto.dart';
 import 'package:captrans_regulateur/model_dto/cotisation_success.dart';
 import 'package:captrans_regulateur/model_dto/cotisation_success_with_montant.dart';
 import 'package:captrans_regulateur/repository/cotisation/cotisation_repo.dart';
@@ -17,13 +19,17 @@ class CotisationDisRepo extends DisRepo implements CotisationRepo{
   StreamController _cotEtTotalStreamController = StreamController<CotisationEtTotalDto>.broadcast();
   NplTreatRequest treatRequest=new NplTreatRequest();
   late NplConverterObject<Cotisation> converterCotisation;
+  late NplConverterObject<CotisationGlobalInfoJour> converterGlobalInfoJour;
   late NplConverterObject<CotisationEtTotalDto> converterCotisationEtTotal;
+  late NplConverterObject<CotisationEtTotalParJourDto> converterCotisationEtTotalParJour;
   late NplConverterObject<CotisationSuccess> converterCotisationSuccess;
   late NplConverterObject<CotisationSuccessWithMoantant> converterCotisationWithTotal;
 
   CotisationDisRepo() : super(){
     converterCotisation=NplConverterObject((p0) => Cotisation.fromJson(p0));
+    converterGlobalInfoJour=NplConverterObject((p0) => CotisationGlobalInfoJour.fromJson(p0));
     converterCotisationEtTotal=NplConverterObject((p0) => CotisationEtTotalDto.fromJson(p0,converterCotisation));
+    converterCotisationEtTotalParJour=NplConverterObject((p0) => CotisationEtTotalParJourDto.fromJson(p0,converterGlobalInfoJour));
     converterCotisationSuccess = NplConverterObject((p0) => CotisationSuccess.fromJson(p0));
     converterCotisationWithTotal = NplConverterObject((p0) => CotisationSuccessWithMoantant.fromJson(p0));
   }
@@ -44,6 +50,17 @@ class CotisationDisRepo extends DisRepo implements CotisationRepo{
             CotisationEtTotalDto cotisationEtTotalDto=treatRequest.makeObject(json,converterCotisationEtTotal);
             _cotEtTotalStreamController.add(cotisationEtTotalDto);
               return cotisationEtTotalDto;
+        }
+    );
+  }
+
+  @override
+  Future<CotisationEtTotalParJourDto> en_cours_jours(int regulateurId,) {
+    return getRequest('api/cotisations/regulateur_par_jour/${regulateurId}',
+            (json) {
+          CotisationEtTotalParJourDto cotisationEtTotalParJourDto=treatRequest.makeObject(json,converterCotisationEtTotalParJour);
+          _cotEtTotalStreamController.add(CotisationEtTotalDto(cotisations: ListPaginate(),montantEncaisser: cotisationEtTotalParJourDto.montantEncaisser));
+          return cotisationEtTotalParJourDto;
         }
     );
   }

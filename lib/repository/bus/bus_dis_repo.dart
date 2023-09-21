@@ -28,6 +28,13 @@ class BusDisRepo extends DisRepo implements BusRepo{
     );
   }
 
+  @override
+  Future<Bus> findBusByMatRestrict(String matricule) {
+    return getRequest('api/bus/etat-restrict/${matricule}',
+            (json) => treatRequest.makeObject(json,converterBus)
+    );
+  }
+
 
 
 }

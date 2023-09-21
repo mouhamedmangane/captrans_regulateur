@@ -30,7 +30,6 @@ class CollectQrCodeView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Mon Qrcode'),
-
         elevation: 0,
         scrolledUnderElevation: 1,
         backgroundColor: Colors.grey.shade50,
@@ -81,7 +80,7 @@ class CollectQrCodeView extends StatelessWidget {
                       width: 150,
                       child: QrImage(
                         backgroundColor: Colors.white,
-                          data: state.value!,
+                        data: state.value!,
                       ),
                     );
                   }

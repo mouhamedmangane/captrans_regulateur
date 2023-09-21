@@ -1,6 +1,7 @@
 
 import 'package:captrans_regulateur/model/cotisation.dart';
 import 'package:captrans_regulateur/model_dto/cotisation_et_total_dto.dart';
+import 'package:captrans_regulateur/model_dto/cotisation_et_total_par_jour_dto.dart';
 import 'package:captrans_regulateur/model_dto/cotisation_success.dart';
 import 'package:captrans_regulateur/model_dto/cotisation_success_with_montant.dart';
 import 'package:noppal_util/dto/list_paginate.dart';
@@ -65,6 +66,12 @@ class CotisationLocalRepo extends NplLocalReposiroty implements CotisationRepo{
   @override
   Future<CotisationSuccessWithMoantant> add(CotisationSave cotisationSave) {
     // TODO: implement add
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<CotisationEtTotalParJourDto> en_cours_jours(int regulateurId) {
+    // TODO: implement en_cours_jours
     throw UnimplementedError();
   }
 

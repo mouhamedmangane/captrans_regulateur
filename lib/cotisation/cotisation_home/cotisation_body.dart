@@ -1,4 +1,6 @@
+import 'package:captrans_regulateur/bloc/cotisation/cotisation_en_cours_actif_bloc.dart';
 import 'package:captrans_regulateur/bloc/cotisation/cotisation_en_cours_bloc.dart';
+import 'package:captrans_regulateur/bloc/cotisation/cotisation_en_cours_par_jour_bloc.dart';
 import 'package:captrans_regulateur/bloc/cotisation/total_cotisation_bloc.dart';
 import 'package:captrans_regulateur/bloc/fcm/fcm_bloc.dart';
 import 'package:captrans_regulateur/bus/search_bus_page.dart';
@@ -24,6 +26,7 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import '../../model/cotisation.dart';
 import '../../notification_fcm/key_fcm.dart';
 import '../../ui/button/button_h_card.dart';
+import '../liste_cotisation_en_cours_par_jour.dart';
 
 class CotisationBody extends StatefulWidget {
 
@@ -55,11 +58,18 @@ class _CotisationBodyState extends State<CotisationBody> {
   Widget build(BuildContext context) {
     return BlocListener<FcmBloc,FcmState>(
       listener: (context,fcmState){
-        if(fcmState.data != null)
-          if(fcmState.data!['name'] == KeyFcm.NOUVEAU_COLLECTE){
+        if(fcmState.data != null){
+          if(fcmState.data!['name'] == KeyFcm.NOUVEAU_COLLECTE
+              || fcmState.data!['name'] == KeyFcm.SUPPRIMER_COTISATION
+              || fcmState.data!['name'] == KeyFcm.NOUVEAU_VERSEMENT ){
             print('niccccccccccccccccccccccce');
             context.read<CotisationEnCoursBloc>().reinit();
+            context.read<CotisationEnCoursParJourBloc>().load();
           }
+
+        }
+
+
       },
       child: Scaffold(
         appBar: AppBar(
@@ -68,82 +78,135 @@ class _CotisationBodyState extends State<CotisationBody> {
           scrolledUnderElevation: 1,
           backgroundColor: Colors.grey.shade50,
           foregroundColor: Colors.black,
+          actions: [
+            Row(
+              children: [
+                Text("Par Jour"),
+                BlocBuilder<CotisationEnCoursActifBloc,CotisationEnCoursViewEnum>(
+                    builder: (context,state) {
+                      print('nouveau----------------------------------------$state',);
+                      bool etat=false;
+                      if(state == CotisationEnCoursViewEnum.PAR_JOUR)
+                        etat=true;
+                      return Switch(value:etat , onChanged: (etat){
+                        print('etat----------------------------------------$state',);
+
+                        CotisationEnCoursViewEnum enumValue=(etat) ? CotisationEnCoursViewEnum.PAR_JOUR:CotisationEnCoursViewEnum.ALL;
+                        context.read<CotisationEnCoursActifBloc>().changerState(enumValue);
+                      });
+
+                    }
+                ),
+
+              ],
+            )
+          ],
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
-          child: RefreshIndicator(
-            onRefresh: ()async{
-              //context.read<TotalCotisationBloc>().load();
-              context.read<CotisationEnCoursBloc>().reinit();
-            },
-            child: CustomScrollView(
-              controller: _scrollController,
-              physics: BouncingScrollPhysics(parent: const AlwaysScrollableScrollPhysics()),
-              slivers: [
-                //MySliverApp("Cotisations"),
-                SliverToBoxAdapter(
-                      child:BlocBuilder<TotalCotisationBloc,SimpleLoadableState<int>>(
-                        builder: (context,state) {
-                          return SelectWidgetByState.select(
-                            state.state,
-                            {
-                              EnumLoadableState.DONE:TotalCotisationCard(),
-                              EnumLoadableState.LOADING:CardCroquis(
-                                width: double.infinity,
-                                height: 100,
-                                borderRadius: BorderRadius.circular(20),
-                                backgroundColor: Colors.grey.shade300,
-                              )
-                            },
-                            parDefaut: Container(
-                              height: 100,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Colors.grey.shade300,
-                              ),
-                            )
-                          );
-                        }
-                      )
-                ),
+          child: BlocBuilder<CotisationEnCoursActifBloc,CotisationEnCoursViewEnum>(
+            builder: (context,state) {
+              return RefreshIndicator(
+                onRefresh: ()async{
+                  //context.read<TotalCotisationBloc>().load();
 
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: AddCotisationBar(),
-                  ),
-                ),
+                    BlocProvider.of<CotisationEnCoursParJourBloc>(context).load();
 
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 20,bottom: 5),
-                    child:  BlocBuilder<CotisationEnCoursBloc,SimpleLoadableStatePaginate<Cotisation>>(
-                      builder: (context,state) {
-                        return Titre1(' En cours ( ${(state.state==EnumLoadablePaginateState.DONE)? state.total() :'...'} )',color: Colors.grey.shade700,);
-                      }
+                    BlocProvider.of<CotisationEnCoursBloc>(context).reinit();
+
+
+                },
+                child: CustomScrollView(
+                  controller: _scrollController,
+                  physics: BouncingScrollPhysics(parent: const AlwaysScrollableScrollPhysics()),
+                  slivers: [
+                    //MySliverApp("Cotisations"),
+                    SliverToBoxAdapter(
+                          child:BlocBuilder<TotalCotisationBloc,SimpleLoadableState<int>>(
+                            builder: (context,state) {
+                              return SelectWidgetByState.select(
+                                state.state,
+                                {
+                                  EnumLoadableState.DONE:TotalCotisationCard(),
+                                  EnumLoadableState.LOADING:CardCroquis(
+                                    width: double.infinity,
+                                    height: 100,
+                                    borderRadius: BorderRadius.circular(20),
+                                    backgroundColor: Colors.grey.shade300,
+                                  )
+                                },
+                                parDefaut: Container(
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Colors.grey.shade300,
+                                  ),
+                                )
+                              );
+                            }
+                          )
                     ),
-                  ),
+
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: AddCotisationBar(),
+                      ),
+                    ),
+
+                    SliverToBoxAdapter(
+                      child: Container(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 20,bottom: 5),
+                          child:  Row(
+                            children: [
+                              BlocBuilder<CotisationEnCoursBloc,SimpleLoadableStatePaginate<Cotisation>>(
+                                builder: (context,state) {
+                                  return Titre1(' En cours ( ${(state.state==EnumLoadablePaginateState.DONE)? state.total() :'...'} )',color: Colors.grey.shade700,);
+                                }
+                              ),
+
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    // ListCroquisSliver(4,
+                    //   backgroundColor: Colors.grey.shade300,
+                    //   shimmerDuration: 1000,
+                    // ),
+                    BlocBuilder<CotisationEnCoursActifBloc,CotisationEnCoursViewEnum>(
+                        builder: (context,state) {
+                          if(state == CotisationEnCoursViewEnum.PAR_JOUR){
+                           return  ListeCotisationEnCoursParJour(
+                              onTap: (BuildContext context, cotisation){
+                              },
+                            );
+                          }
+                          else{
+                            return ListeCotisationEnCours(
+                              onTap: (BuildContext context, cotisation){
+                                Navigator.pushNamed(
+                                    context,
+                                    CotisationPageArgs.routeName,
+                                    arguments: CotisationParamWithCotisation(
+                                      cotisation:cotisation,
+                                    )
+                                );
+                              },
+                            );
+                          }
+
+                        }
+                    ),
+
+
+
+                  ],
                 ),
-
-                // ListCroquisSliver(4,
-                //   backgroundColor: Colors.grey.shade300,
-                //   shimmerDuration: 1000,
-                // ),
-                ListeCotisationEnCours(
-                  onTap: (BuildContext context, cotisation){
-                    Navigator.pushNamed(
-                        context,
-                        CotisationPageArgs.routeName,
-                        arguments: CotisationParamWithCotisation(
-                          cotisation:cotisation,
-                        )
-                    );
-                  },
-                ),
-
-
-              ],
-            ),
+              );
+            }
           ),
         ),
       ),
@@ -212,4 +275,6 @@ class AddCotisationBar extends StatelessWidget {
             Navigator.pushReplacementNamed(context, SelectReceveurPage.routeName,arguments: SelectReceveurParam(bus: bus));
         });
   }
+
+
 }

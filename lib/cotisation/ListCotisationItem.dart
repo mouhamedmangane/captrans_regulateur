@@ -1,5 +1,6 @@
 import 'package:captrans_regulateur/model/cotisation.dart';
 import 'package:flutter/material.dart';
+import 'package:noppal_util/date/npl_date_format.dart';
 import 'package:noppal_util/format/number_helper.dart';
 
 class ListeCotisationItem extends StatelessWidget {
@@ -25,11 +26,21 @@ class ListeCotisationItem extends StatelessWidget {
       },
       title: Text(cotisation.bus!.matricule,style: TextStyle(fontWeight: FontWeight.w400),),
       subtitle: Text(cotisation.bus!.proprietaire!.nom),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
+      trailing: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text('${NumberHelper.format(cotisation.montant)}',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
-          Text(" F ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18))
+          SizedBox(height: 6,),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('${NumberHelper.format(cotisation.montant)}',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
+              Text(" F ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18))
+            ],
+          ),
+          SizedBox(height: 3,),
+          Text("${NplDateFormat.simpleFormat(cotisation.createdAt)}  ",style: TextStyle(fontSize: 12),)
+
         ],
       ),
     );

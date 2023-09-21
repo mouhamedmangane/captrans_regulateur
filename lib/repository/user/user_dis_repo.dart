@@ -48,5 +48,12 @@ class UserDisRepo extends DisRepo{
     );
   }
 
+  Future<List<String>> getLignes() async{
+    return getRequest(
+        'api/lignes/get-lignes',
+        (p0) => treatRequest.makeList(p0)
+    );
+  }
+
 
 }

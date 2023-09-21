@@ -39,7 +39,7 @@ class BusSearchBloc extends Bloc<BusSearchEvent,BusSearchState>{
         message = AppConst.noConnexion;
       }
       emit(state.copyWith(status:BusSearchStatus.error,message: message));
-
+      throw(error);
     });
   }
 

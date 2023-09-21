@@ -1,77 +1,66 @@
 import 'package:captrans_regulateur/bloc/cotisation/cotisation_en_cours_bloc.dart';
+import 'package:captrans_regulateur/bloc/cotisation/cotisation_en_cours_par_jour_bloc.dart';
 import 'package:captrans_regulateur/cotisation/ListCotisationItem.dart';
 import 'package:captrans_regulateur/model/cotisation.dart';
+import 'package:captrans_regulateur/model_dto/cotisation_global_info_jour_dto.dart';
 import 'package:captrans_regulateur/ui/button/error_body_smal_view.dart';
 import 'package:captrans_regulateur/ui/loading/loading_body_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:noppal_util/bloc/enum_loadable_paginate_state.dart';
+import 'package:noppal_util/bloc/enum_loadable_state.dart';
+import 'package:noppal_util/bloc/simple_loadable_state.dart';
 import 'package:noppal_util/bloc/simple_loadable_state_paginate.dart';
 
-class ListeCotisationEnCours extends StatelessWidget {
-  final void Function(BuildContext,Cotisation) ? onTap;
+import 'list_cotisation_par_jour_item.dart';
 
-  ListeCotisationEnCours({this.onTap,Key? key}) : super(key: key);
+class ListeCotisationEnCoursParJour extends StatelessWidget {
+  final void Function(BuildContext,CotisationGlobalInfoJour) ? onTap;
+
+  ListeCotisationEnCoursParJour({this.onTap,Key? key}) : super(key: key);
 
 
   @override
   Widget build(BuildContext context) {
-    return  BlocBuilder<CotisationEnCoursBloc,SimpleLoadableStatePaginate<Cotisation>>(
+    return  BlocBuilder<CotisationEnCoursParJourBloc,SimpleLoadableState<List<CotisationGlobalInfoJour>>>(
       builder: (context,state) {
 
-        if(state.state == EnumLoadablePaginateState.LOADING) {
-          return loading(context,state);
+        if(state.state == EnumLoadableState.LOADING) {
+          return loading(context);
         }
-        else if(state.state == EnumLoadablePaginateState.INIT){
-          return init(context,state);
+        else if(state.state == EnumLoadableState.INIT){
+          return init(context);
         }
-        else if(state.state == EnumLoadablePaginateState.ERROR){
+        else if(state.state == EnumLoadableState.ERROR){
           return error(context,state);
         }
-        return done(context, state);
+        return done(context,state);
       }
     );
   }
 
-  Widget done(BuildContext context,SimpleLoadableStatePaginate state){
-    int count=state.value.data.length;
-    if(state.state == EnumLoadablePaginateState.LOADING_ADD ||
-        state.state==EnumLoadablePaginateState.ERROR_ADD
-    )
-      count++;
+  Widget done(BuildContext context,SimpleLoadableState<List<CotisationGlobalInfoJour>> state){
 
     return SliverList(
         delegate: SliverChildBuilderDelegate(
           (BuildContext context,int index){
-              if(index==count-1){
-                  if(state.state == EnumLoadablePaginateState.ERROR_ADD)
-                    return errorAdd(context, state);
-                  if(state.state == EnumLoadablePaginateState.LOADING_ADD)
-                    return loadingAdd(context, state);
-              }
-                return ListeCotisationItem(
-                  state.value.data[index],
+
+                return ListeCotisationParJourItem(
+                  state.value![index],
                   onTap:onTap,
                 );
 
 
           },
-          childCount:count,
+          childCount:state.value!.length,
         )
     );
   }
 
-  Widget loadingAdd(BuildContext context, SimpleLoadableStatePaginate state){
-    return Container(
-      alignment: Alignment.center,
-      child: CircularProgressIndicator(),
-    );
-  }
-  Widget errorAdd(BuildContext context, SimpleLoadableStatePaginate state){
-    return Text(state.message??"");
-  }
 
-  Widget error(BuildContext context,SimpleLoadableStatePaginate state){
+
+
+  Widget error(BuildContext context,SimpleLoadableState state){
     return SliverToBoxAdapter(
 
       child: ErrorBodySmallView(
@@ -84,11 +73,11 @@ class ListeCotisationEnCours extends StatelessWidget {
     );
   }
 
-  Widget loading(BuildContext context,SimpleLoadableStatePaginate state){
+  Widget loading(BuildContext context){
     return SliverToBoxAdapter(key:ValueKey(19),child: LoadingBodyView(verticalPadding: 50,));
 
   }
-  Widget init(BuildContext context,SimpleLoadableStatePaginate state){
+  Widget init(BuildContext context){
     return SliverToBoxAdapter(key:ValueKey(19),child: Container(
       alignment: Alignment.center,
       padding: EdgeInsets.symmetric(vertical: 20,horizontal: 15),

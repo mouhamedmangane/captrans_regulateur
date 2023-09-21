@@ -6,6 +6,7 @@ import 'package:captrans_regulateur/model_dto/cotisation_save.dart';
 import 'package:captrans_regulateur/model_dto/cotisation_success.dart';
 import 'package:noppal_util/dto/list_paginate.dart';
 
+import '../../model_dto/cotisation_et_total_par_jour_dto.dart';
 import '../../model_dto/cotisation_success_with_montant.dart';
 
 abstract class CotisationRepo{
@@ -14,6 +15,7 @@ abstract class CotisationRepo{
   Future<CotisationSuccessWithMoantant> add(CotisationSave cotisationSave);
   Future<CotisationEtTotalDto> en_cours(int regulateurId,int page,
       {String ? cotisationId});
+  Future<CotisationEtTotalParJourDto> en_cours_jours(int regulateurId);
   Future<Cotisation> getComplete(Cotisation cotisation);
   Future<CotisationSuccess> getDetail(int cotisationId);
   Future<ListPaginate<Cotisation>> findByCollectId(int collectId,{int? page});

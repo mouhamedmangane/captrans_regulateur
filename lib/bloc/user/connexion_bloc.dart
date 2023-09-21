@@ -49,6 +49,7 @@ class ConnexionBloc extends Cubit<SimpleLoadableState<ConnexionDto>>{
         else if(error is TimeoutException) message=AppConst.timeout;
         else message =  AppConst.noConnexion;
         emit(SimpleLoadableState.error(message));
+        throw error;
 
     });
   }

@@ -1,5 +1,6 @@
 import 'package:captrans_regulateur/bloc/cotisation/addcotisation/add_cotisation_bloc.dart';
 import 'package:captrans_regulateur/bloc/cotisation/cotisation_en_cours_bloc.dart';
+import 'package:captrans_regulateur/bloc/cotisation/cotisation_en_cours_par_jour_bloc.dart';
 import 'package:captrans_regulateur/bloc/cotisation/total_cotisation_bloc.dart';
 import 'package:captrans_regulateur/cotisation/add_cotisation/resume_cotisation_view.dart';
 import 'package:captrans_regulateur/cotisation/cotisation_page.dart';
@@ -75,6 +76,7 @@ class _AddMontantCotisationViewState extends State<AddMontantCotisationView> {
               if(state.status==AddCotisationStatus.success){
                 context.read<CotisationEnCoursBloc>().addNewCotisastion(state.cotisation!.ticket.cotisation.copyWith(bus: state.cotisation!.ticket.bus));
                 context.read<TotalCotisationBloc>().changeMontant(state.cotisation!.montantEncaisser);
+                BlocProvider.of<CotisationEnCoursParJourBloc>(context).load();
                 Navigator.pushNamedAndRemoveUntil(
                     context,
                     CotisationPageArgs.routeName,

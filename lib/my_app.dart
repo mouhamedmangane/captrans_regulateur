@@ -30,9 +30,15 @@ class MyHomeView extends StatelessWidget {
     final selectedTab=context.select((HomeCubit cubit)=> cubit.state.tab);
     return BlocListener<FcmBloc,FcmState>(
       listener: (context,state){
-        if(state.data!=null){
+        if(state.data!=null  && state.onOpen  ){
           if(state.data!['name']== KeyFcm.NOUVEAU_COLLECTE){
             context.read<HomeCubit>().setTab(HomeTab.values[1]);
+          }
+          else if(state.data!['name']== KeyFcm.SUPPRIMER_COTISATION){
+            context.read<HomeCubit>().setTab(HomeTab.values[0]);
+          }
+          else if(state.data!['name']== KeyFcm.MODIFIER_LIGNE_USER){
+            context.read<HomeCubit>().setTab(HomeTab.values[3]);
           }
         }
       },

@@ -43,7 +43,7 @@ class TimeLineAutoView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               //crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('$nombre jours',style: const TextStyle(color:Colors.black,fontWeight: FontWeight.bold),),
+                Text('${ligneCotisation.nombreDeDepot} jours',style: const TextStyle(color:Colors.black,fontWeight: FontWeight.bold),),
                 const SizedBox(height: 4,),
                 Text("${NplDateFormat.dayFormat(ligneCotisation.dateDebut,separator: '-')}"),
                 const SizedBox(height: 4,),
@@ -72,7 +72,7 @@ class TimeLineAutoView extends StatelessWidget {
                   Wrap(
                     children: [
                       const Text('Total',style: TextStyle(fontWeight: FontWeight.bold),),
-                      Text(" : $nombre jours x ${ligneCotisation.prixTotal()} f ",style: const TextStyle()),
+                      Text(" : ${ligneCotisation.nombreDeDepot} jours x ${ligneCotisation.prixTotal()} f ",style: const TextStyle()),
                       Text("= ${NumberHelper.format(ligneCotisation.total!)} f",style: TextStyle(fontWeight: FontWeight.bold),)
                     ],
                   ),
