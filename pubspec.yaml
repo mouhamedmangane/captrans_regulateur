@@ -45,8 +45,7 @@ dependencies:
   equatable: ^2.0.5
 
   noppal_util:
-    git:
-      url: https://github.com/mouhamedmangane/noopal_util.git
+    path: ../noppal_util/
   json_annotation: ^4.6.0
   freezed_annotation: ^2.1.0
   bloc_concurrency: ^0.2.0

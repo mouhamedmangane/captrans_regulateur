@@ -78,7 +78,7 @@ class CollectQrCodeView extends StatelessWidget {
                   else{
                     return SizedBox(
                       width: 150,
-                      child: QrImage(
+                      child: QrImageView(
                         backgroundColor: Colors.white,
                         data: state.value!,
                       ),
